@@ -2953,6 +2953,465 @@
                 max-width: 800px;
             }
         }
+
+        /* ========== COMPREHENSIVE RESPONSIVE FIXES ========== */
+
+        /* Extra Small Devices (320px - 480px) */
+        @media (max-width: 480px) {
+
+            /* Navbar */
+            nav {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-right {
+                gap: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            /* Container & Spacing */
+            .container {
+                padding: 1rem 0.5rem;
+                max-width: 100%;
+            }
+
+            /* Text Sizing */
+            .section-title {
+                font-size: 1.4rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .video-title {
+                font-size: 0.95rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
+            /* Cards & Grids */
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem 1rem;
+                border-radius: 10px;
+            }
+
+            .card-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .card-desc {
+                font-size: 0.85rem;
+            }
+
+            /* Videos Grid */
+            .videos-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .video-card {
+                border-radius: 10px;
+            }
+
+            .video-thumbnail {
+                height: 120px;
+                font-size: 2rem;
+            }
+
+            .video-info {
+                padding: 1rem;
+            }
+
+            /* Tabs */
+            .tabs-wrapper {
+                flex-wrap: wrap;
+                overflow-x: auto;
+            }
+
+            .tab {
+                padding: 1rem 0.5rem;
+                font-size: 0.85rem;
+                flex: auto;
+                min-width: auto;
+            }
+
+            .tab-content {
+                padding: 1rem 0.5rem;
+            }
+
+            /* Stats */
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            .stat {
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            /* Modals */
+            .purchase-content,
+            .profile-content {
+                max-width: 95%;
+                width: 95%;
+                padding: 1.5rem 1rem;
+                border-radius: 15px;
+            }
+
+            .purchase-content {
+                max-width: 90%;
+            }
+
+            .purchase-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .purchase-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .purchase-btn-cancel,
+            .purchase-btn-confirm {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .purchase-close {
+                top: 0.8rem;
+                right: 0.8rem;
+            }
+
+            .profile-close {
+                top: 1rem;
+                right: 1rem;
+                font-size: 1.8rem;
+            }
+
+            /* Forms */
+            .post-form-group {
+                margin-bottom: 1rem;
+            }
+
+            .post-form-label {
+                font-size: 0.9rem;
+            }
+
+            .post-form-input,
+            .post-form-select {
+                font-size: 0.95rem;
+                padding: 0.7rem;
+            }
+
+            /* TikTok-style Video Card */
+            .tiktok-video-card {
+                height: 380px !important;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .video-stats {
+                gap: 0.3rem;
+                font-size: 0.8rem;
+            }
+
+            /* Buttons */
+            .logout-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+            }
+
+            /* Audio Players */
+            audio {
+                max-width: 100%;
+                height: 28px !important;
+            }
+
+            /* Comments */
+            #commentsListContainer {
+                max-height: 300px;
+            }
+
+            #newCommentText {
+                height: 50px !important;
+                font-size: 0.9rem !important;
+            }
+
+            /* Voice Recording */
+            #voiceRecordingContainer {
+                padding: 0.8rem !important;
+            }
+
+            /* GIF & Emoji */
+            #emojiGrid {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
+
+            #gifResults {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        /* Small Devices (481px - 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+
+            /* Container */
+            .container {
+                padding: 1.5rem;
+            }
+
+            /* Text */
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            /* Grids */
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            /* Cards */
+            .card {
+                padding: 1.5rem;
+            }
+
+            .video-thumbnail {
+                height: 140px;
+            }
+
+            /* Tabs */
+            .tab {
+                padding: 1.2rem;
+                font-size: 0.95rem;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            /* Modals */
+            .purchase-content {
+                max-width: 400px;
+                padding: 2rem 1.5rem;
+            }
+
+            .profile-content {
+                max-width: 450px;
+                padding: 2.5rem 1.5rem;
+            }
+
+            .purchase-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            /* Video Cards */
+            .tiktok-video-card {
+                height: 450px !important;
+                max-width: 100%;
+            }
+
+            /* Forms */
+            .post-form-input,
+            .post-form-select {
+                font-size: 1rem;
+            }
+
+            /* GIF & Emoji */
+            #emojiGrid {
+                grid-template-columns: repeat(6, 1fr) !important;
+            }
+
+            #gifResults {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+
+        /* Medium Devices / Tablets (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+
+            /* Container */
+            .container {
+                padding: 1.5rem;
+                max-width: 95%;
+            }
+
+            /* Grids */
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            /* Modals */
+            .purchase-content {
+                max-width: 90%;
+            }
+
+            .profile-content {
+                max-width: 90%;
+            }
+
+            /* Video Cards */
+            .tiktok-video-card {
+                height: 500px !important;
+            }
+
+            /* Tabs */
+            .tab {
+                padding: 1.3rem;
+            }
+        }
+
+        /* Large Devices / Desktop (1025px and up) */
+        @media (min-width: 1025px) {
+
+            /* Container */
+            .container {
+                max-width: 1200px;
+                padding: 2rem;
+            }
+
+            /* Grids */
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            /* Video Cards */
+            .tiktok-video-card {
+                height: 600px !important;
+            }
+
+            /* Modals */
+            .purchase-content {
+                max-width: 450px;
+            }
+
+            .profile-content {
+                max-width: 550px;
+            }
+        }
+
+        /* Extra Large Devices (1440px and up) */
+        @media (min-width: 1440px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .tiktok-video-card {
+                height: 650px !important;
+            }
+        }
+
+        /* Landscape orientation fixes */
+        @media (max-height: 500px) and (orientation: landscape) {
+            nav {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .section-title {
+                margin-bottom: 0.8rem;
+            }
+
+            .tiktok-video-card {
+                height: 350px !important;
+            }
+
+            .tabs-wrapper {
+                overflow-x: auto;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+
+            nav,
+            .purchase-modal,
+            .profile-modal,
+            button {
+                display: none;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -3687,6 +4146,89 @@
             <div class="purchase-buttons">
                 <button class="purchase-btn-cancel" onclick="closePurchaseModal()">Cancel</button>
                 <button class="purchase-btn-confirm" onclick="confirmPurchase()">✅ Confirm Purchase</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Comments Modal (TikTok Style) -->
+    <div class="purchase-modal" id="viewCommentsModal">
+        <div class="purchase-content"
+            style="max-width: 500px; max-height: 70vh; display: flex; flex-direction: column;">
+            <button class="purchase-close" onclick="closeViewComments()">×</button>
+
+            <div class="purchase-header" style="margin-bottom: 1rem;">
+                <div class="purchase-icon">💬</div>
+                <h2 style="color: #FFFFFF; margin: 0;">Comments</h2>
+            </div>
+
+            <!-- Comments List -->
+            <div id="commentsListContainer"
+                style="flex: 1; overflow-y: auto; margin-bottom: 1rem; padding-right: 0.5rem;">
+                <div style="text-align: center; color: #999; padding: 2rem;">
+                    Loading comments...
+                </div>
+            </div>
+
+            <!-- Add Comment Section -->
+            <div style="border-top: 1px solid #E63946; padding-top: 1rem; padding-bottom: 0;">
+                <label class="post-form-label" style="margin-bottom: 0.5rem;">Your Comment</label>
+                <textarea id="newCommentText" class="post-form-input" placeholder="Share your thoughts..."
+                    style="resize: none; height: 60px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"
+                    maxlength="500"></textarea>
+                <div style="color: #999; font-size: 0.85rem; margin-top: 0.3rem; margin-bottom: 1rem;"
+                    id="newCommentCount">0/500</div>
+
+                <!-- Voice Recording Section (Hidden by default) -->
+                <div id="voiceRecordingContainer"
+                    style="display: none; margin-bottom: 1rem; padding: 1rem; background: #111; border-radius: 8px;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                        <div id="voiceRecordingStatus" style="color: #E63946; font-weight: 700; font-size: 0.9rem;">🎙️
+                            Recording...</div>
+                        <div id="voiceRecordingTimer" style="color: #999; font-size: 0.85rem;">0:00</div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="purchase-btn-confirm" id="stopVoiceBtn" onclick="stopVoiceRecording()"
+                            style="flex: 1; padding: 0.6rem;">⏹️ Stop</button>
+                        <button class="purchase-btn-confirm" id="playVoiceBtn" onclick="playVoiceRecording()"
+                            style="flex: 1; padding: 0.6rem; display: none;">▶️ Play</button>
+                        <button class="purchase-btn-confirm" id="discardVoiceBtn" onclick="discardVoiceRecording()"
+                            style="flex: 1; padding: 0.6rem; display: none;">🗑️ Discard</button>
+                    </div>
+                </div>
+
+                <!-- Voice, Emoji & GIF Buttons -->
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                    <button class="purchase-btn-confirm" id="voiceRecordBtn" onclick="startVoiceRecording()"
+                        style="flex: 1; padding: 0.6rem; font-size: 0.9rem;">🎙️ Voice</button>
+                    <button class="purchase-btn-confirm" onclick="toggleEmojiPicker()"
+                        style="flex: 1; padding: 0.6rem; font-size: 0.9rem;">😊 Emoji</button>
+                    <button class="purchase-btn-confirm" onclick="toggleGifSearch()"
+                        style="flex: 1; padding: 0.6rem; font-size: 0.9rem;">🎬 GIF</button>
+                </div>
+
+                <!-- Emoji Picker (Hidden by default) -->
+                <div id="emojiPickerContainer"
+                    style="display: none; margin-bottom: 1rem; padding: 1rem; background: #111; border-radius: 8px; max-height: 200px; overflow-y: auto;">
+                    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin-bottom: 1rem;"
+                        id="emojiGrid"></div>
+                </div>
+
+                <!-- GIF Search (Hidden by default) -->
+                <div id="gifSearchContainer"
+                    style="display: none; margin-bottom: 1rem; padding: 1rem; background: #111; border-radius: 8px;">
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="gifSearchInput" placeholder="Search GIFs..."
+                            style="flex: 1; padding: 0.5rem; background: #0a0a0a; border: 1px solid #333; border-radius: 5px; color: #fff;">
+                        <button class="purchase-btn-confirm" onclick="searchGifs()"
+                            style="padding: 0.5rem 1rem;">Search</button>
+                    </div>
+                    <div id="gifResults"
+                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; max-height: 250px; overflow-y: auto;">
+                    </div>
+                </div>
+
+                <button class="purchase-btn-confirm" onclick="submitCommentFromModal()" style="width: 100%;">💬 Post
+                    Comment</button>
             </div>
         </div>
     </div>
@@ -6412,7 +6954,8 @@
                             </div>
                             <div class="video-action-buttons">
                                 <button class="video-action-btn" id="like-btn-${postId}" onclick="likeVideo('${postId}', '${post.creatorId}')">❤️ Like</button>
-                                <button class="video-action-btn" onclick="shareVideo('${post.title}')">🔗 Share</button>
+                                <button class="video-action-btn" onclick="openCommentModal('${postId}', '${post.creatorId}', '${post.title}')">💬 Comment</button>
+                                <button class="video-action-btn" onclick="shareVideo('${postId}', '${post.creatorId}', '${post.title}')">🔗 Share</button>
                             </div>
                         </div>
                     </div>
@@ -6423,11 +6966,11 @@
             hideLoadingIndicator(containerId);
         }
 
-        // Increment view count for a video
+        // Increment view count for a video (only once per user)
         async function incrementViewCount(postId, creatorId) {
             try {
-                if (!postId || !creatorId) {
-                    console.warn('Missing postId or creatorId for view tracking');
+                if (!postId || !creatorId || !currentUser) {
+                    console.warn('Missing postId, creatorId, or currentUser for view tracking');
                     return;
                 }
 
@@ -6444,22 +6987,32 @@
                 // Find and update the post
                 const postIndex = posts.findIndex(p => p.id === postId);
                 if (postIndex !== -1) {
-                    posts[postIndex].views = (posts[postIndex].views || 0) + 1;
+                    // Track user views
+                    const post = posts[postIndex];
+                    const userViews = post.userViews || {};
 
-                    // Save back to Firebase
-                    await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
-                        posts: posts,
-                        updatedAt: new Date().toISOString()
-                    });
+                    // Only count if this user hasn't viewed yet
+                    if (!userViews[currentUser.uid]) {
+                        userViews[currentUser.uid] = true;
+                        post.views = Object.keys(userViews).length;
+                        post.userViews = userViews;
 
-                    // Also update in global collection
-                    await db.collection('xtokpost').doc(postId).update({
-                        views: posts[postIndex].views
-                    }).catch(() => {
-                        // If document doesn't exist in global collection, that's ok
-                    });
+                        // Save back to Firebase
+                        await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
+                            posts: posts,
+                            updatedAt: new Date().toISOString()
+                        });
 
-                    console.log(`✅ View tracked for post ${postId}: ${posts[postIndex].views} views`);
+                        // Also update in global collection
+                        await db.collection('xtokpost').doc(postId).update({
+                            views: post.views,
+                            userViews: userViews
+                        }).catch(() => { });
+
+                        console.log(`✅ View counted for post ${postId} by user ${currentUser.uid}: ${post.views} unique views`);
+                    } else {
+                        console.log(`⏭️ User already viewed post ${postId}`);
+                    }
                 }
             } catch (error) {
                 console.warn('Error incrementing view count:', error.message);
@@ -6467,16 +7020,16 @@
             }
         }
 
-        // Like video function - updates Firebase and UI
+        // Like video function - only 1 like per user
         async function likeVideo(postId, creatorId) {
             try {
-                if (!creatorId || !postId) {
-                    console.error('Missing postId or creatorId');
+                if (!creatorId || !postId || !currentUser) {
+                    console.error('Missing postId, creatorId, or currentUser');
                     alert('Error: Cannot like this video');
                     return;
                 }
 
-                console.log(`❤️ Liking video ${postId} from creator ${creatorId}`);
+                console.log(`❤️ Liking video ${postId} from creator ${creatorId} by user ${currentUser.uid}`);
 
                 // Get current posts from creator's collection
                 const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
@@ -6497,9 +7050,21 @@
                     return;
                 }
 
-                // Increment likes
-                const oldLikes = posts[postIndex].likes || 0;
-                posts[postIndex].likes = oldLikes + 1;
+                // Track user likes
+                const post = posts[postIndex];
+                const userLikes = post.userLikes || {};
+
+                // Check if user already liked
+                if (userLikes[currentUser.uid]) {
+                    alert('❌ You already liked this post');
+                    console.log(`⏭️ User ${currentUser.uid} already liked post ${postId}`);
+                    return;
+                }
+
+                // Add user to likes
+                userLikes[currentUser.uid] = true;
+                post.likes = Object.keys(userLikes).length;
+                post.userLikes = userLikes;
 
                 // Save back to user's collection
                 await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
@@ -6509,14 +7074,15 @@
 
                 // Update global xtokpost collection
                 await db.collection('xtokpost').doc(postId).update({
-                    likes: posts[postIndex].likes
+                    likes: post.likes,
+                    userLikes: userLikes
                 }).catch(err => {
                     console.warn('Could not update global post:', err.message);
                 });
 
                 // Update creator's total likes stat
                 const creatorStats = await loadStatsFromFirebase();
-                const totalLikes = posts.reduce((sum, post) => sum + (post.likes || 0), 0);
+                const totalLikes = posts.reduce((sum, p) => sum + (p.likes || 0), 0);
                 const updatedStats = {
                     postCount: creatorStats.postCount || posts.length,
                     totalViewers: creatorStats.totalViewers || 0,
@@ -6531,8 +7097,8 @@
                 const likesElement = document.getElementById(`likes-${postId}`);
                 const likeBtn = document.getElementById(`like-btn-${postId}`);
                 if (likesElement) {
-                    likesElement.textContent = posts[postIndex].likes;
-                    console.log(`✅ Updated UI: likes count is now ${posts[postIndex].likes}`);
+                    likesElement.textContent = post.likes;
+                    console.log(`✅ Updated UI: likes count is now ${post.likes}`);
                 }
                 if (likeBtn) {
                     likeBtn.style.background = '#E63946';
@@ -6546,9 +7112,58 @@
             }
         }
 
-        // Share video function
-        function shareVideo(title) {
+        // Share video function - only 1 share per user
+        async function shareVideo(postId, creatorId, title) {
             const shareText = `Check out this video: "${title}" on XTOK! 🚀`;
+
+            // Increment share count (only once per user)
+            try {
+                if (postId && creatorId && currentUser) {
+                    const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                    if (postsDoc.exists) {
+                        const data = postsDoc.data();
+                        const posts = data.posts || [];
+
+                        const postIndex = posts.findIndex(p => p.id === postId);
+                        if (postIndex !== -1) {
+                            const post = posts[postIndex];
+                            const userShares = post.userShares || {};
+
+                            // Only count if user hasn't shared
+                            if (!userShares[currentUser.uid]) {
+                                userShares[currentUser.uid] = true;
+                                post.shares = Object.keys(userShares).length;
+                                post.userShares = userShares;
+
+                                await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
+                                    posts: posts,
+                                    updatedAt: new Date().toISOString()
+                                });
+
+                                // Update global collection
+                                await db.collection('xtokpost').doc(postId).update({
+                                    shares: post.shares,
+                                    userShares: userShares
+                                }).catch(() => { });
+
+                                // Update UI
+                                const sharesElement = document.getElementById(`shares-${postId}`);
+                                if (sharesElement) {
+                                    sharesElement.textContent = post.shares;
+                                }
+
+                                console.log(`✅ Share counted for post ${postId}: ${post.shares} unique shares`);
+                            } else {
+                                console.log(`⏭️ User already shared post ${postId}`);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Error counting share:', error.message);
+            }
+
+            // Show share UI
             if (navigator.share) {
                 navigator.share({
                     title: 'XTOK Video',
@@ -6556,7 +7171,6 @@
                     url: window.location.href
                 }).catch(err => console.log('Error sharing:', err));
             } else {
-                // Fallback: copy to clipboard
                 navigator.clipboard.writeText(shareText).then(() => {
                     alert('📋 Share text copied to clipboard!');
                 });
@@ -6910,6 +7524,669 @@
                 initializeFeeds();
             } else {
                 console.log('❌ No user authenticated');
+            }
+        });
+
+        // TikTok-style comments state
+        let viewingPostId = null;
+        let viewingCreatorId = null;
+        let replyingToCommentId = null;
+        let replyingToReplyUserId = null; // For nested replies (reply to a reply)
+
+        // Voice recording state
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordingStartTime = null;
+        let recordingInterval = null;
+        let recordedAudioUrl = null;
+
+        // Open comments view (TikTok style)
+        async function openCommentModal(postId, creatorId, title) {
+            viewingPostId = postId;
+            viewingCreatorId = creatorId;
+            replyingToCommentId = null;
+            replyingToReplyUserId = null;
+
+            // Get modal and show
+            const modal = document.getElementById('viewCommentsModal');
+            if (!modal) {
+                alert('Comments modal not found');
+                return;
+            }
+
+            modal.classList.add('active');
+            document.getElementById('newCommentText').value = '';
+            document.getElementById('newCommentText').placeholder = 'Share your thoughts...';
+            updateNewCommentCount();
+
+            // Load and display all comments
+            await loadComments(postId, creatorId);
+        }
+
+        function closeViewComments() {
+            const modal = document.getElementById('viewCommentsModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+            viewingPostId = null;
+            viewingCreatorId = null;
+            replyingToCommentId = null;
+            replyingToReplyUserId = null;
+        }
+
+        // Load and display comments from Firebase
+        async function loadComments(postId, creatorId) {
+            try {
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                if (!postsDoc.exists) return;
+
+                const data = postsDoc.data();
+                const posts = data.posts || [];
+                const post = posts.find(p => p.id === postId);
+
+                if (!post || !post.postComments) {
+                    document.getElementById('commentsListContainer').innerHTML = '<div style="text-align: center; color: #999; padding: 2rem;">No comments yet. Be the first!</div>';
+                    return;
+                }
+
+                const commentsList = post.postComments;
+
+                // Build HTML with replies
+                let html = '';
+                for (const comment of commentsList) {
+                    try {
+                        const userDoc = await db.collection('users').doc(comment.userId).get();
+                        const userData = userDoc.data() || {};
+                        const userName = userData.displayName || userData.email || 'Anonymous';
+                        const userAvatar = userData.displayName?.charAt(0).toUpperCase() || '?';
+
+                        html += `
+                            <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #333;">
+                                <!-- Main Comment -->
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; flex-shrink: 0;">
+                                        ${userAvatar}
+                                    </div>
+                                    <div style="flex: 1; min-width: 0;">
+                                        <div style="color: #FFFFFF; font-weight: 700; font-size: 0.9rem;">${userName}</div>
+                                         <div style="color: #CCC; word-wrap: break-word; font-size: 0.9rem; margin-bottom: 0.5rem;">${comment.text}</div>
+                                         ${comment.voiceUrl ? `
+                                             <audio controls style="width: 100%; margin: 0.5rem 0; border-radius: 5px;">
+                                                 <source src="${comment.voiceUrl}" type="audio/webm">
+                                                 Your browser does not support audio playback.
+                                             </audio>
+                                         ` : ''}
+                                         <button onclick="startReply('${comment.id}', '${userName}')" style="background: none; border: none; color: #E63946; cursor: pointer; font-size: 0.85rem; font-weight: 700;">↳ Reply</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Replies -->
+                                ${(comment.replies || []).length > 0 ? `
+                                    <div style="margin-left: 3rem; margin-top: 1rem;">
+                                        ${comment.replies.map(reply => {
+                            const replyUserName = reply.userName || 'Anonymous';
+                            const replyAvatar = reply.userAvatar || '?';
+                            return `
+                                                <div style="margin-bottom: 1rem;">
+                                                    <div style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+                                                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #666; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; flex-shrink: 0; font-size: 0.8rem;">
+                                                            ${replyAvatar}
+                                                        </div>
+                                                        <div style="flex: 1; min-width: 0;">
+                                                            <div style="color: #FFFFFF; font-weight: 700; font-size: 0.85rem;">${replyUserName}</div>
+                                                            <div style="color: #CCC; word-wrap: break-word; font-size: 0.85rem;">${reply.text}</div>
+                                                            ${reply.voiceUrl ? `
+                                                                <audio controls style="width: 100%; margin: 0.3rem 0; border-radius: 5px; max-width: 250px; height: 24px;">
+                                                                    <source src="${reply.voiceUrl}" type="audio/webm">
+                                                                    Audio not supported.
+                                                                </audio>
+                                                            ` : ''}
+                                                            <button onclick="startReplyToReply('${comment.id}', '${reply.userId}', '${replyUserName.replace(/'/g, "\\'")}')" style="background: none; border: none; color: #999; cursor: pointer; font-size: 0.75rem; margin-top: 0.3rem;">↳ Reply</button>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Nested Replies to this reply -->
+                                                    ${(reply.nestedReplies || []).length > 0 ? `
+                                                        <div style="margin-left: 3rem; border-left: 2px solid #333; padding-left: 1rem;">
+                                                            ${reply.nestedReplies.map(nestedReply => {
+                                const nestedUserName = nestedReply.userName || 'Anonymous';
+                                const nestedAvatar = nestedReply.userAvatar || '?';
+                                return `
+                                                                    <div style="display: flex; gap: 1rem; margin-bottom: 0.6rem;">
+                                                                        <div style="width: 28px; height: 28px; border-radius: 50%; background: #555; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; flex-shrink: 0; font-size: 0.7rem;">
+                                                                            ${nestedAvatar}
+                                                                        </div>
+                                                                        <div style="flex: 1; min-width: 0;">
+                                                                             <div style="color: #FFF; font-weight: 600; font-size: 0.8rem;">${nestedUserName}</div>
+                                                                             <div style="color: #BBB; word-wrap: break-word; font-size: 0.8rem;">${nestedReply.text}</div>
+                                                                             ${nestedReply.voiceUrl ? `
+                                                                                 <audio controls style="width: 100%; margin: 0.2rem 0; border-radius: 3px; max-width: 200px; height: 20px;">
+                                                                                     <source src="${nestedReply.voiceUrl}" type="audio/webm">
+                                                                                     Audio not supported.
+                                                                                 </audio>
+                                                                             ` : ''}
+                                                                             <button onclick="startReplyToReply('${comment.id}', '${reply.userId}', '${replyUserName.replace(/'/g, "\\'")}')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 0.7rem; margin-top: 0.2rem;">↳ Reply</button>
+                                                                         </div>
+                                                                    </div>
+                                                                `;
+                            }).join('')}
+                                                        </div>
+                                                    ` : ''}
+                                                </div>
+                                            `;
+                        }).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    } catch (err) {
+                        console.warn('Error loading comment user:', err);
+                    }
+                }
+
+                document.getElementById('commentsListContainer').innerHTML = html || '<div style="text-align: center; color: #999; padding: 2rem;">No comments yet</div>';
+            } catch (error) {
+                console.error('Error loading comments:', error);
+                document.getElementById('commentsListContainer').innerHTML = '<div style="text-align: center; color: #E63946; padding: 2rem;">Error loading comments</div>';
+            }
+        }
+
+        // Start reply to a comment
+        function startReply(commentId, userName) {
+            replyingToCommentId = commentId;
+            replyingToReplyUserId = null; // Clear nested reply flag
+            const textarea = document.getElementById('newCommentText');
+            textarea.placeholder = `Reply to ${userName}...`;
+            textarea.focus();
+            console.log(`💬 Replying to comment ${commentId} from ${userName}`);
+        }
+
+        // Start reply to a reply (nested reply)
+        function startReplyToReply(commentId, replyUserId, replyUserName) {
+            replyingToCommentId = commentId;
+            replyingToReplyUserId = replyUserId;
+            const textarea = document.getElementById('newCommentText');
+            textarea.placeholder = `Reply to ${replyUserName}...`;
+            textarea.focus();
+            console.log(`💬 Replying to user ${replyUserName}'s reply on comment ${commentId}`);
+        }
+
+        document.getElementById('newCommentText')?.addEventListener('input', updateNewCommentCount);
+
+        function updateNewCommentCount() {
+            const text = document.getElementById('newCommentText').value;
+            document.getElementById('newCommentCount').textContent = `${text.length}/500`;
+        }
+
+        // Submit comment or reply from TikTok-style modal
+        async function submitCommentFromModal() {
+            let commentText = document.getElementById('newCommentText').value.trim();
+            const postId = viewingPostId;
+            const creatorId = viewingCreatorId;
+
+            if (!commentText && !recordedAudioUrl) {
+                alert('Please write a comment or record a voice message');
+                return;
+            }
+
+            // If voice recording exists, upload it first
+            let voiceUrl = null;
+            if (recordedAudioUrl) {
+                try {
+                    console.log('📤 Uploading voice recording to Cloudinary...');
+                    console.log('Audio chunks count:', audioChunks.length);
+                    voiceUrl = await uploadVoiceToCloudinary();
+                    console.log('✅ Voice uploaded:', voiceUrl);
+                } catch (error) {
+                    console.error('❌ Voice upload failed:', error.message);
+                    alert(`❌ Failed to upload voice recording: ${error.message}`);
+                    return;
+                }
+            }
+
+            if (!postId || !creatorId || !currentUser) {
+                alert('Error: Post information missing');
+                return;
+            }
+
+            try {
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                if (!postsDoc.exists) {
+                    alert('Error: Post not found');
+                    return;
+                }
+
+                const data = postsDoc.data();
+                const posts = data.posts || [];
+                const postIndex = posts.findIndex(p => p.id === postId);
+                if (postIndex === -1) {
+                    alert('Error: Post not found');
+                    return;
+                }
+
+                const post = posts[postIndex];
+                const postComments = post.postComments || [];
+
+                // Get current user data
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const userData = userDoc.data() || {};
+                const userName = userData.displayName || userData.email || 'Anonymous';
+                const userAvatar = userData.displayName?.charAt(0).toUpperCase() || '?';
+
+                if (replyingToCommentId) {
+                    // Add reply to existing comment or nested reply
+                    const comment = postComments.find(c => c.id === replyingToCommentId);
+                    if (!comment) {
+                        alert('Comment not found');
+                        return;
+                    }
+
+                    if (!comment.replies) {
+                        comment.replies = [];
+                    }
+
+                    // If replying to a specific reply (nested reply)
+                    if (replyingToReplyUserId) {
+                        const targetReply = comment.replies.find(r => r.userId === replyingToReplyUserId);
+                        if (!targetReply) {
+                            alert('Reply not found');
+                            return;
+                        }
+
+                        // Initialize nested replies if needed
+                        if (!targetReply.nestedReplies) {
+                            targetReply.nestedReplies = [];
+                        }
+
+                        // Check if user already replied to this specific user
+                        if (targetReply.nestedReplies.some(nr => nr.userId === currentUser.uid)) {
+                            alert('❌ You already replied to this user');
+                            return;
+                        }
+
+                        targetReply.nestedReplies.push({
+                            userId: currentUser.uid,
+                            userName: userName,
+                            userAvatar: userAvatar,
+                            text: commentText,
+                            voiceUrl: voiceUrl,
+                            timestamp: new Date().toISOString()
+                        });
+
+                        console.log(`✅ Nested reply added to ${replyingToReplyUserId}'s reply`);
+                    } else {
+                        // Top-level reply to the comment
+                        // Check if user already replied at this level
+                        if (comment.replies.some(r => r.userId === currentUser.uid && !r.nestedReplyTo)) {
+                            alert('❌ You already replied to this comment. You can reply to others\' replies instead!');
+                            return;
+                        }
+
+                        comment.replies.push({
+                            userId: currentUser.uid,
+                            userName: userName,
+                            userAvatar: userAvatar,
+                            text: commentText,
+                            voiceUrl: voiceUrl,
+                            timestamp: new Date().toISOString(),
+                            nestedReplies: []
+                        });
+
+                        console.log(`✅ Reply added to comment ${replyingToCommentId}`);
+                    }
+                } else {
+                    // Add new top-level comment (allow multiple comments per user)
+                    postComments.push({
+                        id: `comment-${Date.now()}`,
+                        userId: currentUser.uid,
+                        userName: userName,
+                        userAvatar: userAvatar,
+                        text: commentText,
+                        voiceUrl: voiceUrl,
+                        replies: [],
+                        timestamp: new Date().toISOString()
+                    });
+
+                    console.log(`✅ New top-level comment added`);
+                }
+
+                // Save to Firebase
+                post.postComments = postComments;
+                post.comments = postComments.reduce((sum, c) => sum + 1 + (c.replies?.length || 0), 0);
+
+                await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
+                    posts: posts,
+                    updatedAt: new Date().toISOString()
+                });
+
+                await db.collection('xtokpost').doc(postId).update({
+                    comments: post.comments,
+                    postComments: postComments
+                }).catch(() => { });
+
+                // Update comment count on video card
+                const commentsElement = document.getElementById(`comments-${postId}`);
+                if (commentsElement) {
+                    commentsElement.textContent = post.comments;
+                }
+
+                // Clear and reload
+                document.getElementById('newCommentText').value = '';
+                document.getElementById('newCommentText').placeholder = 'Share your thoughts...';
+                replyingToCommentId = null;
+                replyingToReplyUserId = null;
+                discardVoiceRecording(); // Clear voice recording
+                updateNewCommentCount();
+                await loadComments(postId, creatorId);
+
+            } catch (error) {
+                console.error('❌ Error posting comment:', error);
+                alert('❌ Error posting comment. Please try again.');
+            }
+        }
+
+        // ========== VOICE UPLOAD TO CLOUDINARY ==========
+        async function uploadVoiceToCloudinary() {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+
+                // Convert blob to FormData
+                const blob = new Blob(audioChunks, { type: 'audio/webm' });
+                const formData = new FormData();
+                formData.append('file', blob, `voice-${Date.now()}.webm`);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                formData.append('resource_type', 'auto'); // Auto-detect resource type
+
+                xhr.addEventListener('load', () => {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            console.log('✅ Voice uploaded to Cloudinary:', data.secure_url);
+                            resolve(data.secure_url);
+                        } catch (e) {
+                            console.error('❌ Response parse error:', xhr.responseText);
+                            reject(new Error('Invalid response'));
+                        }
+                    } else {
+                        console.error('❌ Upload failed:', xhr.status, xhr.responseText);
+                        reject(new Error(`Upload failed with status ${xhr.status}`));
+                    }
+                });
+
+                xhr.addEventListener('error', () => {
+                    console.error('❌ Network error during voice upload');
+                    reject(new Error('Network error'));
+                });
+
+                xhr.addEventListener('abort', () => {
+                    console.error('❌ Voice upload aborted');
+                    reject(new Error('Upload aborted'));
+                });
+
+                console.log('📤 Starting voice upload to:', CLOUDINARY_API_URL);
+                xhr.open('POST', CLOUDINARY_API_URL, true);
+                xhr.send(formData);
+            });
+        }
+
+        // ========== VOICE RECORDING ==========
+        async function startVoiceRecording() {
+            try {
+                // Reset state
+                audioChunks = [];
+                recordedAudioUrl = null;
+
+                // Request microphone access
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    recordedAudioUrl = URL.createObjectURL(audioBlob);
+                    showVoiceControls();
+                    console.log('✅ Voice recording completed');
+                };
+
+                mediaRecorder.start();
+                recordingStartTime = Date.now();
+
+                // Show recording UI
+                document.getElementById('voiceRecordingContainer').style.display = 'block';
+                document.getElementById('voiceRecordBtn').disabled = true;
+                document.getElementById('voiceRecordBtn').style.opacity = '0.5';
+
+                // Start timer
+                recordingInterval = setInterval(updateRecordingTimer, 100);
+                console.log('🎙️ Voice recording started');
+
+            } catch (error) {
+                console.error('Microphone access denied:', error);
+                alert('❌ Microphone access required for voice recording');
+            }
+        }
+
+        function updateRecordingTimer() {
+            if (recordingStartTime) {
+                const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                const timerDisplay = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('voiceRecordingTimer').textContent = timerDisplay;
+
+                // Max 60 seconds
+                if (elapsed >= 60) {
+                    stopVoiceRecording();
+                }
+            }
+        }
+
+        function stopVoiceRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                clearInterval(recordingInterval);
+
+                // Stop all audio tracks
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+
+                // Hide recording controls
+                document.getElementById('stopVoiceBtn').style.display = 'none';
+                document.getElementById('playVoiceBtn').style.display = 'inline-block';
+                document.getElementById('discardVoiceBtn').style.display = 'inline-block';
+
+                console.log('⏹️ Voice recording stopped');
+            }
+        }
+
+        function playVoiceRecording() {
+            if (recordedAudioUrl) {
+                const audio = new Audio(recordedAudioUrl);
+                audio.play();
+                console.log('▶️ Playing voice recording');
+            }
+        }
+
+        function discardVoiceRecording() {
+            audioChunks = [];
+            recordedAudioUrl = null;
+            mediaRecorder = null;
+            clearInterval(recordingInterval);
+
+            // Reset UI
+            document.getElementById('voiceRecordingContainer').style.display = 'none';
+            document.getElementById('voiceRecordBtn').disabled = false;
+            document.getElementById('voiceRecordBtn').style.opacity = '1';
+            document.getElementById('stopVoiceBtn').style.display = 'inline-block';
+            document.getElementById('playVoiceBtn').style.display = 'none';
+            document.getElementById('discardVoiceBtn').style.display = 'none';
+
+            console.log('🗑️ Voice recording discarded');
+        }
+
+        function showVoiceControls() {
+            document.getElementById('stopVoiceBtn').style.display = 'none';
+            document.getElementById('playVoiceBtn').style.display = 'inline-block';
+            document.getElementById('discardVoiceBtn').style.display = 'inline-block';
+            document.getElementById('voiceRecordBtn').disabled = false;
+            document.getElementById('voiceRecordBtn').style.opacity = '1';
+        }
+
+        // ========== EMOJI PICKER ==========
+        const emojis = ['😊', '😂', '🤣', '❤️', '😍', '🔥', '😢', '😡', '😲', '🎉', '👏', '💯', '👍', '👎', '🙏', '😎', '🤔', '😘', '😜', '🤑', '😻', '💀', '👌', '🚀', '💪', '✨', '⭐', '🌟', '💥', '🎁'];
+
+        function toggleEmojiPicker() {
+            const emojiContainer = document.getElementById('emojiPickerContainer');
+            const gifContainer = document.getElementById('gifSearchContainer');
+
+            // Close GIF search if open
+            if (gifContainer.style.display !== 'none') {
+                gifContainer.style.display = 'none';
+            }
+
+            // Toggle emoji picker
+            if (emojiContainer.style.display === 'none') {
+                emojiContainer.style.display = 'block';
+                renderEmojiPicker();
+            } else {
+                emojiContainer.style.display = 'none';
+            }
+        }
+
+        function renderEmojiPicker() {
+            const grid = document.getElementById('emojiGrid');
+            grid.innerHTML = '';
+
+            emojis.forEach(emoji => {
+                const btn = document.createElement('button');
+                btn.textContent = emoji;
+                btn.style.cssText = `
+                    background: #222;
+                    border: 1px solid #333;
+                    border-radius: 5px;
+                    padding: 0.5rem;
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                    transition: all 0.2s;
+                `;
+                btn.onmouseover = () => {
+                    btn.style.background = '#E63946';
+                    btn.style.transform = 'scale(1.1)';
+                };
+                btn.onmouseout = () => {
+                    btn.style.background = '#222';
+                    btn.style.transform = 'scale(1)';
+                };
+                btn.onclick = () => {
+                    const textarea = document.getElementById('newCommentText');
+                    textarea.value += emoji;
+                    updateNewCommentCount();
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        // ========== GIF SEARCH ==========
+        async function toggleGifSearch() {
+            const gifContainer = document.getElementById('gifSearchContainer');
+            const emojiContainer = document.getElementById('emojiPickerContainer');
+
+            // Close emoji picker if open
+            if (emojiContainer.style.display !== 'none') {
+                emojiContainer.style.display = 'none';
+            }
+
+            // Toggle GIF search
+            if (gifContainer.style.display === 'none') {
+                gifContainer.style.display = 'block';
+                document.getElementById('gifSearchInput').focus();
+            } else {
+                gifContainer.style.display = 'none';
+            }
+        }
+
+        async function searchGifs() {
+            const query = document.getElementById('gifSearchInput').value.trim();
+            if (!query) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('gifResults');
+            resultsDiv.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #999;">Searching...</div>';
+
+            try {
+                // Using Giphy API (free tier)
+                const apiKey = 'dc6zaTOxFJmzC'; // Public beta key
+                const url = `https://api.giphy.com/v1/gifs/search?q=${encodeURIComponent(query)}&limit=9&api_key=${apiKey}`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data.data || data.data.length === 0) {
+                    resultsDiv.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #999;">No GIFs found</div>';
+                    return;
+                }
+
+                resultsDiv.innerHTML = '';
+                data.data.forEach(gif => {
+                    const gifUrl = gif.images.fixed_height.url;
+                    const gifTitle = gif.title || 'GIF';
+
+                    const gifBtn = document.createElement('button');
+                    gifBtn.style.cssText = `
+                        background: #222;
+                        border: 1px solid #333;
+                        border-radius: 5px;
+                        padding: 0;
+                        cursor: pointer;
+                        overflow: hidden;
+                        height: 120px;
+                        transition: all 0.2s;
+                    `;
+                    gifBtn.innerHTML = `<img src="${gifUrl}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    gifBtn.title = gifTitle;
+
+                    gifBtn.onmouseover = () => {
+                        gifBtn.style.border = '2px solid #E63946';
+                        gifBtn.style.transform = 'scale(1.05)';
+                    };
+                    gifBtn.onmouseout = () => {
+                        gifBtn.style.border = '1px solid #333';
+                        gifBtn.style.transform = 'scale(1)';
+                    };
+                    gifBtn.onclick = () => {
+                        insertGifIntoComment(gifUrl, gifTitle);
+                    };
+
+                    resultsDiv.appendChild(gifBtn);
+                });
+            } catch (error) {
+                console.error('Error searching GIFs:', error);
+                resultsDiv.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #E63946;">Error searching GIFs</div>';
+            }
+        }
+
+        function insertGifIntoComment(gifUrl, gifTitle) {
+            const textarea = document.getElementById('newCommentText');
+            const gifMarkdown = `[GIF: ${gifTitle}](${gifUrl})`;
+            textarea.value += gifMarkdown;
+            updateNewCommentCount();
+
+            // Close GIF search
+            document.getElementById('gifSearchContainer').style.display = 'none';
+            document.getElementById('gifSearchInput').value = '';
+
+            console.log(`✅ GIF added: ${gifTitle}`);
+        }
+
+        // Allow Enter to search GIFs
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && document.getElementById('gifSearchInput') === document.activeElement) {
+                e.preventDefault();
+                searchGifs();
             }
         });
     </script>
