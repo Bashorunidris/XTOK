@@ -5519,19 +5519,37 @@
 
         // Update Post Stats - Load from Firebase
         async function updatePostStats() {
-            const userStats = await loadStatsFromFirebase();
+            try {
+                // Load actual posts to calculate stats
+                const userPosts = await loadPostsFromFirebase();
+                const userStats = await loadStatsFromFirebase();
 
-            const stats = {
-                postCount: userStats.postCount || 0,
-                totalViewers: userStats.totalViewers || 0,
-                totalLikes: userStats.totalLikes || 0,
-                totalFollows: userStats.totalFollows || 0
-            };
+                // Calculate stats from actual posts
+                const postCount = userPosts.length;
+                const totalViewers = userPosts.reduce((sum, post) => sum + (post.views || 0), 0);
+                const totalLikes = userPosts.reduce((sum, post) => sum + (post.likes || 0), 0);
+                const totalFollows = userStats.totalFollows || 0;
 
-            document.getElementById('postCount').textContent = stats.postCount;
-            document.getElementById('totalViewers').textContent = stats.totalViewers;
-            document.getElementById('totalLikes').textContent = stats.totalLikes;
-            document.getElementById('totalFollows').textContent = stats.totalFollows;
+                const stats = {
+                    postCount: postCount,
+                    totalViewers: totalViewers,
+                    totalLikes: totalLikes,
+                    totalFollows: totalFollows
+                };
+
+                // Update display
+                document.getElementById('postCount').textContent = stats.postCount;
+                document.getElementById('totalViewers').textContent = stats.totalViewers;
+                document.getElementById('totalLikes').textContent = stats.totalLikes;
+                document.getElementById('totalFollows').textContent = stats.totalFollows;
+
+                // Save updated stats to Firebase (to keep them in sync)
+                await saveStatsToFirebase(stats);
+
+                console.log('✅ Post stats updated:', stats);
+            } catch (error) {
+                console.error('Error updating post stats:', error);
+            }
         }
 
         // Display Active Plan Info
@@ -6139,7 +6157,19 @@
 
                 // Refresh all relevant data immediately
                 await loadPlanFromFirebase();
-                await loadUserPosts();
+                const updatedPosts = await loadUserPosts();
+
+                // Update stats in Firebase (postCount based on actual posts)
+                const currentStats = await loadStatsFromFirebase();
+                const updatedStats = {
+                    postCount: updatedPosts.length,
+                    totalViewers: currentStats.totalViewers || 0,
+                    totalLikes: currentStats.totalLikes || 0,
+                    totalFollows: currentStats.totalFollows || 0
+                };
+                await saveStatsToFirebase(updatedStats);
+
+                // Now update the display
                 await updatePostStats();
 
                 // Refresh plan info with updated remaining videos
@@ -6322,6 +6352,12 @@
             }
 
             container.innerHTML = posts.map((post, index) => {
+                // Track view when video is rendered
+                if (post.id && post.creatorId) {
+                    incrementViewCount(post.id, post.creatorId).catch(err =>
+                        console.warn('Could not increment view:', err.message)
+                    );
+                }
                 const mediaTag = post.type === 'video'
                     ? `<video controls style="cursor: pointer;"><source src="${post.url}" type="video/mp4"><source src="${post.url}" type="video/webm">Video not supported</video>`
                     : `<img src="${post.url}" alt="${post.title}">`;
@@ -6387,17 +6423,20 @@
             hideLoadingIndicator(containerId);
         }
 
-        // Like video function - updates Firebase and UI
-        async function likeVideo(postId, creatorId) {
+        // Increment view count for a video
+        async function incrementViewCount(postId, creatorId) {
             try {
-                if (!creatorId) {
-                    alert('Error: Creator not found');
+                if (!postId || !creatorId) {
+                    console.warn('Missing postId or creatorId for view tracking');
                     return;
                 }
 
                 // Get current posts
                 const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
-                if (!postsDoc.exists) return;
+                if (!postsDoc.exists) {
+                    console.warn('Creator posts document not found');
+                    return;
+                }
 
                 const data = postsDoc.data();
                 const posts = data.posts || [];
@@ -6405,7 +6444,7 @@
                 // Find and update the post
                 const postIndex = posts.findIndex(p => p.id === postId);
                 if (postIndex !== -1) {
-                    posts[postIndex].likes = (posts[postIndex].likes || 0) + 1;
+                    posts[postIndex].views = (posts[postIndex].views || 0) + 1;
 
                     // Save back to Firebase
                     await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
@@ -6413,19 +6452,96 @@
                         updatedAt: new Date().toISOString()
                     });
 
-                    // Update UI immediately
-                    const likesElement = document.getElementById(`likes-${postId}`);
-                    const likeBtn = document.getElementById(`like-btn-${postId}`);
-                    if (likesElement) {
-                        likesElement.textContent = posts[postIndex].likes;
-                    }
-                    if (likeBtn) {
-                        likeBtn.style.background = '#E63946';
-                        likeBtn.style.color = '#FFFFFF';
-                    }
+                    // Also update in global collection
+                    await db.collection('xtokpost').doc(postId).update({
+                        views: posts[postIndex].views
+                    }).catch(() => {
+                        // If document doesn't exist in global collection, that's ok
+                    });
+
+                    console.log(`✅ View tracked for post ${postId}: ${posts[postIndex].views} views`);
                 }
             } catch (error) {
-                console.error('Error liking video:', error);
+                console.warn('Error incrementing view count:', error.message);
+                // Don't throw - viewing should work even if tracking fails
+            }
+        }
+
+        // Like video function - updates Firebase and UI
+        async function likeVideo(postId, creatorId) {
+            try {
+                if (!creatorId || !postId) {
+                    console.error('Missing postId or creatorId');
+                    alert('Error: Cannot like this video');
+                    return;
+                }
+
+                console.log(`❤️ Liking video ${postId} from creator ${creatorId}`);
+
+                // Get current posts from creator's collection
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                if (!postsDoc.exists) {
+                    console.error('Creator posts document not found');
+                    alert('Error: Creator posts not found');
+                    return;
+                }
+
+                const data = postsDoc.data();
+                const posts = data.posts || [];
+
+                // Find and update the post
+                const postIndex = posts.findIndex(p => p.id === postId);
+                if (postIndex === -1) {
+                    console.error('Post not found in creator posts');
+                    alert('Error: Post not found');
+                    return;
+                }
+
+                // Increment likes
+                const oldLikes = posts[postIndex].likes || 0;
+                posts[postIndex].likes = oldLikes + 1;
+
+                // Save back to user's collection
+                await db.collection('users').doc(creatorId).collection('creator').doc('posts').set({
+                    posts: posts,
+                    updatedAt: new Date().toISOString()
+                });
+
+                // Update global xtokpost collection
+                await db.collection('xtokpost').doc(postId).update({
+                    likes: posts[postIndex].likes
+                }).catch(err => {
+                    console.warn('Could not update global post:', err.message);
+                });
+
+                // Update creator's total likes stat
+                const creatorStats = await loadStatsFromFirebase();
+                const totalLikes = posts.reduce((sum, post) => sum + (post.likes || 0), 0);
+                const updatedStats = {
+                    postCount: creatorStats.postCount || posts.length,
+                    totalViewers: creatorStats.totalViewers || 0,
+                    totalLikes: totalLikes,
+                    totalFollows: creatorStats.totalFollows || 0
+                };
+
+                // Update stats for creator
+                await db.collection('users').doc(creatorId).collection('creator').doc('stats').set(updatedStats, { merge: true });
+
+                // Update UI immediately
+                const likesElement = document.getElementById(`likes-${postId}`);
+                const likeBtn = document.getElementById(`like-btn-${postId}`);
+                if (likesElement) {
+                    likesElement.textContent = posts[postIndex].likes;
+                    console.log(`✅ Updated UI: likes count is now ${posts[postIndex].likes}`);
+                }
+                if (likeBtn) {
+                    likeBtn.style.background = '#E63946';
+                    likeBtn.style.color = '#FFFFFF';
+                    likeBtn.textContent = '❤️ Liked';
+                    likeBtn.disabled = true;
+                }
+            } catch (error) {
+                console.error('❌ Error liking video:', error);
                 alert('Error liking video. Please try again.');
             }
         }
