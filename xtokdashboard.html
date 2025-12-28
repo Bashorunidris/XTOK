@@ -288,13 +288,25 @@
 
         /* Loading Spinner Animation */
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .loading-container {
@@ -771,7 +783,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
             padding: 2rem 1.5rem 1.5rem;
             color: #FFFFFF;
             z-index: 10;
@@ -2716,6 +2728,162 @@
                 font-size: 1rem;
                 margin-bottom: 1.2rem;
             }
+
+            /* Video Feed Responsive */
+            .tiktok-video-card {
+                margin-bottom: 1rem;
+            }
+
+            .video-overlay {
+                padding: 1rem;
+            }
+
+            .video-title {
+                font-size: 0.95rem;
+            }
+
+            .video-hashtags {
+                font-size: 0.8rem;
+            }
+
+            .video-stats {
+                gap: 0.5rem;
+                margin: 0.8rem 0;
+            }
+
+            .video-action-buttons {
+                gap: 0.5rem;
+            }
+
+            .video-action-btn {
+                padding: 0.6rem 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            /* Tabs Responsive */
+            .tabs-wrapper {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                padding: 1rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            /* Post Section Responsive */
+            .post-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .add-post-btn {
+                width: 100%;
+            }
+
+            .post-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            .stat-box {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .post-tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .post-tab-btn {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Extra small devices (under 360px) */
+        @media (max-width: 360px) {
+            body {
+                font-size: 14px;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-right {
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0.8rem;
+            }
+
+            .profile-content {
+                padding: 1.2rem 0.8rem;
+                width: 100%;
+            }
+
+            .profile-avatar-large {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .profile-tab-btn {
+                padding: 0.6rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            .profile-name {
+                font-size: 1rem;
+            }
+
+            .viewer-btn {
+                padding: 0.7rem;
+                font-size: 0.8rem;
+            }
+
+            .tab {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .tiktok-video-card {
+                margin-bottom: 0.8rem;
+            }
+
+            .video-action-btn {
+                padding: 0.5rem 0.2rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Tablet landscape (1024px and up) */
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .videos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .profile-modal {
+                width: 70%;
+                max-width: 800px;
+            }
         }
     </style>
 </head>
@@ -2744,7 +2912,8 @@
                 <button class="tab active" onclick="switchTab('forYou', this)">For You</button>
                 <button class="tab" onclick="switchTab('free', this)">Free</button>
                 <button class="tab" onclick="switchTab('exclusive', this)">Exclusive</button>
-                <button class="tab" onclick="initializeFeeds()" style="margin-left: auto; color: #999; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 1rem;">🔄</button>
+                <button class="tab" onclick="initializeFeeds()"
+                    style="margin-left: auto; color: #999; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 1rem;">🔄</button>
             </div>
         </div>
 
@@ -2791,8 +2960,8 @@
             <!-- Profile Tabs -->
             <div class="profile-tabs">
                 <button class="profile-tab-btn active" onclick="switchProfileTab('viewer')">Viewer</button>
-                <button class="profile-tab-btn" id="makePostTabBtn" style="display: none;"
-                    onclick="switchProfileTab('make-post')">Make a Post</button>
+                <button class="profile-tab-btn" id="makePostTabBtn" onclick="switchProfileTab('make-post')">Make a
+                    Post</button>
                 <button class="profile-tab-btn" onclick="switchProfileTab('creator')">Creator</button>
             </div>
 
@@ -3443,7 +3612,8 @@
 
             <div class="purchase-warning">
                 <div style="font-size: 1.3rem;">⚠️</div>
-                <p>This action cannot be undone. You will lose <strong id="purchaseCostDisplay">0 XTC</strong> from your balance.</p>
+                <p>This action cannot be undone. You will lose <strong id="purchaseCostDisplay">0 XTC</strong> from your
+                    balance.</p>
             </div>
 
             <div class="purchase-buttons">
@@ -3889,6 +4059,30 @@
             document.getElementById('profileAvatarLarge').textContent = userInitial;
             document.getElementById('profileName').textContent = userName;
             document.getElementById('profileEmail').textContent = userEmail;
+
+            // Check and update active plan status for Make a Post button
+            updateMakeAPostButtonVisibility();
+        }
+
+        // Check if user has an active plan and show/hide Make a Post button
+        async function updateMakeAPostButtonVisibility() {
+            try {
+                const paidPlan = await loadPlanFromFirebase();
+                const makePostBtn = document.getElementById('makePostTabBtn');
+
+                if (paidPlan && paidPlan.planName) {
+                    // User has an active plan
+                    makePostBtn.style.display = 'block';
+                    console.log('✅ Active plan found:', paidPlan.planName);
+                } else {
+                    // No active plan
+                    makePostBtn.style.display = 'none';
+                    console.log('❌ No active plan found');
+                }
+            } catch (error) {
+                console.error('Error checking active plan:', error);
+                document.getElementById('makePostTabBtn').style.display = 'none';
+            }
         }
 
         function logout() {
@@ -3908,17 +4102,12 @@
         }
 
         // Open User Profile Modal
-        function openUserProfile() {
+        async function openUserProfile() {
             document.getElementById('profileModal').classList.add('active');
             initializePostStats();
 
-            // Check if a plan has been paid
-            const paidPlan = localStorage.getItem('xtok_paidPlan');
-            if (paidPlan) {
-                document.getElementById('makePostTabBtn').style.display = 'block';
-            } else {
-                document.getElementById('makePostTabBtn').style.display = 'none';
-            }
+            // Update Make a Post button visibility based on active plan
+            await updateMakeAPostButtonVisibility();
         }
 
         // Close User Profile Modal
@@ -4291,20 +4480,20 @@
 
         // Copy wallet account ID to clipboard
         function copyWalletAccountID(btn) {
-             const accountID = walletData.accountID || 'xtk00000';
-             navigator.clipboard.writeText(accountID).then(() => {
-                 if (!btn) btn = event?.target || document.querySelector('[onclick*="copyWalletAccountID"]');
-                 if (btn) {
-                     const originalText = btn.textContent;
-                     btn.textContent = '✓';
-                     setTimeout(() => {
-                         btn.textContent = originalText;
-                     }, 1500);
-                 }
-             }).catch(err => {
-                 console.error('Copy error:', err);
-             });
-         }
+            const accountID = walletData.accountID || 'xtk00000';
+            navigator.clipboard.writeText(accountID).then(() => {
+                if (!btn) btn = event?.target || document.querySelector('[onclick*="copyWalletAccountID"]');
+                if (btn) {
+                    const originalText = btn.textContent;
+                    btn.textContent = '✓';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 1500);
+                }
+            }).catch(err => {
+                console.error('Copy error:', err);
+            });
+        }
 
         // Display wallet account ID
         function displayWalletAccountID() {
@@ -6013,12 +6202,12 @@
         }
 
         // ===== TAB FEED ALGORITHM =====
-        
+
         // Load all posts from global xtokpost collection (faster)
         async function loadAllUserPosts() {
             try {
                 console.log('🔄 Loading all posts from global xtokpost collection...');
-                
+
                 if (!db) {
                     console.error('❌ Database not initialized');
                     return [];
@@ -6026,7 +6215,7 @@
 
                 const postsSnapshot = await db.collection('xtokpost').get();
                 console.log('✅ Found', postsSnapshot.size, 'posts');
-                
+
                 let allPosts = [];
                 postsSnapshot.forEach(doc => {
                     allPosts.push({
@@ -6057,7 +6246,7 @@
         // Display video feed with TikTok-style cards
         function displayVideoFeed(posts, containerId) {
             const container = document.getElementById(containerId);
-            
+
             if (!posts || posts.length === 0) {
                 container.innerHTML = '<div class="no-posts">📭 No videos available</div>';
                 hideLoadingIndicator(containerId);
@@ -6065,11 +6254,11 @@
             }
 
             container.innerHTML = posts.map((post, index) => {
-                const mediaTag = post.type === 'video' 
+                const mediaTag = post.type === 'video'
                     ? `<video controls style="cursor: pointer;"><source src="${post.url}" type="video/mp4"><source src="${post.url}" type="video/webm">Video not supported</video>`
                     : `<img src="${post.url}" alt="${post.title}">`;
 
-                const badge = post.postType === 'paid' 
+                const badge = post.postType === 'paid'
                     ? `<div class="video-price-badge">💰 ${post.price} XTC</div>`
                     : `<div class="video-free-badge">FREE</div>`;
 
@@ -6125,7 +6314,7 @@
                     </div>
                 `;
             }).join('');
-            
+
             // Hide loading indicator after videos are rendered
             hideLoadingIndicator(containerId);
         }
@@ -6205,7 +6394,7 @@
             console.log('🔴 purchasePost called with:', { postId, creatorId, price });
             console.log('🔴 currentUser:', currentUser);
             console.log('🔴 db:', db);
-            
+
             if (!currentUser) {
                 console.error('❌ No currentUser');
                 alert('❌ Please sign in first');
@@ -6380,10 +6569,10 @@
             console.log('forYouFeed:', document.getElementById('forYouFeed'));
             console.log('freeFeed:', document.getElementById('freeFeed'));
             console.log('exclusiveFeed:', document.getElementById('exclusiveFeed'));
-            
+
             // Load For You first (user sees this tab first)
             await loadForYouFeed();
-            
+
             // Load other tabs in background (don't wait)
             loadFreeFeed().catch(err => console.error('Error loading free feed:', err));
             loadExclusiveFeed().catch(err => console.error('Error loading exclusive feed:', err));
@@ -6409,17 +6598,17 @@
         // Merge and deduplicate posts (avoid showing same post twice)
         function mergePosts(allPosts, userPosts) {
             const postMap = new Map();
-            
+
             // Add all posts
             allPosts.forEach(post => {
                 postMap.set(post.id, post);
             });
-            
+
             // User posts override (in case they're updated)
             userPosts.forEach(post => {
                 postMap.set(post.id, post);
             });
-            
+
             return Array.from(postMap.values());
         }
 
@@ -6429,13 +6618,13 @@
                 console.log('🎬 Loading For You feed...');
                 const allPosts = await getCachedPosts();
                 console.log('📊 All posts loaded:', allPosts.length);
-                
+
                 const userPosts = await getCurrentUserPosts();
                 console.log('👤 User posts loaded:', userPosts.length);
-                
+
                 const mergedPosts = mergePosts(allPosts, userPosts);
                 console.log('🔀 Merged posts:', mergedPosts.length);
-                
+
                 // Filter active posts (not scheduled or scheduled past due)
                 const activePosts = mergedPosts.filter(post => {
                     if (post.scheduled) {
@@ -6452,7 +6641,7 @@
 
                 console.log('✅ Displaying', sortedPosts.length, 'posts in For You feed');
                 displayVideoFeed(sortedPosts, 'forYouFeed');
-                
+
                 // Verify display
                 const container = document.getElementById('forYouFeed');
                 console.log('📺 Container HTML length:', container.innerHTML.length);
@@ -6469,7 +6658,7 @@
                 const allPosts = await getCachedPosts();
                 const userPosts = await getCurrentUserPosts();
                 const mergedPosts = mergePosts(allPosts, userPosts);
-                
+
                 // Filter only free posts that are active
                 const freePosts = mergedPosts.filter(post => {
                     if (post.postType !== 'free') return false;
@@ -6500,7 +6689,7 @@
                 const allPosts = await getCachedPosts();
                 const userPosts = await getCurrentUserPosts();
                 const mergedPosts = mergePosts(allPosts, userPosts);
-                
+
                 // Filter only paid posts with price 3 or 4 XTCoins
                 const exclusivePosts = mergedPosts.filter(post => {
                     if (post.postType !== 'paid') return false;
