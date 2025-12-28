@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTOK - Watch, Enjoy & Feel Happy</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            background: #0a0e27;
+            transition: background 0.3s;
+        }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f7ff 0%, #e8f4f8 100%);
+            color: #2d3436;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.98);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(255, 107, 180, 0.15);
+            border-bottom: 2px solid rgba(255, 107, 180, 0.2);
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #E63946 0%, #FFFFFF 50%, #E63946 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #e0e0e0;
+            margin: 0 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        body.light-mode nav a {
+            color: #2d3436;
+        }
+
+        nav a:hover {
+            color: #E63946;
+            transform: scale(1.05);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        .btn-login {
+            padding: 0.7rem 1.8rem;
+            background: transparent;
+            border: 2.5px solid #FFFFFF;
+            color: #FFFFFF;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-login:hover {
+            background: #FFFFFF;
+            color: #000000;
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-signup-nav {
+            padding: 0.7rem 1.8rem;
+            background: linear-gradient(135deg, #E63946 0%, #D62828 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-signup-nav:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(230, 57, 70, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%), #0a0e27;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-mode .hero {
+            background: linear-gradient(135deg, #E63946 0%, #F1243D 25%, #FFFFFF 50%, #F0F0F0 75%, #E63946 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+        }
+
+        .btn-primary {
+            padding: 1.1rem 2.5rem;
+            background: white;
+            color: #E63946;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .btn-secondary {
+            padding: 1.1rem 2.5rem;
+            background: transparent;
+            color: white;
+            border: 3px solid white;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #E63946;
+            transform: translateY(-5px);
+        }
+
+        .hero-image {
+            position: relative;
+            height: 500px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            border: 8px solid rgba(230, 57, 70, 0.3);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08) 0%, rgba(0, 0, 0, 0.5) 100%), #0a0e27;
+        }
+
+        body.light-mode .gallery {
+            background: #FFFFFF;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            color: #e0e0e0;
+            font-weight: 800;
+            background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light-mode .section-title {
+            color: #2d3436;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+        }
+
+        .gallery-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .gallery-container::-webkit-scrollbar-track {
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 10px;
+        }
+
+        .gallery-container::-webkit-scrollbar-thumb {
+            background: #E63946;
+            border-radius: 10px;
+        }
+
+        .gallery-container::-webkit-scrollbar-thumb:hover {
+            background: #00D4FF;
+        }
+
+        .gallery-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            width: 280px;
+            height: 280px;
+            flex-shrink: 0;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(230, 57, 70, 0.3);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:hover video {
+            transform: scale(1.12);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(230, 57, 70, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Partnership Section */
+        .partnership {
+            padding: 4rem 2rem;
+            background: #0a0e27;
+        }
+
+        body.light-mode .partnership {
+            background: white;
+        }
+
+        .partnership-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partners-container {
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+        }
+
+        .partners-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .partners-container::-webkit-scrollbar-track {
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 10px;
+        }
+
+        .partners-container::-webkit-scrollbar-thumb {
+            background: #E63946;
+            border-radius: 10px;
+        }
+
+        .partners-wrapper {
+            display: flex;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .partner-card {
+            background: rgba(230, 57, 70, 0.1);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(230, 57, 70, 0.2);
+            transition: all 0.3s;
+            flex-shrink: 0;
+            min-width: 200px;
+        }
+
+        body.light-mode .partner-card {
+            background: #f5f5f5;
+            border: 2px solid #E63946;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+            border-color: #E63946;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+        }
+
+        .partner-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .partner-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #E63946;
+            margin-bottom: 0.5rem;
+        }
+
+        .partner-desc {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        body.light-mode .partner-desc {
+            color: #666;
+        }
+
+        /* Payment Section */
+        .payment {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(230, 57, 70, 0.1) 100%), #0a0e27;
+        }
+
+        body.light-mode .payment {
+            background: #FFFFFF;
+        }
+
+        .payment-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .payment-container {
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+        }
+
+        .payment-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .payment-container::-webkit-scrollbar-track {
+            background: rgba(230, 57, 70, 0.1);
+            border-radius: 10px;
+        }
+
+        .payment-container::-webkit-scrollbar-thumb {
+            background: #E63946;
+            border-radius: 10px;
+        }
+
+        .payment-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0 2rem;
+        }
+
+        .payment-card {
+            background: rgba(230, 57, 70, 0.08);
+            padding: 1.8rem;
+            border-radius: 15px;
+            border-left: 5px solid #E63946;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            min-width: 250px;
+        }
+
+        body.light-mode .payment-card {
+            background: white;
+            box-shadow: 0 5px 20px rgba(230, 57, 70, 0.15);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.25);
+        }
+
+        .payment-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-card h3 {
+            font-size: 1.1rem;
+            color: #E63946;
+            margin-bottom: 0.8rem;
+            font-weight: 800;
+        }
+
+        .payment-card p {
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        body.light-mode .payment-card p {
+            color: #666;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 3rem 2rem;
+            background: #0a0e27;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        body.light-mode .stats {
+            background: white;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: rgba(230, 57, 70, 0.08);
+            border-radius: 15px;
+            border-left: 4px solid #E63946;
+            transition: all 0.3s;
+            min-width: 180px;
+        }
+
+        body.light-mode .stat-item {
+            background: #F5F5F5;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #999;
+            margin-top: 0.6rem;
+            font-weight: 700;
+        }
+
+        body.light-mode .stat-label {
+            color: #555;
+        }
+
+        /* Signup Section */
+        .signup-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #E63946 0%, #D62828 25%, #A4161A 50%, rgba(240, 248, 255, 0.3) 100%), #0a0e27;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-mode .signup-section {
+            background: linear-gradient(135deg, #E63946 0%, #D62828 25%, #A4161A 50%, #C1121F 75%, #F0F8FF 100%);
+        }
+
+        .signup-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .signup-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signup-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .signup-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1f3a;
+            padding: 2.5rem;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-top: 5px solid #E63946;
+        }
+
+        body.light-mode .modal-content {
+            background: white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: #E63946;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            margin-top: 0.5rem;
+            font-weight: 800;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .form-group label {
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: #e0e0e0;
+        }
+
+        body.light-mode .form-group label {
+            color: #2d3436;
+        }
+
+        .form-group input {
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #2a2f4a;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        body.light-mode .form-group input {
+            background: #f5f5f5;
+            color: #2d3436;
+        }
+
+        .form-group input::placeholder {
+            color: #888;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            background: #353c5a;
+            box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.3);
+            transform: translateY(-2px);
+        }
+
+        body.light-mode .form-group input:focus {
+            background: white;
+        }
+
+        .btn-submit {
+            padding: 1.1rem;
+            background: white;
+            color: #E63946;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-link {
+            color: #E63946;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .modal-link:hover {
+            color: #FFFFFF;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav a {
+                display: none;
+            }
+
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .btn-login, .btn-signup-nav {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.9rem 2rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .gallery-item {
+                width: 220px;
+                height: 220px;
+            }
+
+            .partner-card {
+                min-width: 150px;
+                padding: 1.5rem 1rem;
+            }
+
+            .payment-card {
+                min-width: 200px;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .signup-content h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">✨ XTOK ✨</div>
+        <div style="display: flex; align-items: center; gap: 2rem;">
+            <a href="#gallery">Trending</a>
+            <a href="#payment">Plans</a>
+        </div>
+        <div class="nav-buttons">
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="btn-login" onclick="openLoginModal()">Login</button>
+            <button class="btn-signup-nav" onclick="openSignupModal()">Join Free</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Endless Fun Awaits 🎉</h1>
+                <p>Watch amazing videos that make you smile, laugh, and feel alive. Discover content that brings joy to your heart.</p>
+                <div class="cta-buttons">
+                    <button class="btn-primary" onclick="openSignupModal()">Start Watching</button>
+                    <button class="btn-secondary">Explore Now</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=600&fit=crop" alt="Happy Watching">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Trending Videos 🔥</h2>
+        <div class="gallery-container">
+            <div class="gallery-wrapper">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1576091160550-112173f7f869?w=400&h=400&fit=crop" alt="Funny">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=400&h=400&fit=crop" alt="Entertainment">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1445180274455-4b8fe426e347?w=400&h=400&fit=crop" alt="Fun">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1488649153243-99d7cb8817ad?w=400&h=400&fit=crop" alt="Happy">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1533061304694-a0bff9bce45e?w=400&h=400&fit=crop" alt="Joyful">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=400&h=400&fit=crop" alt="Smile">
+                    <div class="gallery-overlay"><div class="play-icon">▶</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Partnership Section -->
+    <section class="partnership">
+        <div class="partnership-content">
+            <h2 class="section-title">Our Partners 🤝</h2>
+            <div class="partners-container">
+                <div class="partners-wrapper">
+                    <div class="partner-card">
+                        <img src="https://i.ibb.co/qY1HQt95/1000034835-removebg-preview.png" alt="Rewarder Logo" style="height: 60px; margin-bottom: 0.8rem; object-fit: contain;">
+                        <div class="partner-desc">Premium rewards & loyalty program</div>
+                    </div>
+                    <div class="partner-card">
+                        <div style="font-size: 1rem; margin-bottom: 0.8rem; font-weight: 700; color: #E63946;">Sweet Addictions</div>
+                        <div class="partner-desc">Exclusive partnerships & deals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section class="payment" id="payment">
+        <div class="payment-content">
+            <h2 class="section-title">Payment 💳</h2>
+            <div class="payment-container">
+                <div class="payment-wrapper">
+                    <div class="payment-card" style="min-width: 320px;">
+                        <div style="text-align: center;">
+                            <img src="https://flutterwave.com/images/logo-colored.svg" alt="Flutterwave Logo" style="height: 50px; margin: 1.5rem 0; object-fit: contain;">
+                        </div>
+                        <h3 style="color: #E63946; font-size: 1.3rem; margin: 1rem 0; text-align: center;">Secure Payment</h3>
+                        <div style="background: rgba(230, 57, 70, 0.15); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                            <p style="color: #999; text-align: center; margin-bottom: 1rem; font-weight: 600;">Powered by Flutterwave</p>
+                            <p style="color: #999; text-align: center; font-size: 0.9rem;">💳 All Payment Methods</p>
+                            <p style="color: #999; text-align: center; font-size: 0.9rem;">📱 Mobile Money</p>
+                            <p style="color: #999; text-align: center; font-size: 0.9rem;">🏦 Bank Transfer</p>
+                        </div>
+                        <div style="background: rgba(230, 57, 70, 0.15); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <p style="color: #E63946; font-weight: 800; font-size: 1.2rem;">Prices in ₦ Naira</p>
+                            <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">Nigerian Payment Currency</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Section -->
+    <section class="signup-section">
+        <div class="signup-content">
+            <h2>Join Millions Having Fun 🌈</h2>
+            <p>Start watching videos that make you happy today</p>
+            <button class="btn-primary" onclick="openSignupModal()" style="background: white; color: #E63946; padding: 1rem 2rem; font-size: 1rem; font-weight: 800; border: none; border-radius: 50px; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.5px;">
+                Start Free Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal" onclick="closeSignupModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeSignupModal()">✕</button>
+            <h2 class="modal-title">Join The Fun 🎉</h2>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required placeholder="Pick your username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Create a password">
+                </div>
+                <button type="submit" class="btn-submit">Start Watching</button>
+            </form>
+            <p style="margin-top: 1.5rem; text-align: center; color: #999;">
+                Already on XTOK? <a href="#" onclick="switchToLogin()" class="modal-link">Log In</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" onclick="closeLoginModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeLoginModal()">✕</button>
+            <h2 class="modal-title">Welcome Back 💖</h2>
+            <form class="signup-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required placeholder="your@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn-submit">Let's Go!</button>
+            </form>
+            <p style="margin-top: 1.5rem; text-align: center; color: #999;">
+                New here? <a href="#" onclick="switchToSignup()" class="modal-link">Join The Fun</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
+            authDomain: "rewarderhub.firebaseapp.com",
+            projectId: "rewarderhub",
+            storageBucket: "rewarderhub.appspot.com",
+            messagingSenderId: "85965945106",
+            appId: "1:85965945106:web:fa0a57d8968926e1041bcb",
+            measurementId: "G-F2ERB5NGN0"
+        };
+
+        let auth;
+        let db;
+        let firebaseReady = false;
+
+        // Initialize Firebase
+        try {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+            db = firebase.firestore();
+            firebaseReady = true;
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase initialization error:', error);
+            firebaseReady = false;
+        }
+
+        // Check if user is logged in
+        if (firebaseReady) {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is logged in, redirect to dashboard
+                    window.location.href = 'xtokdashboard.html';
+                }
+            });
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const button = document.querySelector('.theme-toggle');
+            button.textContent = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+        }
+
+        // Modal Functions
+        function openSignupModal() {
+            document.getElementById('signupModal').classList.add('show');
+        }
+
+        function closeSignupModal(event) {
+            if (!event || event.target === document.getElementById('signupModal')) {
+                document.getElementById('signupModal').classList.remove('show');
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('show');
+        }
+
+        function closeLoginModal(event) {
+            if (!event || event.target === document.getElementById('loginModal')) {
+                document.getElementById('loginModal').classList.remove('show');
+            }
+        }
+
+        function switchToLogin() {
+            closeSignupModal();
+            openLoginModal();
+        }
+
+        function switchToSignup() {
+            closeLoginModal();
+            openSignupModal();
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Validate inputs
+            if (!fullname || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+
+            if (!firebaseReady || !auth) {
+                // Fallback to localStorage for demo
+                const users = JSON.parse(localStorage.getItem('xtok_users') || '[]');
+                if (users.find(u => u.email === email)) {
+                    alert('Email already registered!');
+                    return;
+                }
+                users.push({ fullname, email, password });
+                localStorage.setItem('xtok_users', JSON.stringify(users));
+                localStorage.setItem('xtok_currentUser', JSON.stringify({ fullname, email }));
+                alert(`Welcome to XTOK, ${fullname}! 🎉`);
+                event.target.reset();
+                closeSignupModal();
+                setTimeout(() => {
+                    window.location.href = 'xtokdashboard.html';
+                }, 1000);
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    return userCredential.user.updateProfile({
+                        displayName: fullname
+                    });
+                })
+                .then(() => {
+                    alert(`Welcome to XTOK, ${fullname}! 🎉`);
+                    event.target.reset();
+                    closeSignupModal();
+                    setTimeout(() => {
+                        window.location.href = 'xtokdashboard.html';
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.error('Signup error:', error);
+                    alert('Signup Error: ' + error.message);
+                });
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            // Validate inputs
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (!firebaseReady || !auth) {
+                // Fallback to localStorage for demo
+                const users = JSON.parse(localStorage.getItem('xtok_users') || '[]');
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    localStorage.setItem('xtok_currentUser', JSON.stringify(user));
+                    alert(`Welcome back! Ready for some fun? 😄`);
+                    event.target.reset();
+                    closeLoginModal();
+                    setTimeout(() => {
+                        window.location.href = 'xtokdashboard.html';
+                    }, 1000);
+                } else {
+                    alert('Invalid email or password');
+                }
+                return;
+            }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert(`Welcome back! Ready for some fun? 😄`);
+                    event.target.reset();
+                    closeLoginModal();
+                    setTimeout(() => {
+                        window.location.href = 'xtokdashboard.html';
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.error('Login error:', error);
+                    alert('Login Error: ' + error.message);
+                });
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSignupModal();
+                closeLoginModal();
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
