@@ -261,16 +261,22 @@
 
         .hero-image {
             position: relative;
-            height: 500px;
+            flex: 1;
+            min-height: 600px;
+            width: 100%;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            border: 8px solid rgba(230, 57, 70, 0.3);
         }
 
-        .hero-image img {
+        .hero-image img,
+        .hero-image iframe,
+        .hero-image video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 25px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-            border: 8px solid rgba(230, 57, 70, 0.3);
+            display: block;
         }
 
         /* Gallery Section */
@@ -934,7 +940,13 @@
             }
 
             .hero-image {
-                display: none;
+                flex: 1;
+                min-height: 450px;
+                width: 100%;
+                border-radius: 15px;
+                margin-top: 2rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                border: 4px solid rgba(230, 57, 70, 0.3);
             }
 
             .section-title {
@@ -990,8 +1002,8 @@
                     <button class="btn-primary" onclick="openSignupModal()">Start Watching</button>
                 </div>
             </div>
-            <div class="hero-image">
-                <iframe style="width: 100%; height: 100%; border-radius: 25px;" src="https://player.vimeo.com/video/1150040845?autoplay=1&loop=1&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <div class="hero-image" id="heroVideoContainer">
+                <div style="width: 100%; height: 100%; background: rgba(0,0,0,0.3); border-radius: 25px; display: flex; align-items: center; justify-content: center; color: #fff;">Loading video...</div>
             </div>
         </div>
     </section>
@@ -1323,6 +1335,57 @@
                 closeLoginModal();
             }
         });
+
+        // Load featured video from Firebase
+        async function loadHeroVideo() {
+            try {
+                if (!firebaseReady || !db) {
+                    console.log('Firebase not ready');
+                    return;
+                }
+
+                // Fetch ALL video posts from xtokpost collection
+                const postsSnapshot = await db.collection('xtokpost')
+                    .where('type', '==', 'video')
+                    .get();
+
+                if (!postsSnapshot.empty) {
+                    // Collect all video posts
+                    const videoPosts = [];
+                    postsSnapshot.forEach(doc => {
+                        const post = doc.data();
+                        if (post.url) {
+                            videoPosts.push(post);
+                        }
+                    });
+
+                    if (videoPosts.length > 0) {
+                        // Pick completely random video from entire library
+                        const randomPost = videoPosts[Math.floor(Math.random() * videoPosts.length)];
+                        const container = document.getElementById('heroVideoContainer');
+                        
+                        container.innerHTML = `
+                            <video autoplay loop muted playsinline>
+                                <source src="${randomPost.url}" type="video/mp4">
+                            </video>
+                        `;
+                        console.log('✅ Hero video loaded from', videoPosts.length, 'videos:', randomPost.url);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading hero video:', error);
+            }
+        }
+
+        // Load hero video when Firebase is ready
+        if (firebaseReady) {
+            loadHeroVideo();
+        }
+
+        // Refresh hero video on button click
+        function refreshHeroVideo() {
+            loadHeroVideo();
+        }
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
