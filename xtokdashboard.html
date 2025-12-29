@@ -7698,20 +7698,30 @@
                 if (post.type === 'video') {
                     const detailVideoId = `detail-video-${Date.now()}`;
                     mediaContainer.innerHTML = `
-                        <div style="position: relative; width: 100%; background: #0a0a0a; border-radius: 10px; overflow: hidden;">
+                        <div id="detail-video-clickable-${detailVideoId}" style="position: relative; width: 100%; background: #0a0a0a; border-radius: 10px; overflow: hidden; cursor: pointer; min-height: 300px; display: flex; align-items: center; justify-content: center;">
                             <video id="${detailVideoId}" class="post-detail-media" controls style="cursor: pointer; max-width: 100%; display: none;">
                                 Your browser does not support the video tag.
                             </video>
                             <div id="detail-video-loading-${detailVideoId}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; width: 100%;">
                                 <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
-                                <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Downloading video...</div>
-                                <div id="detail-video-progress-${detailVideoId}" style="font-size: 0.9rem; color: #E63946;">0%</div>
+                                <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Click to download & watch</div>
+                                <div id="detail-video-progress-${detailVideoId}" style="font-size: 0.9rem; color: #E63946; margin-top: 0.5rem;">Ready to download</div>
                             </div>
                         </div>
                     `;
-                    // Preload the video
+                    // Add click handler for lazy loading
                     setTimeout(() => {
-                        preloadVideoFromFirebase(post.url, detailVideoId);
+                        const container = document.getElementById(`detail-video-clickable-${detailVideoId}`);
+                        if (container) {
+                            container.onclick = (e) => {
+                                e.stopPropagation();
+                                const loadingDiv = document.getElementById(`detail-video-loading-${detailVideoId}`);
+                                if (loadingDiv && loadingDiv.getAttribute('data-loading') !== 'true') {
+                                    loadingDiv.setAttribute('data-loading', 'true');
+                                    preloadVideoFromFirebase(post.url, detailVideoId);
+                                }
+                            };
+                        }
                     }, 100);
                 } else {
                     mediaContainer.innerHTML = `<img class="post-detail-media" src="${post.url}" style="max-width: 100%; border-radius: 10px;">`;
@@ -8298,11 +8308,11 @@
                             </div>
                         </div>
 
-                        <div class="${containerClass}">
-                            ${mediaTag}
-                            ${badge}
-                            ${paidOverlay}
-                        </div>
+                        <div class="${containerClass}" id="video-clickable-${postId}" onclick="handleVideoClick('${postId}', '${post.url}', event)" style="cursor: pointer;">
+                             ${mediaTag}
+                             ${badge}
+                             ${paidOverlay}
+                         </div>
                         <div class="video-overlay">
                             <div class="video-title">${post.title || 'Untitled'}</div>
                             ${hashtags ? `<div class="video-hashtags">${hashtags}</div>` : ''}
@@ -8334,15 +8344,8 @@
                 `;
             }).join('');
 
-            // Preload all videos in the feed
+            // Initialize 5-second timers for paid videos
             setTimeout(() => {
-                posts.forEach(post => {
-                    if (post.type === 'video') {
-                        const postId = post.id || Date.now().toString();
-                        preloadVideoFromFirebase(post.url, postId);
-                    }
-                });
-                // Initialize 5-second timers for paid videos
                 initializePaidVideoTimers();
             }, 100);
 
@@ -8421,6 +8424,31 @@
             } catch (error) {
                 console.error('Error in preloadVideoFromFirebase:', error);
             }
+        }
+
+        // Handle Video Click - Lazy Load (Telegram Style)
+        function handleVideoClick(postId, videoUrl, event) {
+            event.stopPropagation();
+
+            const video = document.getElementById(`video-${postId}`);
+            const loadingDiv = document.getElementById(`video-loading-${postId}`);
+
+            // If video already loaded, just play it
+            if (video && video.style.display === 'block') {
+                video.play();
+                return;
+            }
+
+            // If already downloading, ignore click
+            if (loadingDiv && loadingDiv.getAttribute('data-loading') === 'true') {
+                return;
+            }
+
+            // Start downloading video on click
+            if (loadingDiv) {
+                loadingDiv.setAttribute('data-loading', 'true');
+            }
+            preloadVideoFromFirebase(videoUrl, postId);
         }
 
         // Increment view count for a video (only once per user)
