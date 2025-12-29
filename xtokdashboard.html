@@ -4309,6 +4309,7 @@
 
         /* Light Mode Styles */
         @media (prefers-color-scheme: light) {
+
             /* ALL buttons with white background get black border */
             button {
                 border: 2px solid #000 !important;
@@ -5387,7 +5388,8 @@
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">📸 🎬</div>
                     <div style="color: #FFFFFF; font-weight: 700; margin-bottom: 0.5rem;">Click to upload</div>
                     <div style="color: #999; font-size: 0.9rem;">Video or Image (Max 100MB)</div>
-                    <input type="file" id="postFileInput" accept="*" onchange="handlePostFileUpload(event)" style="display: none;">
+                    <input type="file" id="postFileInput" accept="*" onchange="handlePostFileUpload(event)"
+                        style="display: none;">
                 </div>
                 <div id="postPreview" style="display: none; margin-top: 1rem;">
                     <video id="videoPreview"
@@ -7694,15 +7696,25 @@
 
             if (post.url) {
                 if (post.type === 'video') {
+                    const detailVideoId = `detail-video-${Date.now()}`;
                     mediaContainer.innerHTML = `
-                        <video class="post-detail-media" controls style="cursor: pointer; max-width: 100%;">
-                            <source src="${post.url}" type="video/webm">
-                            <source src="${post.url}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <div style="position: relative; width: 100%; background: #0a0a0a; border-radius: 10px; overflow: hidden;">
+                            <video id="${detailVideoId}" class="post-detail-media" controls style="cursor: pointer; max-width: 100%; display: none;">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div id="detail-video-loading-${detailVideoId}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10; width: 100%;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+                                <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Downloading video...</div>
+                                <div id="detail-video-progress-${detailVideoId}" style="font-size: 0.9rem; color: #E63946;">0%</div>
+                            </div>
+                        </div>
                     `;
+                    // Preload the video
+                    setTimeout(() => {
+                        preloadVideoFromFirebase(post.url, detailVideoId);
+                    }, 100);
                 } else {
-                    mediaContainer.innerHTML = `<img class="post-detail-media" src="${post.url}" style="max-width: 100%;">`;
+                    mediaContainer.innerHTML = `<img class="post-detail-media" src="${post.url}" style="max-width: 100%; border-radius: 10px;">`;
                 }
             } else {
                 mediaContainer.innerHTML = `<div style="height: 300px; display: flex; align-items: center; justify-content: center; background: #0a0a0a; border-radius: 10px; color: #999;">No media</div>`;
@@ -7755,28 +7767,28 @@
         }
 
         // Handle File Upload
-         function handlePostFileUpload(event) {
-             const file = event.target.files[0];
-             if (!file) return;
+        function handlePostFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-             // Validate file size (100MB max)
-             if (file.size > 100 * 1024 * 1024) {
-                 alert('File size must be less than 100MB');
-                 return;
-             }
+            // Validate file size (100MB max)
+            if (file.size > 100 * 1024 * 1024) {
+                alert('File size must be less than 100MB');
+                return;
+            }
 
-             // Check if file is video or image by type and extension
-             const isVideo = file.type.startsWith('video') || file.name.match(/\.(mp4|webm|mov|avi|mkv|flv|wmv|3gp|m3u8|ts|m4v|mts|m2ts|mxf|ogv|ogg|f4v)$/i);
-             const isImage = file.type.startsWith('image') || file.name.match(/\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff|heic)$/i);
+            // Check if file is video or image by type and extension
+            const isVideo = file.type.startsWith('video') || file.name.match(/\.(mp4|webm|mov|avi|mkv|flv|wmv|3gp|m3u8|ts|m4v|mts|m2ts|mxf|ogv|ogg|f4v)$/i);
+            const isImage = file.type.startsWith('image') || file.name.match(/\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff|heic)$/i);
 
-             if (!isVideo && !isImage) {
-                 alert('❌ Invalid file type. Please select a video or image file.');
-                 return;
-             }
+            if (!isVideo && !isImage) {
+                alert('❌ Invalid file type. Please select a video or image file.');
+                return;
+            }
 
-             currentPostData.file = file;
-             currentPostData.fileName = file.name;
-             currentPostData.fileType = isVideo ? 'video' : 'image';
+            currentPostData.file = file;
+            currentPostData.fileName = file.name;
+            currentPostData.fileType = isVideo ? 'video' : 'image';
 
             // Show preview
             const postPreview = document.getElementById('postPreview');
@@ -8244,8 +8256,16 @@
                         console.warn('Could not increment view:', err.message)
                     );
                 }
+                const postId = post.id || Date.now().toString();
                 const mediaTag = post.type === 'video'
-                    ? `<video controls style="cursor: pointer;"><source src="${post.url}" type="video/mp4"><source src="${post.url}" type="video/webm">Video not supported</video>`
+                    ? `<div id="video-container-${postId}" style="position: relative; width: 100%; height: 100%; background: #0a0a0a;">
+                         <video id="video-${postId}" controls style="cursor: pointer; width: 100%; height: 100%; object-fit: contain; display: none;"><source src="${post.url}" type="video/mp4"><source src="${post.url}" type="video/webm">Video not supported</video>
+                         <div id="video-loading-${postId}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; z-index: 10;">
+                             <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+                             <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">Preparing video...</div>
+                             <div id="video-progress-${postId}" style="font-size: 0.9rem; color: #E63946;">0%</div>
+                         </div>
+                       </div>`
                     : `<img src="${post.url}" alt="${post.title}">`;
 
                 const badge = post.postType === 'paid'
@@ -8253,7 +8273,6 @@
                     : `<div class="video-free-badge">FREE</div>`;
 
                 const hashtags = (post.hashtags || []).join(' ');
-                const postId = post.id || Date.now().toString();
 
                 // Remove blur, instead show payment modal after 5 seconds of play
                 const isPaid = post.postType === 'paid';
@@ -8315,13 +8334,93 @@
                 `;
             }).join('');
 
-            // Initialize 5-second timers for paid videos
+            // Preload all videos in the feed
             setTimeout(() => {
+                posts.forEach(post => {
+                    if (post.type === 'video') {
+                        const postId = post.id || Date.now().toString();
+                        preloadVideoFromFirebase(post.url, postId);
+                    }
+                });
+                // Initialize 5-second timers for paid videos
                 initializePaidVideoTimers();
             }, 100);
 
             // Hide loading indicator after videos are rendered
             hideLoadingIndicator(containerId);
+        }
+
+        // Preload video from Firebase and cache it
+        function preloadVideoFromFirebase(videoUrl, postId) {
+            try {
+                const video = document.getElementById(`video-${postId}`);
+                const loadingDiv = document.getElementById(`video-loading-${postId}`);
+                const progressDiv = document.getElementById(`video-progress-${postId}`);
+
+                if (!video) {
+                    console.warn(`Video element not found for postId: ${postId}`);
+                    return;
+                }
+
+                // Fetch the video with progress tracking
+                fetch(videoUrl, { method: 'GET' })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const contentLength = response.headers.get('content-length');
+                        const total = parseInt(contentLength, 10);
+                        let loaded = 0;
+
+                        const reader = response.body.getReader();
+                        const chunks = [];
+
+                        const pump = () => {
+                            return reader.read().then(({ done, value }) => {
+                                if (done) {
+                                    // Video fully downloaded
+                                    const blob = new Blob(chunks, { type: 'video/mp4' });
+                                    const blobUrl = URL.createObjectURL(blob);
+
+                                    // Set video source to blob URL
+                                    video.src = blobUrl;
+                                    video.style.display = 'block';
+
+                                    if (loadingDiv) {
+                                        loadingDiv.style.display = 'none';
+                                    }
+
+                                    console.log(`✅ Video fully loaded: ${postId}`);
+                                    return;
+                                }
+
+                                chunks.push(value);
+                                loaded += value.length;
+
+                                // Update progress
+                                if (total && progressDiv) {
+                                    const percent = Math.round((loaded / total) * 100);
+                                    progressDiv.textContent = `${percent}%`;
+                                }
+
+                                return pump();
+                            });
+                        };
+
+                        return pump();
+                    })
+                    .catch(error => {
+                        console.error(`Error preloading video ${postId}:`, error);
+                        // Fallback to direct streaming if fetch fails
+                        if (loadingDiv) {
+                            loadingDiv.innerHTML = '<div style="font-size: 1rem; color: #E63946;">Loading from server...</div>';
+                        }
+                        video.style.display = 'block';
+                    });
+            } catch (error) {
+                console.error('Error in preloadVideoFromFirebase:', error);
+            }
         }
 
         // Increment view count for a video (only once per user)
