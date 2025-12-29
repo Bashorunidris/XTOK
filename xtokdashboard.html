@@ -91,6 +91,237 @@
             box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
         }
 
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            flex: 1;
+            max-width: 500px;
+            padding: 1rem;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 25px;
+            color: #FFFFFF;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #E63946;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+            background: #0a0a0a;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: #E63946;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #C1121F;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        /* Search Results Modal */
+        .search-results-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000000;
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .search-results-modal.active {
+            display: block;
+        }
+
+        .search-results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .search-results-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.8) 100%);
+            padding: 1.5rem 0;
+            z-index: 3001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-results-title {
+            color: #FFFFFF;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .search-close-btn {
+            background: none;
+            border: none;
+            color: #E63946;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-close-btn:hover {
+            color: #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        .search-results-count {
+            color: #999;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-result-card {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .search-result-card:hover {
+            border-color: #E63946;
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
+            transform: translateY(-8px);
+        }
+
+        .search-result-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-result-thumbnail video,
+        .search-result-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .search-result-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #E63946;
+            color: #FFFFFF;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .search-result-info {
+            padding: 1.5rem;
+        }
+
+        .search-result-title {
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .search-result-creator {
+            color: #E63946;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-result-description {
+            color: #CCC;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .search-result-stats {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .search-no-results {
+            text-align: center;
+            color: #999;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-input {
+                max-width: 100%;
+            }
+
+            .search-results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1rem;
+            }
+
+            .search-result-thumbnail {
+                height: 150px;
+            }
+
+            .search-results-title {
+                font-size: 1.5rem;
+            }
+        }
+
         /* Main Container */
         .container {
             max-width: 1200px;
@@ -456,6 +687,436 @@
         .purchase-close:hover {
             color: #FFFFFF;
             transform: rotate(90deg);
+        }
+
+        /* Full Page Creator Profile Modal */
+        .creator-profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000000;
+            z-index: 3000;
+            overflow-y: auto;
+            animation: slideInFromRight 0.3s ease-out;
+        }
+
+        .creator-profile-modal.active {
+            display: block;
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutToRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .creator-profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .creator-profile-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.8) 100%);
+            padding: 1.5rem 0;
+            z-index: 3001;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .creator-profile-close {
+            background: none;
+            border: none;
+            color: #E63946;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .creator-profile-close:hover {
+            color: #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        .creator-profile-title {
+            color: #FFFFFF;
+            font-size: 1.3rem;
+            font-weight: 800;
+            flex: 1;
+            text-align: center;
+        }
+
+        .creator-profile-hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid #E63946;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(230, 57, 70, 0.2);
+        }
+
+        .creator-profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #000000;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
+        }
+
+        .creator-profile-name {
+            color: #FFFFFF;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .creator-profile-email {
+            color: #999;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .creator-profile-bio {
+            color: #CCC;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .creator-profile-actions {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .creator-profile-btn {
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 160px;
+        }
+
+        .creator-profile-btn-follow {
+            background: #E63946;
+            color: #FFFFFF;
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .creator-profile-btn-follow:hover:not(:disabled) {
+            background: #C1121F;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(230, 57, 70, 0.4);
+        }
+
+        .creator-profile-btn-follow:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .creator-profile-btn-follow:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .creator-profile-btn-follow.following {
+            background: rgba(230, 57, 70, 0.3);
+            border: 2px solid #E63946;
+            color: #E63946;
+            box-shadow: none;
+        }
+
+        .creator-profile-btn-follow.following:hover:not(:disabled) {
+            background: rgba(230, 57, 70, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .creator-profile-btn-follow.not-following {
+            background: #E63946;
+            color: #FFFFFF;
+        }
+
+        .creator-profile-btn-message {
+            background: transparent;
+            color: #E63946;
+            border: 2px solid #E63946;
+        }
+
+        .creator-profile-btn-message:hover {
+            background: #E63946;
+            color: #FFFFFF;
+            transform: translateY(-3px);
+        }
+
+        .creator-profile-own-badge {
+            display: inline-block;
+            background: rgba(230, 57, 70, 0.2);
+            color: #E63946;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border: 2px solid #E63946;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .creator-profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .creator-profile-stat-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .creator-profile-stat-card:hover {
+            border-color: #E63946;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .creator-profile-stat-number {
+            color: #E63946;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .creator-profile-stat-label {
+            color: #999;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .creator-profile-section {
+            margin-bottom: 3rem;
+        }
+
+        .creator-profile-section-title {
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #E63946;
+        }
+
+        .creator-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .creator-video-card {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 2px solid #333;
+            transition: all 0.3s;
+            height: 200px;
+            background: #0a0a0a;
+        }
+
+        .creator-video-card:hover {
+            border-color: #E63946;
+            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
+            transform: translateY(-8px);
+        }
+
+        .creator-video-card video,
+        .creator-video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .creator-video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+            padding: 1rem;
+            color: #fff;
+        }
+
+        .creator-video-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .creator-video-views {
+            font-size: 0.85rem;
+            color: #E63946;
+            font-weight: 700;
+        }
+
+        .creator-no-videos {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #999;
+            padding: 3rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .creator-profile-container {
+                padding: 1rem;
+            }
+
+            .creator-profile-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .creator-profile-hero {
+                padding: 2rem 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .creator-profile-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .creator-profile-name {
+                font-size: 1.5rem;
+            }
+
+            .creator-profile-actions {
+                gap: 1rem;
+            }
+
+            .creator-profile-btn {
+                padding: 0.8rem 1.5rem;
+                min-width: 140px;
+                font-size: 0.9rem;
+            }
+
+            .creator-profile-stats {
+                gap: 1rem;
+            }
+
+            .creator-profile-stat-card {
+                padding: 1.5rem;
+            }
+
+            .creator-profile-stat-number {
+                font-size: 2rem;
+            }
+
+            .creator-videos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .creator-video-card {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .creator-profile-container {
+                padding: 0.5rem;
+            }
+
+            .creator-profile-hero {
+                padding: 1.5rem 1rem;
+            }
+
+            .creator-profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .creator-profile-name {
+                font-size: 1.3rem;
+            }
+
+            .creator-profile-actions {
+                flex-direction: column;
+            }
+
+            .creator-profile-btn {
+                width: 100%;
+            }
+
+            .creator-profile-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .creator-videos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .creator-video-card {
+                height: 130px;
+            }
         }
 
         .purchase-header {
@@ -3433,6 +4094,12 @@
 
     <!-- Main Content -->
     <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search videos by creator, hashtag, or description...">
+            <button class="search-btn" onclick="searchVideos()">🔍 Search</button>
+        </div>
+
         <!-- Tabs Section -->
         <div class="tabs-container">
             <div class="tabs-wrapper">
@@ -4234,50 +4901,63 @@
     </div>
 
     <!-- Creator Profile Modal -->
-    <div class="purchase-modal" id="creatorProfileModal">
-        <div class="purchase-content"
-            style="max-width: 600px; max-height: 80vh; display: flex; flex-direction: column;">
-            <button class="purchase-close" onclick="closeCreatorProfile()">×</button>
-
-            <!-- Creator Info Header -->
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: #000; margin: 0 auto 1rem; box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);"
-                    id="creatorAvatarLarge">C</div>
-                <div style="color: #FFFFFF; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem;"
-                    id="creatorNameLarge">Creator</div>
-                <div style="color: #999; font-size: 0.95rem;" id="creatorEmailLarge">creator@example.com</div>
+    <!-- Full Page Creator Profile Modal -->
+    <div class="creator-profile-modal" id="creatorProfileModal">
+        <div class="creator-profile-container">
+            <!-- Sticky Header with Close Button -->
+            <div class="creator-profile-header">
+                <div class="creator-profile-title" id="creatorProfileTitle">Creator Profile</div>
+                <button class="creator-profile-close" onclick="closeCreatorProfile()">×</button>
             </div>
 
-            <!-- Creator Stats -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                <div
-                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
-                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
-                        id="creatorFollowers">0</div>
-                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Followers</div>
+            <!-- Hero Section with Creator Info -->
+            <div class="creator-profile-hero">
+                <div class="creator-profile-avatar" id="creatorAvatarLarge">C</div>
+                <div class="creator-profile-name" id="creatorNameLarge">Creator</div>
+                <div class="creator-profile-email" id="creatorEmailLarge">creator@example.com</div>
+
+                <!-- Creator Bio -->
+                <div class="creator-profile-bio" id="creatorBio" style="display: none;"></div>
+
+                <!-- Action Buttons -->
+                <div class="creator-profile-actions">
+                    <button class="creator-profile-btn creator-profile-btn-follow" id="creatorFollowBtn"
+                        onclick="toggleFollowCreator()">
+                        👥 Follow
+                    </button>
+                    <button class="creator-profile-btn creator-profile-btn-message" id="creatorMessageBtn"
+                        onclick="messageCreator()" style="display: none;">
+                        💬 Message
+                    </button>
                 </div>
-                <div
-                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
-                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
-                        id="creatorTotalViews">0</div>
-                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Total Views</div>
-                </div>
-                <div
-                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
-                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
-                        id="creatorVideoCount">0</div>
-                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Videos</div>
+
+                <!-- Is Own Profile Badge -->
+                <div id="ownProfileBadge" style="display: none;" class="creator-profile-own-badge">
+                    ✨ This is your profile
                 </div>
             </div>
 
-            <!-- Videos by Creator Section -->
-            <div style="border-top: 1px solid #333; padding-top: 1.5rem;">
-                <div style="color: #E63946; font-weight: 700; margin-bottom: 1rem; font-size: 1.1rem;">More Videos by
-                    Creator</div>
-                <div id="creatorVideosContainer"
-                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; max-height: 300px; overflow-y: auto;">
-                    <div style="grid-column: 1 / -1; text-align: center; color: #999; padding: 1rem;">Loading videos...
-                    </div>
+            <!-- Stats Section -->
+            <div class="creator-profile-stats">
+                <div class="creator-profile-stat-card">
+                    <div class="creator-profile-stat-number" id="creatorFollowers">0</div>
+                    <div class="creator-profile-stat-label">Followers</div>
+                </div>
+                <div class="creator-profile-stat-card">
+                    <div class="creator-profile-stat-number" id="creatorTotalViews">0</div>
+                    <div class="creator-profile-stat-label">Total Views</div>
+                </div>
+                <div class="creator-profile-stat-card">
+                    <div class="creator-profile-stat-number" id="creatorVideoCount">0</div>
+                    <div class="creator-profile-stat-label">Videos</div>
+                </div>
+            </div>
+
+            <!-- Videos Section -->
+            <div class="creator-profile-section">
+                <div class="creator-profile-section-title">Videos</div>
+                <div class="creator-videos-grid" id="creatorVideosContainer">
+                    <div class="creator-no-videos">Loading videos...</div>
                 </div>
             </div>
         </div>
@@ -7660,7 +8340,7 @@
 
         // TikTok-style comments state
         let viewingPostId = null;
-       let replyingToCommentId = null;
+        let replyingToCommentId = null;
         let replyingToReplyUserId = null; // For nested replies (reply to a reply)
 
         // Voice recording state
@@ -8313,8 +8993,15 @@
         }
 
         // View Creator Profile
+        // Store current viewing creator for follow actions
+        let viewingCreatorIdForProfile = null;
+        let isFollowingViewer = false;
+
         async function viewCreatorProfile(creatorId, creatorName) {
             try {
+                // Store viewing creator ID for follow actions
+                viewingCreatorIdForProfile = creatorId;
+
                 // Get creator info
                 const userDoc = await db.collection('users').doc(creatorId).get();
                 if (!userDoc.exists) {
@@ -8326,6 +9013,10 @@
                 const displayName = userData.displayName || creatorName || 'Creator';
                 const email = userData.email || 'creator@example.com';
                 const avatar = displayName.charAt(0).toUpperCase();
+                const bio = userData.bio || '';
+
+                // Check if this is the current user's profile
+                const isOwnProfile = currentUser && currentUser.uid === creatorId;
 
                 // Get creator stats
                 const statsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('stats').get();
@@ -8340,6 +9031,7 @@
                 const posts = postsDoc.exists ? (postsDoc.data().posts || []) : [];
 
                 // Update modal with creator info
+                document.getElementById('creatorProfileTitle').textContent = `${displayName}'s Profile`;
                 document.getElementById('creatorAvatarLarge').textContent = avatar;
                 document.getElementById('creatorNameLarge').textContent = displayName;
                 document.getElementById('creatorEmailLarge').textContent = email;
@@ -8347,21 +9039,56 @@
                 document.getElementById('creatorTotalViews').textContent = totalViews;
                 document.getElementById('creatorVideoCount').textContent = videoCount;
 
+                // Update bio if exists
+                const bioElement = document.getElementById('creatorBio');
+                if (bio) {
+                    bioElement.textContent = bio;
+                    bioElement.style.display = 'block';
+                } else {
+                    bioElement.style.display = 'none';
+                }
+
+                // Handle own profile vs other creator's profile
+                const followBtn = document.getElementById('creatorFollowBtn');
+                const messageBtn = document.getElementById('creatorMessageBtn');
+                const ownProfileBadge = document.getElementById('ownProfileBadge');
+
+                if (isOwnProfile) {
+                    // Hide follow/message buttons for own profile
+                    followBtn.style.display = 'none';
+                    messageBtn.style.display = 'none';
+                    ownProfileBadge.style.display = 'block';
+                } else {
+                    // Show follow/message buttons for other creators
+                    followBtn.style.display = 'block';
+                    messageBtn.style.display = 'block';
+                    ownProfileBadge.style.display = 'none';
+
+                    // Check if current user is following this creator
+                    if (currentUser) {
+                        const followDoc = await db.collection('users').doc(currentUser.uid).collection('following').doc(creatorId).get();
+                        isFollowingViewer = followDoc.exists;
+                        updateFollowButton();
+                    }
+                }
+
                 // Display creator's videos
                 const videosContainer = document.getElementById('creatorVideosContainer');
                 if (posts.length === 0) {
-                    videosContainer.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #999; padding: 1rem;">No videos yet</div>';
+                    videosContainer.innerHTML = '<div class="creator-no-videos">📭 No videos yet</div>';
                 } else {
                     videosContainer.innerHTML = posts.map(video => `
-                         <div style="position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; border: 1px solid #333; transition: all 0.3s; hover: border-color: #E63946;" onclick="viewVideo('${video.id}', '${creatorId}', event)">
-                             ${video.type === 'video'
-                            ? `<video style="width: 100%; height: 120px; object-fit: cover; background: #0a0a0a;"><source src="${video.url}" type="video/mp4"></video>`
-                            : `<img src="${video.url}" style="width: 100%; height: 120px; object-fit: cover; background: #0a0a0a;" alt="${video.title}">`
+                        <div class="creator-video-card" onclick="viewVideo('${video.id}', '${creatorId}', event)">
+                            ${video.type === 'video'
+                            ? `<video><source src="${video.url}" type="video/mp4"></video>`
+                            : `<img src="${video.url}" alt="${video.title}" />`
                         }
-                             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 0.4rem; color: #fff; font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${video.title || 'Untitled'}</div>
-                             <div style="position: absolute; top: 0; right: 0; background: #E63946; padding: 0.3rem 0.5rem; border-radius: 3px; font-size: 0.7rem; color: #fff;">👁️ ${video.views || 0}</div>
-                         </div>
-                     `).join('');
+                            <div class="creator-video-overlay">
+                                <div class="creator-video-title">${video.title || 'Untitled'}</div>
+                                <div class="creator-video-views">👁️ ${video.views || 0}</div>
+                            </div>
+                        </div>
+                    `).join('');
                 }
 
                 // Show modal
@@ -8371,6 +9098,87 @@
                 console.error('❌ Error loading creator profile:', error);
                 alert('Error loading creator profile');
             }
+        }
+
+        // Update follow button text based on status
+        function updateFollowButton() {
+            const followBtn = document.getElementById('creatorFollowBtn');
+            if (isFollowingViewer) {
+                followBtn.textContent = '✅ Following';
+                followBtn.classList.add('following');
+                followBtn.classList.remove('not-following');
+            } else {
+                followBtn.textContent = '👥 Follow';
+                followBtn.classList.remove('following');
+                followBtn.classList.add('not-following');
+            }
+        }
+
+        // Toggle follow/unfollow creator
+        async function toggleFollowCreator() {
+            if (!currentUser) {
+                alert('Please log in to follow creators');
+                return;
+            }
+
+            if (!viewingCreatorIdForProfile) {
+                alert('Creator information not found');
+                return;
+            }
+
+            try {
+                const followBtn = document.getElementById('creatorFollowBtn');
+                const originalText = followBtn.textContent;
+                followBtn.disabled = true;
+
+                const followingRef = db.collection('users').doc(currentUser.uid).collection('following').doc(viewingCreatorIdForProfile);
+
+                if (isFollowingViewer) {
+                    // Unfollow
+                    followBtn.textContent = '⏳ Unfollowing...';
+                    await followingRef.delete();
+                    isFollowingViewer = false;
+                    console.log('👋 Unfollowed creator');
+                } else {
+                    // Follow
+                    followBtn.textContent = '⏳ Following...';
+                    await followingRef.set({
+                        followedAt: new Date().toISOString(),
+                        creatorId: viewingCreatorIdForProfile
+                    });
+                    isFollowingViewer = true;
+                    console.log('👥 Followed creator');
+                }
+
+                updateFollowButton();
+                followBtn.disabled = false;
+            } catch (error) {
+                console.error('Error toggling follow:', error);
+                alert('❌ Error updating follow status. Please try again.');
+                const followBtn = document.getElementById('creatorFollowBtn');
+                followBtn.disabled = false;
+                updateFollowButton();
+            }
+        }
+
+        // Message creator
+        function messageCreator() {
+            if (!currentUser) {
+                alert('Please log in to message creators');
+                return;
+            }
+
+            if (!viewingCreatorIdForProfile) {
+                alert('Creator information not found');
+                return;
+            }
+
+            // Close creator profile modal
+            closeCreatorProfile();
+
+            // Navigate to messaging section (if implemented)
+            alert('💬 Messaging feature coming soon!');
+            // TODO: Implement direct messaging
         }
 
         // Close Creator Profile Modal
@@ -8482,6 +9290,381 @@
             }
         });
     </script>
+
+    <!-- Search Results Modal -->
+    <div class="search-results-modal" id="searchResultsModal">
+        <div class="search-results-container">
+            <!-- Sticky Header -->
+            <div class="search-results-header">
+                <div class="search-results-title" id="searchResultsTitle">Search Results</div>
+                <button class="search-close-btn" onclick="closeSearchResults()">×</button>
+            </div>
+
+            <!-- Results Count -->
+            <div class="search-results-count" id="searchResultsCount"></div>
+
+            <!-- Results Grid -->
+            <div class="search-results-grid" id="searchResultsGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== SEARCH FEATURE FUNCTIONS =====
+
+        /**
+         * Search videos by creator name, hashtag, or description
+         * Searches through all accessible posts and displays results
+         */
+        async function searchVideos() {
+            const searchInput = document.querySelector('.search-input');
+            const searchQuery = searchInput.value.trim().toLowerCase();
+
+            // Validation
+            if (!searchQuery) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            console.log('🔍 Starting search for:', searchQuery);
+
+            // Show loading state
+            const searchModal = document.querySelector('.search-results-modal');
+            searchModal.classList.add('active');
+            const resultsGrid = document.getElementById('searchResultsGrid');
+            const resultsCount = document.getElementById('searchResultsCount');
+            
+            resultsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 2rem;">🔄 Searching...</div>';
+
+            try {
+                // Check if user is authenticated
+                if (!currentUser) {
+                    throw new Error('User not authenticated. Please login first.');
+                }
+
+                console.log('✅ User authenticated:', currentUser.uid);
+
+                // Get all posts from Firebase
+                console.log('📥 Fetching posts from Firebase...');
+                const allPosts = await loadAllPostsForSearch();
+                
+                console.log(`📊 Total posts retrieved: ${allPosts.length}`);
+                
+                if (allPosts.length === 0) {
+                    resultsGrid.innerHTML = `
+                        <div class="search-no-results">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+                            <div>You haven't created any posts yet</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem; color: #666;">Create your first post to start searching</div>
+                        </div>
+                    `;
+                    resultsCount.textContent = 'No posts found';
+                    return;
+                }
+                
+                // Filter posts based on search query
+                console.log('🔎 Filtering posts...');
+                const results = filterSearchResults(allPosts, searchQuery);
+
+                console.log(`✅ Search complete: ${results.length} results found`);
+
+                // Display results
+                displaySearchResults(results, searchQuery);
+
+            } catch (error) {
+                console.error('❌ Search error:', error);
+                resultsGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #E63946; padding: 2rem;">⚠️ Error performing search: ${error.message}</div>`;
+            }
+        }
+
+        /**
+         * Load all posts from Firebase for searching
+         */
+        async function loadAllPostsForSearch() {
+            try {
+                if (!currentUser) {
+                    console.error('❌ User not authenticated');
+                    return [];
+                }
+
+                const doc = await db.collection('users').doc(currentUser.uid).collection('creator').doc('posts').get();
+                
+                if (!doc.exists) {
+                    console.log('ℹ️ No posts found for this user');
+                    return [];
+                }
+
+                const postsData = doc.data();
+                const posts = postsData.posts || [];
+                
+                console.log(`✅ Loaded ${posts.length} posts for search`);
+                console.log('Posts data:', posts);
+                
+                return posts;
+            } catch (error) {
+                console.error('❌ Error loading posts for search:', error);
+                return [];
+            }
+        }
+
+        /**
+         * Filter posts based on search query
+         * Searches in: title, hashtags, creator name
+         * NOTE: Posts don't have description field, so only searching available fields
+         */
+        function filterSearchResults(posts, query) {
+            if (!Array.isArray(posts) || posts.length === 0) {
+                console.log('❌ No posts to filter');
+                return [];
+            }
+
+            const results = posts.filter(post => {
+                if (!post) return false;
+
+                // Only search fields that actually exist in posts
+                const title = (post.title || '').toLowerCase();
+                const hashtags = Array.isArray(post.hashtags) 
+                    ? post.hashtags.join(' ').toLowerCase() 
+                    : '';
+                const creatorName = (currentUser.displayName || '').toLowerCase();
+
+                // Search across title, hashtags, and creator name
+                const searchableText = `${title} ${hashtags} ${creatorName}`;
+
+                const matches = searchableText.includes(query);
+                
+                console.log(`Post "${post.title || 'Untitled'}": ${matches ? '✅ MATCH' : '❌ NO MATCH'} [Searched: title="${title.substring(0,30)}" + hashtags="${hashtags.substring(0,30)}" + creator="${creatorName}"]`);
+                
+                return matches;
+            });
+
+            console.log(`🔍 Filter Results: ${results.length}/${posts.length} posts matched for query "${query}"`);
+            return results;
+        }
+
+        /**
+         * Display search results in the modal
+         */
+        function displaySearchResults(results, searchQuery) {
+            const resultsGrid = document.getElementById('searchResultsGrid');
+            const resultsCount = document.getElementById('searchResultsCount');
+
+            // Update results count
+            resultsCount.textContent = `Found ${results.length} result${results.length !== 1 ? 's' : ''} for "${searchQuery}"`;
+
+            // Clear grid
+            resultsGrid.innerHTML = '';
+
+            // Handle no results
+            if (results.length === 0) {
+                resultsGrid.innerHTML = `
+                    <div class="search-no-results">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <div>No videos found matching "<strong>${escapeHtml(searchQuery)}</strong>"</div>
+                        <div style="font-size: 0.9rem; margin-top: 0.5rem; color: #666;">Try different keywords or hashtags</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Display results
+            results.forEach(post => {
+                const card = createSearchResultCard(post);
+                resultsGrid.innerHTML += card;
+            });
+        }
+
+        /**
+         * Create a search result card HTML
+         */
+        function createSearchResultCard(post) {
+            const creatorName = firebase.auth().currentUser.displayName || 'Unknown Creator';
+            const thumbnail = post.url 
+                ? (post.type === 'video' 
+                    ? `<video class="search-result-thumbnail" style="width:100%; height:200px; object-fit:cover;">
+                        <source src="${post.url}" type="video/mp4">
+                        <source src="${post.url}" type="video/webm">
+                      </video>`
+                    : `<img class="search-result-thumbnail" src="${post.url}" style="width:100%; height:200px; object-fit:cover;">`)
+                : `<div class="search-result-thumbnail" style="width:100%; height:200px; background:#0a0a0a; display:flex; align-items:center; justify-content:center; font-size:3rem;">${post.type === 'video' ? '🎬' : '📸'}</div>`;
+
+            const badge = post.type === 'video' ? '<span class="search-result-badge">Video</span>' : '<span class="search-result-badge">Image</span>';
+
+            return `
+                <div class="search-result-card" onclick="viewPostFromSearch('${post.id}')">
+                    <div class="search-result-thumbnail" style="position:relative;">
+                        ${thumbnail}
+                        ${badge}
+                    </div>
+                    <div class="search-result-info">
+                        <div class="search-result-title">${escapeHtml(post.title || 'Untitled')}</div>
+                        <div class="search-result-creator">👤 ${escapeHtml(creatorName)}</div>
+                        <div class="search-result-description" style="color: #E63946; font-size: 0.9rem;">
+                            ${Array.isArray(post.hashtags) && post.hashtags.length > 0 ? post.hashtags.join(' ') : 'No hashtags'}
+                        </div>
+                        <div class="search-result-stats">
+                            <span>👁️ ${post.views || 0}</span>
+                            <span>❤️ ${post.likes || 0}</span>
+                            <span>💬 ${post.comments || 0}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * View post from search results
+         * Opens the post in the detail modal with full video player
+         */
+        async function viewPostFromSearch(postId) {
+            try {
+                console.log('📺 Opening post from search:', postId);
+
+                // Try to get post from current user's posts first
+                const post = await getPostById(postId);
+
+                if (!post) {
+                    throw new Error('Post not found');
+                }
+
+                // Close search modal
+                closeSearchResults();
+
+                // Display post in detail modal
+                displayPostDetail(post);
+
+                console.log('✅ Post displayed successfully');
+
+            } catch (error) {
+                console.error('❌ Error viewing post:', error);
+                alert(`Error loading post: ${error.message}`);
+            }
+        }
+
+        /**
+         * Get post by ID from Firebase
+         */
+        async function getPostById(postId) {
+            try {
+                if (!currentUser) {
+                    throw new Error('User not authenticated');
+                }
+
+                // Get post from user's posts collection
+                const doc = await db.collection('users')
+                    .doc(currentUser.uid)
+                    .collection('creator')
+                    .doc('posts')
+                    .get();
+
+                if (!doc.exists) {
+                    return null;
+                }
+
+                const postsArray = doc.data().posts || [];
+                const post = postsArray.find(p => p.id === postId);
+
+                if (!post) {
+                    console.log('❌ Post not found in array');
+                    return null;
+                }
+
+                console.log('✅ Post found:', post.title);
+                return post;
+
+            } catch (error) {
+                console.error('❌ Error getting post:', error);
+                return null;
+            }
+        }
+
+        /**
+         * Display post details in modal with video player
+         */
+        function displayPostDetail(post) {
+            try {
+                // Populate modal with post data
+                document.getElementById('postDetailTitle').textContent = post.title || 'Untitled';
+                document.getElementById('postDetailViews').textContent = (post.views || 0).toString();
+                document.getElementById('postDetailLikes').textContent = (post.likes || 0).toString();
+                document.getElementById('postDetailComments').textContent = (post.comments || 0).toString();
+                // Don't show earnings in search view
+                // document.getElementById('postDetailEarnings').textContent = `₦${(post.earnings || 0).toLocaleString()}`;
+                document.getElementById('postDetailDescription').textContent = post.description || (post.hashtags ? post.hashtags.join(' ') : 'No description');
+                document.getElementById('postDetailType').textContent = post.postType === 'paid' ? `Paid - ₦${post.priceInNaira || 0}` : 'Free';
+                document.getElementById('postDetailHashtags').textContent = (post.hashtags || []).join(' ') || 'None';
+                document.getElementById('postDetailDate').textContent = new Date(post.createdAt).toLocaleDateString();
+
+                // Display media
+                const mediaContainer = document.getElementById('postDetailMediaContainer');
+                mediaContainer.innerHTML = '';
+
+                if (post.url) {
+                    if (post.type === 'video') {
+                        mediaContainer.innerHTML = `
+                            <video class="post-detail-media" controls style="cursor: pointer; max-width: 100%; border-radius: 10px;">
+                                <source src="${post.url}" type="video/webm">
+                                <source src="${post.url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
+                    } else {
+                        mediaContainer.innerHTML = `
+                            <img class="post-detail-media" src="${post.url}" style="max-width: 100%; border-radius: 10px; object-fit: cover;">
+                        `;
+                    }
+                } else {
+                    mediaContainer.innerHTML = `
+                        <div style="height: 300px; display: flex; align-items: center; justify-content: center; background: #0a0a0a; border-radius: 10px; color: #999; font-size: 3rem;">
+                            ${post.type === 'video' ? '🎬' : '📸'}
+                        </div>
+                    `;
+                }
+
+                // Show modal
+                document.getElementById('postDetailModal').classList.add('active');
+                console.log('📺 Modal displayed for post:', post.title);
+
+            } catch (error) {
+                console.error('❌ Error displaying post:', error);
+                alert('Error displaying post details');
+            }
+        }
+
+        /**
+         * Close search results modal
+         */
+        function closeSearchResults() {
+            document.querySelector('.search-results-modal').classList.remove('active');
+            document.querySelector('.search-input').value = '';
+        }
+
+        /**
+         * Utility function to escape HTML special characters
+         */
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return (text || '').replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Allow search on Enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchVideos();
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 
 </html>
