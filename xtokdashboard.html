@@ -4290,56 +4290,43 @@
 
         /* Light Mode Styles */
         @media (prefers-color-scheme: light) {
-            /* White buttons get black border in light mode */
-            button:not([style*="background: #E63946"]):not([style*="background: linear-gradient"]),
-            .wallet-action-btn,
-            .profile-btn,
-            .profile-btn-secondary,
-            .search-btn,
-            .logout-btn,
-            .unlock-btn,
-            .price-option-btn,
-            .post-type-btn,
-            .withdrawal-modal-close,
-            .withdrawal-pay-btn,
-            .tab,
-            .wallet-tab-btn,
-            input[type="button"],
-            input[type="submit"] {
-                border-color: #000 !important;
-            }
-
-            /* Specific button styles for light mode */
+            /* ALL buttons with white background get black border */
             button {
                 border: 2px solid #000 !important;
             }
 
-            .profile-btn-secondary,
-            .profile-btn-secondary:hover {
-                border: 2px solid #000 !important;
-                color: #000 !important;
-            }
-
-            .logout-btn,
-            .logout-btn:hover {
+            input[type="button"],
+            input[type="submit"] {
                 border: 2px solid #000 !important;
             }
 
-            .withdrawal-modal-close {
-                border: 2px solid #000 !important;
-                color: #000 !important;
-            }
-
-            /* Text color adjustments for light mode buttons */
+            /* Buttons with white/transparent background */
             .profile-btn-secondary {
+                border: 2px solid #000 !important;
                 color: #000 !important;
-                background: transparent !important;
+                background: white !important;
+            }
+
+            .logout-btn {
+                border: 2px solid #000 !important;
             }
 
             .wallet-action-btn {
                 border: 2px solid #000 !important;
                 color: #000 !important;
-                background: transparent !important;
+            }
+
+            .profile-btn {
+                border: 2px solid #000 !important;
+            }
+
+            .tab {
+                border: 2px solid #000 !important;
+                border-bottom-color: transparent !important;
+            }
+
+            .tab.active {
+                border-bottom-color: #000 !important;
             }
 
             .wallet-tab-btn {
@@ -4349,6 +4336,51 @@
             .wallet-tab-btn.active {
                 color: #000 !important;
                 border-bottom-color: #000 !important;
+            }
+
+            .price-option-btn {
+                border: 2px solid #000 !important;
+                color: #000 !important;
+            }
+
+            .price-option-btn.selected {
+                background: #000 !important;
+                color: white !important;
+            }
+
+            .post-type-btn {
+                border: 2px solid #000 !important;
+                color: #000 !important;
+            }
+
+            .post-type-btn.active {
+                background: #000 !important;
+                color: white !important;
+            }
+
+            .withdrawal-pay-btn {
+                border: 2px solid #000 !important;
+            }
+
+            .withdrawal-modal-close {
+                color: #000 !important;
+            }
+
+            /* All form inputs */
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            input[type="number"],
+            textarea,
+            select {
+                border: 2px solid #000 !important;
+                color: #000 !important;
+            }
+
+            input[type="text"]::placeholder,
+            input[type="email"]::placeholder,
+            textarea::placeholder {
+                color: #666 !important;
             }
         }
     </style>
