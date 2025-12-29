@@ -97,10 +97,12 @@
             gap: 1rem;
             align-items: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .search-input {
             flex: 1;
+            min-width: 250px;
             max-width: 500px;
             padding: 1rem;
             background: #1a1a1a;
@@ -131,12 +133,90 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         .search-btn:hover {
             background: #C1121F;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        /* Tablet responsive (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .search-bar {
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .search-input {
+                min-width: 200px;
+                max-width: 100%;
+                padding: 0.85rem;
+                font-size: 0.95rem;
+            }
+
+            .search-btn {
+                padding: 0.85rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Mobile responsive (max 768px) */
+        @media (max-width: 768px) {
+            .search-bar {
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+
+            .search-input {
+                flex: 1;
+                min-width: unset;
+                max-width: 100%;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .search-btn {
+                flex: 0 0 auto;
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Small devices (max 480px) */
+        @media (max-width: 480px) {
+            .search-bar {
+                gap: 0.4rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .search-input {
+                padding: 0.5rem 0.7rem;
+                font-size: 0.8rem;
+                border-radius: 18px;
+            }
+
+            .search-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.75rem;
+                border-radius: 18px;
+            }
+        }
+
+        /* Extra small devices (max 360px) */
+        @media (max-width: 360px) {
+            .search-input {
+                padding: 0.45rem 0.6rem;
+                font-size: 0.75rem;
+                border-radius: 15px;
+            }
+
+            .search-btn {
+                padding: 0.45rem 0.6rem;
+                font-size: 0.7rem;
+                border-radius: 15px;
+            }
         }
 
         /* Search Results Modal */
@@ -166,7 +246,7 @@
         .search-results-header {
             position: sticky;
             top: 0;
-            background: linear-gradient(180deg, #000000 0%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.8) 100%);
             padding: 1.5rem 0;
             z-index: 3001;
             display: flex;
@@ -300,14 +380,6 @@
         }
 
         @media (max-width: 768px) {
-            .search-bar {
-                flex-direction: column;
-            }
-
-            .search-input {
-                max-width: 100%;
-            }
-
             .search-results-grid {
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
                 gap: 1rem;
@@ -549,6 +621,10 @@
             gap: 1.5rem;
         }
 
+        .loading-container.hidden {
+            display: none;
+        }
+
         .loading-spinner {
             width: 60px;
             height: 60px;
@@ -564,6 +640,42 @@
             font-weight: 700;
             letter-spacing: 2px;
             animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Responsive Loading */
+        @media (max-width: 768px) {
+            .loading-container {
+                padding: 2rem 1rem;
+                gap: 1rem;
+            }
+
+            .loading-spinner {
+                width: 50px;
+                height: 50px;
+                border-width: 3px;
+            }
+
+            .loading-text {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loading-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .loading-spinner {
+                width: 40px;
+                height: 40px;
+                border-width: 2px;
+            }
+
+            .loading-text {
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+            }
         }
 
         .skeleton-card {
@@ -698,7 +810,7 @@
             right: 0;
             bottom: 0;
             background: #000000;
-            z-index: 3000;
+            z-index: 9999;
             overflow-y: auto;
             animation: slideInFromRight 0.3s ease-out;
         }
@@ -780,46 +892,46 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border: 2px solid #E63946;
             border-radius: 20px;
-            padding: 3rem 2rem;
+            padding: 2rem 2rem;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 10px 40px rgba(230, 57, 70, 0.2);
         }
 
         .creator-profile-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: bold;
             color: #000000;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
             box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
         }
 
         .creator-profile-name {
             color: #FFFFFF;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 900;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             letter-spacing: 0.5px;
         }
 
         .creator-profile-email {
             color: #999;
-            font-size: 1rem;
-            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
         }
 
         .creator-profile-bio {
             color: #CCC;
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -827,21 +939,21 @@
 
         .creator-profile-actions {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .creator-profile-btn {
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 25px;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            min-width: 160px;
+            min-width: 140px;
         }
 
         .creator-profile-btn-follow {
@@ -909,40 +1021,50 @@
         }
 
         .creator-profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(230, 57, 70, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid #E63946;
         }
 
         .creator-profile-stat-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 2rem;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0.5rem 1.5rem;
             text-align: center;
             transition: all 0.3s;
+            flex: 1;
+            border-right: 1px solid rgba(230, 57, 70, 0.3);
+        }
+
+        .creator-profile-stat-card:last-child {
+            border-right: none;
         }
 
         .creator-profile-stat-card:hover {
-            border-color: #E63946;
-            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
-            transform: translateY(-5px);
+            background: rgba(230, 57, 70, 0.2);
+            border-radius: 10px;
         }
 
         .creator-profile-stat-number {
             color: #E63946;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 900;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .creator-profile-stat-label {
             color: #999;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .creator-profile-section {
@@ -1427,6 +1549,51 @@
             transform: translateY(-5px);
         }
 
+        /* Responsive Video Card */
+        @media (max-width: 1024px) {
+            .tiktok-video-card {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tiktok-video-card {
+                height: 450px;
+                border-radius: 12px;
+                border-width: 1.5px;
+            }
+
+            .video-feed {
+                gap: 0.8rem;
+                padding-bottom: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tiktok-video-card {
+                height: 400px;
+                border-radius: 10px;
+                border-width: 1px;
+            }
+
+            .video-feed {
+                gap: 0.6rem;
+                padding-bottom: 60px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tiktok-video-card {
+                height: 350px;
+                border-radius: 8px;
+            }
+
+            .video-feed {
+                gap: 0.5rem;
+                padding-bottom: 50px;
+            }
+        }
+
         .tiktok-video-container {
             flex: 1;
             background: #000;
@@ -1538,6 +1705,20 @@
             padding: 3rem 2rem;
             color: #999;
             font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .no-posts {
+                padding: 2rem 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .no-posts {
+                padding: 1.5rem 1rem;
+                font-size: 0.9rem;
+            }
         }
 
         .profile-buttons {
@@ -3126,6 +3307,39 @@
             gap: 0.3rem;
         }
 
+        .post-delete-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(230, 57, 70, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .post-card:hover .post-delete-btn {
+            display: flex;
+        }
+
+        .post-delete-btn:hover {
+            background: #C1121F;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+        }
+
+        .post-delete-btn:active {
+            transform: scale(0.95);
+        }
+
         .no-posts {
             text-align: center;
             padding: 3rem 1rem;
@@ -4096,7 +4310,8 @@
     <div class="container">
         <!-- Search Bar -->
         <div class="search-bar">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search videos by creator, hashtag, or description...">
+            <input type="text" class="search-input" id="searchInput"
+                placeholder="Search videos by creator, hashtag, or description...">
             <button class="search-btn" onclick="searchVideos()">🔍 Search</button>
         </div>
 
@@ -4106,6 +4321,7 @@
                 <button class="tab active" onclick="switchTab('forYou', this)">For You</button>
                 <button class="tab" onclick="switchTab('free', this)">Free</button>
                 <button class="tab" onclick="switchTab('exclusive', this)">Exclusive</button>
+                <button class="tab" onclick="switchTab('loaded', this)">📥 Loaded</button>
                 <button class="tab" onclick="initializeFeeds()"
                     style="margin-left: auto; color: #999; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 1rem;">🔄</button>
             </div>
@@ -4134,6 +4350,14 @@
                 <div class="loading-text">LOADING VIDEOS</div>
             </div>
             <div class="video-feed" id="exclusiveFeed"></div>
+        </div>
+
+        <div id="loaded" class="tab-content">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">LOADING SAVED VIDEOS</div>
+            </div>
+            <div class="video-feed" id="loadedFeed"></div>
         </div>
 
         <!-- Bottom Notification Bar -->
@@ -5265,6 +5489,119 @@
             }
         }
 
+        // Initialize Wallet with Signup Bonus
+        async function initializeWalletForNewUser() {
+            try {
+                if (!currentUser) return false;
+
+                // Check if wallet already exists
+                const walletDoc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+
+                if (!walletDoc.exists) {
+                    // New user - create wallet with 500 naira bonus
+                    await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').set({
+                        totalBalance: 500,
+                        withdrawableBalance: 0,
+                        freeBonus: 500,
+                        createdAt: new Date().toISOString(),
+                        lastUpdated: new Date().toISOString()
+                    });
+                    console.log('✅ 500 Naira signup bonus added!');
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error initializing wallet:', error);
+                return false;
+            }
+        }
+
+        // Load User Wallet
+        async function loadWalletFromFirebase() {
+            try {
+                if (!currentUser) return null;
+
+                const doc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                if (doc.exists) {
+                    return doc.data();
+                } else {
+                    // Initialize if doesn't exist
+                    await initializeWalletForNewUser();
+                    return {
+                        totalBalance: 500,
+                        withdrawableBalance: 0,
+                        freeBonus: 500,
+                        createdAt: new Date().toISOString()
+                    };
+                }
+            } catch (error) {
+                console.error('Error loading wallet:', error);
+                return null;
+            }
+        }
+
+        // Update Wallet Balance (only withdrawable balance can be updated externally)
+        async function updateWalletBalance(amount, isWithdrawable = false) {
+            try {
+                if (!currentUser) return false;
+
+                const wallet = await loadWalletFromFirebase();
+                if (!wallet) return false;
+
+                if (isWithdrawable) {
+                    wallet.withdrawableBalance = Math.max(0, wallet.withdrawableBalance + amount);
+                } else {
+                    wallet.totalBalance = Math.max(0, wallet.totalBalance + amount);
+                }
+                wallet.lastUpdated = new Date().toISOString();
+
+                await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').update(wallet);
+                return true;
+            } catch (error) {
+                console.error('Error updating wallet:', error);
+                return false;
+            }
+        }
+
+        // Check if amount can be withdrawn (only withdrawable balance can be withdrawn, not free bonus)
+        async function canWithdraw(amount) {
+            try {
+                const wallet = await loadWalletFromFirebase();
+                if (!wallet) return false;
+
+                // Only withdrawable balance can be withdrawn, not free bonus
+                return wallet.withdrawableBalance >= amount;
+            } catch (error) {
+                console.error('Error checking withdrawal:', error);
+                return false;
+            }
+        }
+
+        // Display Wallet Info (with free bonus indicator)
+        async function displayWalletInfo() {
+            try {
+                const wallet = await loadWalletFromFirebase();
+                if (!wallet) return;
+
+                // Update wallet display in UI
+                const walletBalanceEl = document.querySelector('.wallet-balance-amount');
+                const walletSubEl = document.querySelector('.wallet-balance-sub');
+
+                if (walletBalanceEl) {
+                    walletBalanceEl.textContent = `₦${wallet.totalBalance.toLocaleString()}`;
+                }
+
+                if (walletSubEl) {
+                    walletSubEl.innerHTML = `
+                         <div>Withdrawable: ₦${wallet.withdrawableBalance.toLocaleString()}</div>
+                         <div style="color: #FFA500; font-weight: 700;">Free Bonus: ₦${wallet.freeBonus.toLocaleString()} (Use Only)</div>
+                     `;
+                }
+            } catch (error) {
+                console.error('Error displaying wallet:', error);
+            }
+        }
+
         // Save User Plan to Firestore
         async function savePlanToFirebase(planData) {
             try {
@@ -5406,6 +5743,9 @@
                     currentUser = user;
                     console.log('User authenticated:', user.uid);
                     try {
+                        // Initialize wallet for new users (adds 500 naira bonus)
+                        await initializeWalletForNewUser();
+
                         await displayUserInfo(user);
                         // Initialize feeds after user is authenticated
                         console.log('Initializing feeds after auth...');
@@ -5928,6 +6268,9 @@
 
                 await loadWalletFromFirebase();
 
+                // Display wallet info with bonus indicator
+                await displayWalletInfo();
+
                 // Generate wallet account ID if doesn't exist
                 if (!walletData.accountID && currentUser) {
                     walletData.accountID = generateWalletAccountID(currentUser.uid);
@@ -6298,7 +6641,7 @@
         }
 
         // Process withdrawal payment with Flutterwave
-        function processWithdrawalPayment() {
+        async function processWithdrawalPayment() {
             const amount = parseFloat(document.getElementById('withdrawalAmount').value);
             const statusDiv = document.getElementById('withdrawalStatus');
             const withdrawalType = document.getElementById('selectedWithdrawalType').value;
@@ -6319,6 +6662,18 @@
             if (amount < minimumAmount) {
                 statusDiv.className = 'withdrawal-status error';
                 statusDiv.textContent = `❌ Minimum withdrawal for ${withdrawalType} is ₦${minimumAmount.toLocaleString()}`;
+                return;
+            }
+
+            // Check withdrawable balance (free bonus cannot be withdrawn)
+            const canWithdrawAmount = await canWithdraw(amount);
+            if (!canWithdrawAmount) {
+                statusDiv.className = 'withdrawal-status error';
+                const wallet = await loadWalletFromFirebase();
+                statusDiv.innerHTML = `
+                    ❌ Insufficient withdrawable balance. <br>
+                    <small style="color: #FFA500;">Note: Free signup bonus of ₦${wallet.freeBonus.toLocaleString()} cannot be withdrawn</small>
+                `;
                 return;
             }
 
@@ -7087,16 +7442,19 @@
                     : `<div class="post-thumbnail" style="width:100%; height:150px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:#0a0a0a;">${post.type === 'video' ? '🎬' : '📸'}</div>`;
 
                 const postHTML = `
-                    <div class="post-card" onclick="openPostDetail(${index})" style="cursor: pointer; transition: all 0.3s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                        ${mediaHTML}
-                        <div class="post-info">
-                            <div class="post-title">${post.title || 'Untitled'}</div>
-                            <div class="post-stats-mini">
-                                <span>👁️ ${post.views || 0}</span>
-                                <span>❤️ ${post.likes || 0}</span>
-                                <span>💬 ${post.comments || 0}</span>
+                    <div class="post-card" style="cursor: pointer; transition: all 0.3s; position: relative;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                        <div onclick="openPostDetail(${index})" style="cursor: pointer;">
+                            ${mediaHTML}
+                            <div class="post-info">
+                                <div class="post-title">${post.title || 'Untitled'}</div>
+                                <div class="post-stats-mini">
+                                    <span>👁️ ${post.views || 0}</span>
+                                    <span>❤️ ${post.likes || 0}</span>
+                                    <span>💬 ${post.comments || 0}</span>
+                                </div>
                             </div>
                         </div>
+                        <button class="post-delete-btn" onclick="deletePost('${post.id}'); event.stopPropagation();" title="Delete post">🗑️</button>
                     </div>
                 `;
 
@@ -7158,6 +7516,8 @@
                 await loadFreeFeed();
             } else if (tabName === 'exclusive') {
                 await loadExclusiveFeed();
+            } else if (tabName === 'loaded') {
+                await loadLoadedFeed();
             }
         }
 
@@ -7686,6 +8046,65 @@
         }
 
         // Display video feed with TikTok-style cards
+        // Initialize paid video 5-second timers
+        function initializePaidVideoTimers() {
+            const videoCards = document.querySelectorAll('.tiktok-video-card');
+
+            videoCards.forEach(card => {
+                const video = card.querySelector('video');
+                if (!video) return;
+
+                // Find the paid overlay in this card
+                const paidOverlay = card.querySelector('[id^="paid-overlay-"]');
+                if (!paidOverlay) return; // Not a paid video
+
+                let timerStarted = false;
+                let paymentShown = false;
+
+                // Timer to show payment prompt after 5 seconds
+                const checkVideoTime = () => {
+                    if (!timerStarted && video.currentTime > 0) {
+                        timerStarted = true;
+                        console.log(`▶️ Paid video started: ${video.src}`);
+                    }
+
+                    // Show payment prompt after 5 seconds
+                    if (timerStarted && video.currentTime >= 5 && !paymentShown) {
+                        paymentShown = true;
+                        video.pause();
+                        paidOverlay.style.display = 'flex';
+                        console.log(`💰 Payment prompt shown after 5 seconds`);
+                    }
+
+                    // If video is playing and timer hasn't fired yet, keep checking
+                    if (!paymentShown && !video.paused) {
+                        requestAnimationFrame(checkVideoTime);
+                    }
+                };
+
+                // Start checking when video plays
+                video.addEventListener('play', () => {
+                    if (!paymentShown) {
+                        requestAnimationFrame(checkVideoTime);
+                    }
+                });
+
+                // Reset timer if user pauses and resumes (optional - for better UX)
+                video.addEventListener('pause', () => {
+                    if (timerStarted && !paymentShown) {
+                        console.log('⏸️ Video paused, timer paused');
+                    }
+                });
+
+                // Hide overlay if user somehow bypasses and clicks video
+                video.addEventListener('click', () => {
+                    if (paymentShown) {
+                        paidOverlay.style.display = 'flex'; // Keep showing
+                    }
+                });
+            });
+        }
+
         function displayVideoFeed(posts, containerId) {
             const container = document.getElementById(containerId);
 
@@ -7713,13 +8132,13 @@
                 const hashtags = (post.hashtags || []).join(' ');
                 const postId = post.id || Date.now().toString();
 
-                // Blur container if paid, and add unlock overlay
+                // Remove blur, instead show payment modal after 5 seconds of play
                 const isPaid = post.postType === 'paid';
-                const containerClass = isPaid ? 'tiktok-video-container blurred' : 'tiktok-video-container';
+                const containerClass = 'tiktok-video-container';  // No blur
                 const creatorId = post.creatorId || 'unknown';
                 const paidOverlay = isPaid ? `
-                    <div class="paid-overlay">
-                        <div class="paid-icon">🔒</div>
+                    <div class="paid-overlay" id="paid-overlay-${postId}" style="display: none;">
+                        <div class="paid-icon">💰</div>
                         <div class="paid-text">Premium Content</div>
                         <div class="paid-price">${post.price} XTC</div>
                         <button class="unlock-btn" onclick="console.log('🟡 Button clicked!'); console.log('postId:', '${postId}'); console.log('creatorId:', '${creatorId}'); console.log('price:', ${post.price}); purchasePost('${postId}', '${creatorId}', ${post.price});">🔓 Unlock Now</button>
@@ -7772,6 +8191,11 @@
                     </div>
                 `;
             }).join('');
+
+            // Initialize 5-second timers for paid videos
+            setTimeout(() => {
+                initializePaidVideoTimers();
+            }, 100);
 
             // Hide loading indicator after videos are rendered
             hideLoadingIndicator(containerId);
@@ -7974,16 +8398,23 @@
                 console.warn('Error counting share:', error.message);
             }
 
-            // Show share UI
+            // Create shareable link with video ID and creator ID
+            const baseUrl = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
+            const shareLink = `${window.location.origin}${window.location.pathname}?videoId=${postId}&creatorId=${creatorId}`;
+
+            // Show share UI with shareable link
             if (navigator.share) {
                 navigator.share({
                     title: 'XTOK Video',
                     text: shareText,
-                    url: window.location.href
+                    url: shareLink
                 }).catch(err => console.log('Error sharing:', err));
             } else {
-                navigator.clipboard.writeText(shareText).then(() => {
-                    alert('📋 Share text copied to clipboard!');
+                // Copy share link to clipboard
+                navigator.clipboard.writeText(shareLink).then(() => {
+                    alert('🔗 Share link copied!\n\n' + shareLink);
+                }).catch(() => {
+                    alert('🔗 Share link:\n\n' + shareLink);
                 });
             }
         }
@@ -8225,6 +8656,11 @@
         async function loadForYouFeed() {
             try {
                 console.log('🎬 Loading For You feed...');
+                // Hide loading spinner
+                const loadingContainer = document.querySelector('#forYou .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
                 const allPosts = await getCachedPosts();
                 console.log('📊 All posts loaded:', allPosts.length);
 
@@ -8264,6 +8700,30 @@
         async function loadFreeFeed() {
             try {
                 console.log('Loading Free feed...');
+                // Hide loading spinner
+                const loadingContainer = document.querySelector('#free .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
+
+                // Check free video limit for current user
+                if (!currentUser) {
+                    document.getElementById('freeFeed').innerHTML = '<div class="no-posts">Please log in to watch free videos</div>';
+                    return;
+                }
+
+                const freeVideoCount = await getFreeVideoWatchCount();
+                const FREE_VIDEO_LIMIT = 10;
+
+                console.log(`📊 Free videos watched: ${freeVideoCount}/${FREE_VIDEO_LIMIT}`);
+
+                // If limit reached, show upgrade prompt
+                if (freeVideoCount >= FREE_VIDEO_LIMIT) {
+                    console.log('⛔ Free video limit reached!');
+                    showFreeVideoLimitModal();
+                    return;
+                }
+
                 const allPosts = await getCachedPosts();
                 const userPosts = await getCurrentUserPosts();
                 const mergedPosts = mergePosts(allPosts, userPosts);
@@ -8283,8 +8743,27 @@
                     return new Date(b.createdAt) - new Date(a.createdAt);
                 });
 
-                console.log('Free posts:', sortedPosts.length);
-                displayVideoFeed(sortedPosts, 'freeFeed');
+                // Add warning banner if close to limit
+                const remainingVideos = FREE_VIDEO_LIMIT - freeVideoCount;
+                let warningHTML = '';
+                if (remainingVideos <= 3 && remainingVideos > 0) {
+                    warningHTML = `
+                         <div style="background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; border-left: 4px solid #FFD700; display: flex; align-items: center; gap: 1rem;">
+                             <div style="font-size: 1.5rem;">⚠️</div>
+                             <div>
+                                 <div style="color: white; font-weight: 700;">Limited Free Videos Remaining</div>
+                                 <div style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">You have ${remainingVideos} more free video${remainingVideos === 1 ? '' : 's'} left. Upgrade to watch unlimited!</div>
+                                 <button onclick="switchTab('creator', this); document.querySelector('[onclick*=selectPlan]').click();" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: white; color: #FF8C00; border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: all 0.3s;">📊 Upgrade Now</button>
+                             </div>
+                         </div>
+                     `;
+                    document.getElementById('freeFeed').innerHTML = warningHTML + '<div id="freeVideosContainer"></div>';
+                    const container = document.getElementById('freeVideosContainer');
+                    container.innerHTML = sortedPosts.map((post, index) => displayVideoCard(post, index)).join('');
+                } else {
+                    console.log('Free posts:', sortedPosts.length);
+                    displayVideoFeed(sortedPosts, 'freeFeed');
+                }
             } catch (error) {
                 console.error('Error loading Free feed:', error);
                 document.getElementById('freeFeed').innerHTML = '<div class="no-posts">Error loading posts</div>';
@@ -8295,6 +8774,11 @@
         async function loadExclusiveFeed() {
             try {
                 console.log('Loading Exclusive feed...');
+                // Hide loading spinner
+                const loadingContainer = document.querySelector('#exclusive .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
                 const allPosts = await getCachedPosts();
                 const userPosts = await getCurrentUserPosts();
                 const mergedPosts = mergePosts(allPosts, userPosts);
@@ -8324,10 +8808,333 @@
             }
         }
 
+        // ===== FREE VIDEO LIMIT MANAGEMENT =====
+        // Track free video watches and enforce limit (10 per user)
+
+        async function getFreeVideoWatchCount() {
+            try {
+                if (!currentUser) return 0;
+
+                const limitDoc = await db.collection('users')
+                    .doc(currentUser.uid)
+                    .collection('settings')
+                    .doc('freeVideoLimit')
+                    .get();
+
+                if (!limitDoc.exists) {
+                    return 0;
+                }
+
+                return limitDoc.data().watchCount || 0;
+            } catch (error) {
+                console.error('Error getting free video count:', error);
+                return 0;
+            }
+        }
+
+        async function incrementFreeVideoWatch() {
+            try {
+                if (!currentUser) return;
+
+                const limitDocRef = db.collection('users')
+                    .doc(currentUser.uid)
+                    .collection('settings')
+                    .doc('freeVideoLimit');
+
+                const limitDoc = await limitDocRef.get();
+                const currentCount = limitDoc.exists ? (limitDoc.data().watchCount || 0) : 0;
+
+                await limitDocRef.set({
+                    watchCount: currentCount + 1,
+                    updatedAt: new Date().toISOString(),
+                    resetDate: new Date().toISOString().split('T')[0]  // Daily reset possible in future
+                });
+
+                console.log(`📊 Free video watch count: ${currentCount + 1}/10`);
+            } catch (error) {
+                console.error('Error incrementing free video watch:', error);
+            }
+        }
+
+        function showFreeVideoLimitModal() {
+            const modalHTML = `
+                 <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 9999; display: flex; align-items: center; justify-content: center;" id="freeVideoLimitModal">
+                     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 2px solid #E63946; border-radius: 20px; padding: 2.5rem; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(230, 57, 70, 0.3);">
+                         <button onclick="document.getElementById('freeVideoLimitModal').remove();" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #E63946; font-size: 2rem; cursor: pointer; transition: all 0.3s;">×</button>
+
+                         <div style="font-size: 3rem; margin-bottom: 1rem;">🎬</div>
+
+                         <div style="color: #FFFFFF; font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem;">Free Video Limit Reached!</div>
+
+                         <div style="color: #CCC; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">
+                             You've watched <span style="color: #E63946; font-weight: 700;">10 free videos</span> this month. 
+                             <br><br>
+                             Upgrade to a <strong>Creator Plan</strong> to unlock unlimited videos and earn from your content!
+                         </div>
+
+                         <div style="background: rgba(230, 57, 70, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid #E63946;">
+                             <div style="color: #E63946; font-weight: 700; margin-bottom: 0.5rem;">✨ Creator Plan Benefits</div>
+                             <div style="color: #999; font-size: 0.9rem; text-align: left;">
+                                 ✅ Unlimited video access<br>
+                                 ✅ Post your own videos<br>
+                                 ✅ Earn money from views<br>
+                                 ✅ Exclusive creator features<br>
+                                 ✅ Priority support
+                             </div>
+                         </div>
+
+                         <button onclick="document.getElementById('freeVideoLimitModal').remove(); switchTab('creator', document.querySelector('.tab')); setTimeout(() => { const planBtn = document.querySelector('[onclick*=selectPlan]'); if(planBtn) planBtn.click(); }, 500);" style="width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #E63946 0%, #C1121F 100%); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: 800; cursor: pointer; margin-bottom: 1rem; transition: all 0.3s; box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);">
+                             🚀 Upgrade Now
+                         </button>
+
+                         <button onclick="document.getElementById('freeVideoLimitModal').remove();" style="width: 100%; padding: 1rem; background: transparent; color: #E63946; border: 2px solid #E63946; border-radius: 15px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s;">
+                             Maybe Later
+                         </button>
+
+                         <div style="color: #666; font-size: 0.85rem; margin-top: 1.5rem;">
+                             Your free videos will reset next month
+                         </div>
+                     </div>
+                 </div>
+             `;
+
+            // Remove existing modal if any
+            const existingModal = document.getElementById('freeVideoLimitModal');
+            if (existingModal) existingModal.remove();
+
+            // Add new modal
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // ===== LOADED/CACHED VIDEOS MANAGEMENT =====
+        // Smart algorithm to manage loaded/viewed videos
+        const LOADED_VIDEOS_STORAGE_KEY = 'xtok_loaded_videos';
+        const MAX_LOADED_VIDEOS = 50;  // Keep track of last 50 videos
+        const VIDEO_EXPIRY_DAYS = 30;  // Keep videos for 30 days
+
+        // Initialize loaded videos storage
+        function initializeLoadedVideosStorage() {
+            const stored = localStorage.getItem(LOADED_VIDEOS_STORAGE_KEY);
+            if (!stored) {
+                localStorage.setItem(LOADED_VIDEOS_STORAGE_KEY, JSON.stringify([]));
+            }
+        }
+
+        // Get all loaded videos from localStorage
+        function getLoadedVideos() {
+            initializeLoadedVideosStorage();
+            const stored = localStorage.getItem(LOADED_VIDEOS_STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        // Save loaded videos to localStorage
+        function saveLoadedVideos(videos) {
+            localStorage.setItem(LOADED_VIDEOS_STORAGE_KEY, JSON.stringify(videos));
+        }
+
+        // Smart algorithm: Add a video to loaded videos
+        function addToLoadedVideos(post) {
+            if (!post || !post.id) return;
+
+            const loadedVideos = getLoadedVideos();
+
+            // Check if video already exists
+            const existingIndex = loadedVideos.findIndex(v => v.id === post.id);
+
+            if (existingIndex !== -1) {
+                // Move to front (most recently viewed)
+                loadedVideos.splice(existingIndex, 1);
+            }
+
+            // Add to front with metadata
+            loadedVideos.unshift({
+                ...post,
+                loadedAt: new Date().toISOString(),
+                viewCount: (loadedVideos[existingIndex]?.viewCount || 0) + 1  // Track how many times viewed
+            });
+
+            // Keep only last MAX_LOADED_VIDEOS
+            if (loadedVideos.length > MAX_LOADED_VIDEOS) {
+                loadedVideos.pop();
+            }
+
+            saveLoadedVideos(loadedVideos);
+            console.log(`✅ Added to loaded videos: ${post.title}`);
+        }
+
+        // Smart algorithm: Clean expired videos (older than 30 days)
+        function cleanExpiredLoadedVideos() {
+            const loadedVideos = getLoadedVideos();
+            const now = new Date();
+            const thirtyDaysAgo = new Date(now.getTime() - (VIDEO_EXPIRY_DAYS * 24 * 60 * 60 * 1000));
+
+            const filtered = loadedVideos.filter(video => {
+                const videoDate = new Date(video.loadedAt);
+                return videoDate > thirtyDaysAgo;
+            });
+
+            saveLoadedVideos(filtered);
+            console.log(`🧹 Cleaned expired videos. Kept: ${filtered.length}`);
+        }
+
+        // Smart algorithm: Get most frequently viewed videos
+        function getMostViewedLoadedVideos(limit = 10) {
+            const videos = getLoadedVideos();
+            return videos.sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, limit);
+        }
+
+        // Smart algorithm: Load and display loaded feed
+        async function loadLoadedFeed() {
+            try {
+                console.log('📥 Loading Loaded/Cached videos...');
+
+                // Hide loading spinner
+                const loadingContainer = document.querySelector('#loaded .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
+
+                // Clean expired videos first
+                cleanExpiredLoadedVideos();
+
+                // Get loaded videos
+                const loadedVideos = getLoadedVideos();
+
+                if (loadedVideos.length === 0) {
+                    document.getElementById('loadedFeed').innerHTML = `
+                         <div class="no-posts" style="text-align: center; padding: 3rem;">
+                             <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+                             <div style="color: #999; font-size: 1.1rem;">No videos loaded yet</div>
+                             <div style="color: #666; font-size: 0.9rem; margin-top: 1rem;">Videos you watch will appear here</div>
+                         </div>
+                     `;
+                    return;
+                }
+
+                // Sort by most recent first (but keep metadata)
+                const sortedVideos = loadedVideos.sort((a, b) => {
+                    return new Date(b.loadedAt) - new Date(a.loadedAt);
+                });
+
+                console.log(`📥 Displaying ${sortedVideos.length} loaded videos`);
+
+                // Create custom video cards with metadata
+                const videosHTML = sortedVideos.map(video => {
+                    const daysAgo = Math.floor((new Date() - new Date(video.loadedAt)) / (1000 * 60 * 60 * 24));
+                    const daysText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo}d ago`;
+
+                    return `
+                         <div class="tiktok-video-card" onclick="openVideoViewer('${video.id}', '${video.creatorId}')">
+                             <div class="tiktok-video-container" style="position: relative; background: #0a0a0a;">
+                                 ${video.type === 'video'
+                            ? `<video style="width: 100%; height: 100%; object-fit: cover;">
+                                         <source src="${video.url}" type="video/mp4">
+                                        </video>`
+                            : `<img src="${video.url}" style="width: 100%; height: 100%; object-fit: cover;" alt="${video.title}">`
+                        }
+                             </div>
+                             <div class="tiktok-video-info">
+                                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                     <div class="tiktok-video-title" title="${video.title}">${video.title || 'Untitled'}</div>
+                                     <div style="color: #666; font-size: 0.75rem; white-space: nowrap;">${daysText}</div>
+                                 </div>
+                                 <div style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">👤 ${video.creatorName || 'Creator'}</div>
+                                 <div style="display: flex; gap: 1rem; color: #666; font-size: 0.8rem;">
+                                     <span>👁️ ${video.views || 0}</span>
+                                     <span>❤️ ${video.likes || 0}</span>
+                                     <span>🔄 ${video.viewCount || 1}x viewed</span>
+                                 </div>
+                             </div>
+                         </div>
+                     `;
+                }).join('');
+
+                document.getElementById('loadedFeed').innerHTML = videosHTML;
+            } catch (error) {
+                console.error('Error loading Loaded feed:', error);
+                document.getElementById('loadedFeed').innerHTML = '<div class="no-posts">Error loading saved videos</div>';
+            }
+        }
+
+        // Handle shared video links
+        function handleSharedVideoLink() {
+            const params = new URLSearchParams(window.location.search);
+            const videoId = params.get('videoId');
+            const creatorId = params.get('creatorId');
+
+            if (videoId && creatorId) {
+                console.log(`🔗 Shared video link detected: ${videoId} from ${creatorId}`);
+
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        // User authenticated - show video
+                        console.log('✅ User authenticated, showing shared video');
+                        viewVideo(videoId, creatorId, null);
+                    } else {
+                        // User not authenticated - show login first
+                        console.log('🔐 User not authenticated, showing login');
+                        showSharedVideoLoginModal(videoId, creatorId);
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
+
+        // Show login modal for shared videos
+        function showSharedVideoLoginModal(videoId, creatorId) {
+            const modalHTML = `
+                 <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 9999; display: flex; align-items: center; justify-content: center;" id="sharedVideoLoginModal">
+                     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 2px solid #E63946; border-radius: 20px; padding: 2.5rem; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(230, 57, 70, 0.3);">
+                         <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎬</div>
+                         <div style="color: #FFFFFF; font-size: 1.6rem; font-weight: 900; margin-bottom: 1rem;">Watch Shared Video</div>
+                         <div style="color: #CCC; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">
+                             Someone shared an awesome video with you!<br><br>Sign in or create an account to watch it now.
+                         </div>
+
+                         <button onclick="handleSignIn('${videoId}', '${creatorId}');" style="width: 100%; padding: 1.2rem; background: linear-gradient(135deg, #E63946 0%, #C1121F 100%); color: white; border: none; border-radius: 15px; font-size: 1rem; font-weight: 800; cursor: pointer; margin-bottom: 1rem; transition: all 0.3s; box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);">
+                             🔐 Sign In / Sign Up
+                         </button>
+
+                         <button onclick="document.getElementById('sharedVideoLoginModal').remove();" style="width: 100%; padding: 1rem; background: transparent; color: #E63946; border: 2px solid #E63946; border-radius: 15px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s;">
+                             Cancel
+                         </button>
+                     </div>
+                 </div>
+             `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        // Handle sign in for shared videos
+        function handleSignIn(videoId, creatorId) {
+            // Remove modal
+            const modal = document.getElementById('sharedVideoLoginModal');
+            if (modal) modal.remove();
+
+            // Show auth modal
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.classList.add('active');
+                // Store video info for after login
+                window.pendingSharedVideo = { videoId, creatorId };
+                console.log('📋 Stored pending shared video:', window.pendingSharedVideo);
+            }
+        }
+
         // Load feeds immediately when user is authenticated
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log('✅ User authenticated, loading feeds NOW...');
+
+                // Check if there's a pending shared video to show
+                if (window.pendingSharedVideo) {
+                    console.log('🎬 Showing pending shared video');
+                    const { videoId, creatorId } = window.pendingSharedVideo;
+                    window.pendingSharedVideo = null;
+                    viewVideo(videoId, creatorId, null);
+                    return;
+                }
+
                 // Clear cache to ensure fresh data
                 cachedPosts = null;
                 lastCacheTime = 0;
@@ -9247,6 +10054,19 @@
                 // Show modal
                 document.getElementById('videoViewerModal').classList.add('active');
                 console.log(`✅ Video opened: ${video.title}`);
+
+                // Add to loaded videos with creator name
+                addToLoadedVideos({
+                    ...video,
+                    creatorId: creatorId,
+                    creatorName: creatorName
+                });
+
+                // Track free video watch if this is a free video
+                if (video.postType === 'free') {
+                    await incrementFreeVideoWatch();
+                    console.log('📊 Free video watch tracked');
+                }
             } catch (error) {
                 console.error('❌ Error opening video:', error);
                 alert('Error opening video');
@@ -9309,6 +10129,94 @@
     </div>
 
     <script>
+        // ===== DELETE POST FUNCTION =====
+
+        /**
+         * Delete a post by ID
+         */
+        async function deletePost(postId) {
+            try {
+                // Confirmation
+                if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+                    return;
+                }
+
+                console.log('🗑️ Deleting post:', postId);
+
+                if (!currentUser) {
+                    alert('User not authenticated');
+                    return;
+                }
+
+                // Load all posts from Firebase
+                const doc = await db.collection('users')
+                    .doc(currentUser.uid)
+                    .collection('creator')
+                    .doc('posts')
+                    .get();
+
+                if (!doc.exists) {
+                    alert('No posts found');
+                    return;
+                }
+
+                // Get posts array and filter out the one to delete
+                const postsArray = doc.data().posts || [];
+                const updatedPosts = postsArray.filter(p => p.id !== postId);
+
+                // Check if post was found
+                if (updatedPosts.length === postsArray.length) {
+                    alert('Post not found');
+                    return;
+                }
+
+                // Update Firebase with filtered posts
+                await db.collection('users')
+                    .doc(currentUser.uid)
+                    .collection('creator')
+                    .doc('posts')
+                    .set({
+                        posts: updatedPosts,
+                        updatedAt: new Date().toISOString()
+                    });
+
+                // Also delete from global xtokpost collection
+                try {
+                    await db.collection('xtokpost').doc(postId).delete();
+                } catch (e) {
+                    console.log('Note: Post not found in global collection');
+                }
+
+                console.log('✅ Post deleted successfully');
+
+                // Get deleted post for stats calculation
+                const deletedPost = postsArray.find(p => p.id === postId);
+
+                // Update stats by decrementing values
+                const currentStats = await loadStatsFromFirebase();
+                const updatedStats = {
+                    postCount: Math.max(0, (currentStats.postCount || 0) - 1),
+                    totalViewers: Math.max(0, (currentStats.totalViewers || 0) - (deletedPost?.views || 0)),
+                    totalLikes: Math.max(0, (currentStats.totalLikes || 0) - (deletedPost?.likes || 0)),
+                    totalFollows: currentStats.totalFollows || 0
+                };
+
+                // Save updated stats to Firebase
+                await saveStatsToFirebase(updatedStats);
+                console.log('✅ Stats updated after post deletion:', updatedStats);
+
+                // Refresh posts display and stats
+                await loadUserPosts();
+                await updatePostStats();
+
+                alert('✅ Post deleted successfully!');
+
+            } catch (error) {
+                console.error('❌ Error deleting post:', error);
+                alert(`Error deleting post: ${error.message}`);
+            }
+        }
+
         // ===== SEARCH FEATURE FUNCTIONS =====
 
         /**
@@ -9332,7 +10240,7 @@
             searchModal.classList.add('active');
             const resultsGrid = document.getElementById('searchResultsGrid');
             const resultsCount = document.getElementById('searchResultsCount');
-            
+
             resultsGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 2rem;">🔄 Searching...</div>';
 
             try {
@@ -9346,9 +10254,9 @@
                 // Get all posts from Firebase
                 console.log('📥 Fetching posts from Firebase...');
                 const allPosts = await loadAllPostsForSearch();
-                
+
                 console.log(`📊 Total posts retrieved: ${allPosts.length}`);
-                
+
                 if (allPosts.length === 0) {
                     resultsGrid.innerHTML = `
                         <div class="search-no-results">
@@ -9360,7 +10268,7 @@
                     resultsCount.textContent = 'No posts found';
                     return;
                 }
-                
+
                 // Filter posts based on search query
                 console.log('🔎 Filtering posts...');
                 const results = filterSearchResults(allPosts, searchQuery);
@@ -9387,7 +10295,7 @@
                 }
 
                 const doc = await db.collection('users').doc(currentUser.uid).collection('creator').doc('posts').get();
-                
+
                 if (!doc.exists) {
                     console.log('ℹ️ No posts found for this user');
                     return [];
@@ -9395,10 +10303,10 @@
 
                 const postsData = doc.data();
                 const posts = postsData.posts || [];
-                
+
                 console.log(`✅ Loaded ${posts.length} posts for search`);
                 console.log('Posts data:', posts);
-                
+
                 return posts;
             } catch (error) {
                 console.error('❌ Error loading posts for search:', error);
@@ -9422,8 +10330,8 @@
 
                 // Only search fields that actually exist in posts
                 const title = (post.title || '').toLowerCase();
-                const hashtags = Array.isArray(post.hashtags) 
-                    ? post.hashtags.join(' ').toLowerCase() 
+                const hashtags = Array.isArray(post.hashtags)
+                    ? post.hashtags.join(' ').toLowerCase()
                     : '';
                 const creatorName = (currentUser.displayName || '').toLowerCase();
 
@@ -9431,9 +10339,9 @@
                 const searchableText = `${title} ${hashtags} ${creatorName}`;
 
                 const matches = searchableText.includes(query);
-                
-                console.log(`Post "${post.title || 'Untitled'}": ${matches ? '✅ MATCH' : '❌ NO MATCH'} [Searched: title="${title.substring(0,30)}" + hashtags="${hashtags.substring(0,30)}" + creator="${creatorName}"]`);
-                
+
+                console.log(`Post "${post.title || 'Untitled'}": ${matches ? '✅ MATCH' : '❌ NO MATCH'} [Searched: title="${title.substring(0, 30)}" + hashtags="${hashtags.substring(0, 30)}" + creator="${creatorName}"]`);
+
                 return matches;
             });
 
@@ -9478,8 +10386,8 @@
          */
         function createSearchResultCard(post) {
             const creatorName = firebase.auth().currentUser.displayName || 'Unknown Creator';
-            const thumbnail = post.url 
-                ? (post.type === 'video' 
+            const thumbnail = post.url
+                ? (post.type === 'video'
                     ? `<video class="search-result-thumbnail" style="width:100%; height:200px; object-fit:cover;">
                         <source src="${post.url}" type="video/mp4">
                         <source src="${post.url}" type="video/webm">
@@ -9653,10 +10561,13 @@
         }
 
         // Allow search on Enter key
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check for shared video link
+            handleSharedVideoLink();
+
             const searchInput = document.querySelector('.search-input');
             if (searchInput) {
-                searchInput.addEventListener('keypress', function(e) {
+                searchInput.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') {
                         searchVideos();
                     }
