@@ -5802,7 +5802,7 @@
         function checkFirebaseAuth() {
             auth.onAuthStateChanged(async (user) => {
                 if (!user) {
-                    window.location.href = 'xtok_landing.html';
+                    window.location.href = 'index.html';
                 } else {
                     currentUser = user;
                     console.log('User authenticated:', user.uid);
@@ -5838,14 +5838,14 @@
         async function checkLocalAuth() {
             const userJson = localStorage.getItem('xtok_currentUser');
             if (!userJson) {
-                window.location.href = 'xtok_landing.html';
+                window.location.href = 'index.html';
             } else {
                 try {
                     const user = JSON.parse(userJson);
                     await displayUserInfo(user);
                 } catch (error) {
                     console.error('Error displaying user info:', error);
-                    window.location.href = 'xtok_landing.html';
+                    window.location.href = 'index.html';
                 }
             }
         }
