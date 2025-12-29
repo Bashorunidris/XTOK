@@ -4233,6 +4233,128 @@
         </div>
     </div>
 
+    <!-- Creator Profile Modal -->
+    <div class="purchase-modal" id="creatorProfileModal">
+        <div class="purchase-content"
+            style="max-width: 600px; max-height: 80vh; display: flex; flex-direction: column;">
+            <button class="purchase-close" onclick="closeCreatorProfile()">×</button>
+
+            <!-- Creator Info Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: #000; margin: 0 auto 1rem; box-shadow: 0 8px 25px rgba(230, 57, 70, 0.3);"
+                    id="creatorAvatarLarge">C</div>
+                <div style="color: #FFFFFF; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem;"
+                    id="creatorNameLarge">Creator</div>
+                <div style="color: #999; font-size: 0.95rem;" id="creatorEmailLarge">creator@example.com</div>
+            </div>
+
+            <!-- Creator Stats -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <div
+                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
+                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
+                        id="creatorFollowers">0</div>
+                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Followers</div>
+                </div>
+                <div
+                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
+                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
+                        id="creatorTotalViews">0</div>
+                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Total Views</div>
+                </div>
+                <div
+                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; text-align: center;">
+                    <div style="color: #E63946; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.3rem;"
+                        id="creatorVideoCount">0</div>
+                    <div style="color: #999; font-size: 0.85rem; font-weight: 700;">Videos</div>
+                </div>
+            </div>
+
+            <!-- Videos by Creator Section -->
+            <div style="border-top: 1px solid #333; padding-top: 1.5rem;">
+                <div style="color: #E63946; font-weight: 700; margin-bottom: 1rem; font-size: 1.1rem;">More Videos by
+                    Creator</div>
+                <div id="creatorVideosContainer"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; max-height: 300px; overflow-y: auto;">
+                    <div style="grid-column: 1 / -1; text-align: center; color: #999; padding: 1rem;">Loading videos...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Viewer Modal -->
+    <div class="purchase-modal" id="videoViewerModal">
+        <div class="purchase-content"
+            style="max-width: 700px; max-height: 90vh; display: flex; flex-direction: column;">
+            <button class="purchase-close" onclick="closeVideoViewer()">×</button>
+
+            <!-- Video Container -->
+            <div id="videoViewerContainer"
+                style="width: 100%; background: #000; border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
+                <!-- Video will be inserted here -->
+            </div>
+
+            <!-- Video Info -->
+            <div style="flex: 1; overflow-y: auto;">
+                <div style="color: #FFFFFF; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;"
+                    id="viewerVideoTitle">Video Title</div>
+                <div style="color: #999; margin-bottom: 1rem;" id="viewerVideoDescription">No description</div>
+
+                <!-- Video Stats -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div
+                        style="background: #0a0a0a; padding: 0.8rem; border-radius: 8px; border-left: 3px solid #E63946; text-align: center;">
+                        <div style="color: #E63946; font-size: 1.2rem; font-weight: 900;" id="viewerViews">0</div>
+                        <div style="color: #999; font-size: 0.75rem; font-weight: 700;">Views</div>
+                    </div>
+                    <div
+                        style="background: #0a0a0a; padding: 0.8rem; border-radius: 8px; border-left: 3px solid #E63946; text-align: center;">
+                        <div style="color: #E63946; font-size: 1.2rem; font-weight: 900;" id="viewerLikes">0</div>
+                        <div style="color: #999; font-size: 0.75rem; font-weight: 700;">Likes</div>
+                    </div>
+                    <div
+                        style="background: #0a0a0a; padding: 0.8rem; border-radius: 8px; border-left: 3px solid #E63946; text-align: center;">
+                        <div style="color: #E63946; font-size: 1.2rem; font-weight: 900;" id="viewerComments">0</div>
+                        <div style="color: #999; font-size: 0.75rem; font-weight: 700;">Comments</div>
+                    </div>
+                    <div
+                        style="background: #0a0a0a; padding: 0.8rem; border-radius: 8px; border-left: 3px solid #E63946; text-align: center;">
+                        <div style="color: #E63946; font-size: 1.2rem; font-weight: 900;" id="viewerShares">0</div>
+                        <div style="color: #999; font-size: 0.75rem; font-weight: 700;">Shares</div>
+                    </div>
+                </div>
+
+                <!-- Creator Info -->
+                <div
+                    style="background: #0a0a0a; padding: 1rem; border-radius: 10px; border-left: 4px solid #E63946; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.8rem; cursor: pointer;"
+                        onclick="viewCreatorProfileFromVideo(viewingCreatorId)">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; flex-shrink: 0;"
+                            id="viewerCreatorAvatar">C</div>
+                        <div>
+                            <div style="color: #FFFFFF; font-weight: 700;" id="viewerCreatorName">Creator</div>
+                            <div style="color: #999; font-size: 0.85rem;">View creator profile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hashtags -->
+                <div id="viewerHashtags" style="margin-bottom: 1rem;"></div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="purchase-btn-confirm" onclick="likeVideoFromViewer(viewingVideoId, viewingCreatorId)"
+                        style="flex: 1;">❤️ Like</button>
+                    <button class="purchase-btn-confirm" onclick="openCommentModal(viewingVideoId, viewingCreatorId)"
+                        style="flex: 1;">💬 Comment</button>
+                    <button class="purchase-btn-confirm" onclick="shareVideo(viewingVideoId, viewingCreatorId)"
+                        style="flex: 1;">🔗 Share</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Create Post Modal -->
     <div class="create-post-modal" id="createPostModal">
         <div class="create-post-content">
@@ -6926,6 +7048,15 @@
 
                 return `
                     <div class="tiktok-video-card">
+                        <!-- Creator Profile Top Left -->
+                        <div style="position: absolute; top: 1rem; left: 1rem; display: flex; align-items: center; gap: 0.8rem; background: rgba(0, 0, 0, 0.7); padding: 0.6rem 1rem; border-radius: 25px; z-index: 15; cursor: pointer; transition: all 0.3s; border: 1px solid #E63946;" onclick="viewCreatorProfile('${post.creatorId}', '${post.creatorName || 'Creator'}')">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #E63946 0%, #FFFFFF 100%); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 0.9rem; flex-shrink: 0;">${(post.creatorName || 'C').charAt(0).toUpperCase()}</div>
+                            <div>
+                                <div style="color: #FFFFFF; font-weight: 700; font-size: 0.9rem;">${post.creatorName || 'Creator'}</div>
+                                <div style="color: #999; font-size: 0.75rem;">Tap for profile</div>
+                            </div>
+                        </div>
+
                         <div class="${containerClass}">
                             ${mediaTag}
                             ${badge}
@@ -7529,8 +7660,7 @@
 
         // TikTok-style comments state
         let viewingPostId = null;
-        let viewingCreatorId = null;
-        let replyingToCommentId = null;
+       let replyingToCommentId = null;
         let replyingToReplyUserId = null; // For nested replies (reply to a reply)
 
         // Voice recording state
@@ -8180,6 +8310,168 @@
             document.getElementById('gifSearchInput').value = '';
 
             console.log(`✅ GIF added: ${gifTitle}`);
+        }
+
+        // View Creator Profile
+        async function viewCreatorProfile(creatorId, creatorName) {
+            try {
+                // Get creator info
+                const userDoc = await db.collection('users').doc(creatorId).get();
+                if (!userDoc.exists) {
+                    alert('Creator not found');
+                    return;
+                }
+
+                const userData = userDoc.data();
+                const displayName = userData.displayName || creatorName || 'Creator';
+                const email = userData.email || 'creator@example.com';
+                const avatar = displayName.charAt(0).toUpperCase();
+
+                // Get creator stats
+                const statsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('stats').get();
+                const stats = statsDoc.exists ? statsDoc.data() : {};
+
+                const followers = stats.totalFollows || 0;
+                const totalViews = stats.totalViewers || 0;
+                const videoCount = stats.postCount || 0;
+
+                // Get creator's videos
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                const posts = postsDoc.exists ? (postsDoc.data().posts || []) : [];
+
+                // Update modal with creator info
+                document.getElementById('creatorAvatarLarge').textContent = avatar;
+                document.getElementById('creatorNameLarge').textContent = displayName;
+                document.getElementById('creatorEmailLarge').textContent = email;
+                document.getElementById('creatorFollowers').textContent = followers;
+                document.getElementById('creatorTotalViews').textContent = totalViews;
+                document.getElementById('creatorVideoCount').textContent = videoCount;
+
+                // Display creator's videos
+                const videosContainer = document.getElementById('creatorVideosContainer');
+                if (posts.length === 0) {
+                    videosContainer.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #999; padding: 1rem;">No videos yet</div>';
+                } else {
+                    videosContainer.innerHTML = posts.map(video => `
+                         <div style="position: relative; cursor: pointer; overflow: hidden; border-radius: 8px; border: 1px solid #333; transition: all 0.3s; hover: border-color: #E63946;" onclick="viewVideo('${video.id}', '${creatorId}', event)">
+                             ${video.type === 'video'
+                            ? `<video style="width: 100%; height: 120px; object-fit: cover; background: #0a0a0a;"><source src="${video.url}" type="video/mp4"></video>`
+                            : `<img src="${video.url}" style="width: 100%; height: 120px; object-fit: cover; background: #0a0a0a;" alt="${video.title}">`
+                        }
+                             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 0.4rem; color: #fff; font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${video.title || 'Untitled'}</div>
+                             <div style="position: absolute; top: 0; right: 0; background: #E63946; padding: 0.3rem 0.5rem; border-radius: 3px; font-size: 0.7rem; color: #fff;">👁️ ${video.views || 0}</div>
+                         </div>
+                     `).join('');
+                }
+
+                // Show modal
+                document.getElementById('creatorProfileModal').classList.add('active');
+                console.log(`✅ Creator profile loaded: ${displayName}`);
+            } catch (error) {
+                console.error('❌ Error loading creator profile:', error);
+                alert('Error loading creator profile');
+            }
+        }
+
+        // Close Creator Profile Modal
+        function closeCreatorProfile() {
+            document.getElementById('creatorProfileModal').classList.remove('active');
+        }
+
+        // Global variables for video viewer
+        let viewingVideoId = null;
+        let viewingCreatorId = null;
+
+        // View Video Function
+        async function viewVideo(videoId, creatorId, event) {
+            if (event) event.stopPropagation();
+
+            try {
+                // Fetch video data
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                if (!postsDoc.exists) {
+                    alert('Video not found');
+                    return;
+                }
+
+                const posts = postsDoc.data().posts || [];
+                const video = posts.find(p => p.id === videoId);
+
+                if (!video) {
+                    alert('Video not found');
+                    return;
+                }
+
+                // Get creator info
+                const userDoc = await db.collection('users').doc(creatorId).get();
+                const userData = userDoc.exists ? userDoc.data() : {};
+                const creatorName = userData.displayName || 'Creator';
+
+                // Store global variables
+                viewingVideoId = videoId;
+                viewingCreatorId = creatorId;
+
+                // Update modal with video data
+                const container = document.getElementById('videoViewerContainer');
+                const mediaHTML = video.type === 'video'
+                    ? `<video controls style="width: 100%; height: 400px; object-fit: cover;"><source src="${video.url}" type="video/mp4"><source src="${video.url}" type="video/webm">Video not supported</video>`
+                    : `<img src="${video.url}" alt="${video.title}" style="width: 100%; height: 400px; object-fit: cover;">`;
+
+                container.innerHTML = mediaHTML;
+                document.getElementById('viewerVideoTitle').textContent = video.title || 'Untitled';
+                document.getElementById('viewerVideoDescription').textContent = video.description || 'No description available';
+                document.getElementById('viewerViews').textContent = video.views || 0;
+                document.getElementById('viewerLikes').textContent = video.likes || 0;
+                document.getElementById('viewerComments').textContent = video.comments || 0;
+                document.getElementById('viewerShares').textContent = video.shares || 0;
+                document.getElementById('viewerCreatorAvatar').textContent = creatorName.charAt(0).toUpperCase();
+                document.getElementById('viewerCreatorName').textContent = creatorName;
+
+                // Display hashtags
+                const hashtagsDiv = document.getElementById('viewerHashtags');
+                if (video.hashtags && video.hashtags.length > 0) {
+                    hashtagsDiv.innerHTML = '<div style="color: #E63946; font-weight: 700; margin-bottom: 0.5rem;">Tags</div>' +
+                        video.hashtags.map(tag => `<span style="display: inline-block; background: #0a0a0a; padding: 0.4rem 0.8rem; border-radius: 15px; margin-right: 0.5rem; margin-bottom: 0.5rem; color: #E63946; font-size: 0.85rem;">${tag}</span>`).join('');
+                } else {
+                    hashtagsDiv.innerHTML = '';
+                }
+
+                // Show modal
+                document.getElementById('videoViewerModal').classList.add('active');
+                console.log(`✅ Video opened: ${video.title}`);
+            } catch (error) {
+                console.error('❌ Error opening video:', error);
+                alert('Error opening video');
+            }
+        }
+
+        // Close Video Viewer Modal
+        function closeVideoViewer() {
+            document.getElementById('videoViewerModal').classList.remove('active');
+            viewingVideoId = null;
+            viewingCreatorId = null;
+        }
+
+        // Like video from viewer
+        async function likeVideoFromViewer(videoId, creatorId) {
+            await likeVideo(videoId, creatorId);
+            // Update viewer display
+            if (videoId && creatorId) {
+                const postsDoc = await db.collection('users').doc(creatorId).collection('creator').doc('posts').get();
+                if (postsDoc.exists) {
+                    const posts = postsDoc.data().posts || [];
+                    const video = posts.find(p => p.id === videoId);
+                    if (video) {
+                        document.getElementById('viewerLikes').textContent = video.likes || 0;
+                    }
+                }
+            }
+        }
+
+        // View creator profile from video viewer
+        function viewCreatorProfileFromVideo(creatorId) {
+            closeVideoViewer();
+            viewCreatorProfile(creatorId, 'Creator');
         }
 
         // Allow Enter to search GIFs
