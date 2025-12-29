@@ -25,13 +25,13 @@
 
         /* Navbar */
         nav {
-            background: #1a1a1a;
-            padding: 1.5rem 2rem;
+            background: #0f0f0f;
+            padding: 1.2rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #E63946;
-            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.2);
+            border-bottom: 2px solid #E63946;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         .logo {
@@ -70,12 +70,12 @@
         }
 
         .user-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+            transform: scale(1.08);
+            box-shadow: 0 3px 10px rgba(230, 57, 70, 0.25);
         }
 
         .logout-btn {
-            padding: 0.7rem 1.5rem;
+            padding: 0.65rem 1.4rem;
             background: #E63946;
             color: white;
             border: none;
@@ -83,12 +83,13 @@
             cursor: pointer;
             font-weight: 700;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .logout-btn:hover {
             background: #C1121F;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
         }
 
         /* Search Bar */
@@ -104,19 +105,19 @@
             flex: 1;
             min-width: 250px;
             max-width: 500px;
-            padding: 1rem;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 25px;
+            padding: 0.85rem 1.2rem;
+            background: #0f0f0f;
+            border: 1.5px solid #333;
+            border-radius: 20px;
             color: #FFFFFF;
-            font-size: 1rem;
-            transition: all 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.25s;
         }
 
         .search-input:focus {
             outline: none;
             border-color: #E63946;
-            box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
+            box-shadow: 0 0 12px rgba(230, 57, 70, 0.2);
             background: #0a0a0a;
         }
 
@@ -125,7 +126,7 @@
         }
 
         .search-btn {
-            padding: 1rem 2rem;
+            padding: 0.85rem 1.8rem;
             background: #E63946;
             color: #FFFFFF;
             border: none;
@@ -133,13 +134,14 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.95rem;
             white-space: nowrap;
         }
 
         .search-btn:hover {
             background: #C1121F;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 57, 70, 0.25);
         }
 
         /* Tablet responsive (768px - 1024px) */
@@ -237,22 +239,23 @@
         }
 
         .search-results-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2.5rem;
             min-height: 100vh;
         }
 
         .search-results-header {
             position: sticky;
             top: 0;
-            background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.8) 100%);
+            background: #000000;
             padding: 1.5rem 0;
             z-index: 3001;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(230, 57, 70, 0.1);
         }
 
         .search-results-title {
@@ -299,8 +302,8 @@
 
         .search-result-card:hover {
             border-color: #E63946;
-            box-shadow: 0 15px 40px rgba(230, 57, 70, 0.3);
-            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.2);
+            transform: translateY(-5px);
         }
 
         .search-result-thumbnail {
@@ -375,36 +378,48 @@
         .search-no-results {
             text-align: center;
             color: #999;
-            padding: 4rem 2rem;
-            font-size: 1.2rem;
+            padding: 5rem 3rem;
+            font-size: 1.1rem;
         }
 
         @media (max-width: 768px) {
+            .search-results-container {
+                padding: 2rem 1.5rem;
+            }
+
             .search-results-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 1rem;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1.2rem;
             }
 
             .search-result-thumbnail {
-                height: 150px;
+                height: 140px;
             }
 
             .search-results-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .tabs-wrapper {
+                padding: 0 1.5rem;
             }
         }
 
         /* Main Container */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2.5rem;
         }
 
         /* Grid Section */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -467,6 +482,8 @@
             overflow: hidden;
             border: 2px solid rgba(230, 57, 70, 0.3);
             transition: all 0.3s;
+            height: 600px;
+            width: 100%;
         }
 
         .video-card:hover {
@@ -477,7 +494,7 @@
 
         .video-thumbnail {
             width: 100%;
-            height: 150px;
+            height: 100%;
             background: linear-gradient(135deg, #E63946 0%, #1a1a1a 100%);
             display: flex;
             align-items: center;
@@ -540,14 +557,16 @@
 
         .tabs-wrapper {
             display: flex;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 2.5rem;
         }
 
         .tab {
             flex: 1;
-            padding: 1.5rem;
+            padding: 1.4rem 1.8rem;
             text-align: center;
+            font-size: 0.95rem;
             background: transparent;
             border: none;
             color: #999;
@@ -4194,13 +4213,13 @@
 
             /* Container */
             .container {
-                max-width: 1200px;
-                padding: 2rem;
+                max-width: 1400px;
+                padding: 3rem 2.5rem;
             }
 
             /* Grids */
             .grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             }
 
             .videos-grid {
@@ -5368,8 +5387,7 @@
                     <div style="font-size: 2.5rem; margin-bottom: 1rem;">📸 🎬</div>
                     <div style="color: #FFFFFF; font-weight: 700; margin-bottom: 0.5rem;">Click to upload</div>
                     <div style="color: #999; font-size: 0.9rem;">Video or Image (Max 100MB)</div>
-                    <input type="file" id="postFileInput" accept="image/*,video/*"
-                        onchange="handlePostFileUpload(event)" style="display: none;">
+                    <input type="file" id="postFileInput" accept="*" onchange="handlePostFileUpload(event)" style="display: none;">
                 </div>
                 <div id="postPreview" style="display: none; margin-top: 1rem;">
                     <video id="videoPreview"
@@ -7737,19 +7755,28 @@
         }
 
         // Handle File Upload
-        function handlePostFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+         function handlePostFileUpload(event) {
+             const file = event.target.files[0];
+             if (!file) return;
 
-            // Validate file size (100MB max)
-            if (file.size > 100 * 1024 * 1024) {
-                alert('File size must be less than 100MB');
-                return;
-            }
+             // Validate file size (100MB max)
+             if (file.size > 100 * 1024 * 1024) {
+                 alert('File size must be less than 100MB');
+                 return;
+             }
 
-            currentPostData.file = file;
-            currentPostData.fileName = file.name;
-            currentPostData.fileType = file.type.startsWith('video') ? 'video' : 'image';
+             // Check if file is video or image by type and extension
+             const isVideo = file.type.startsWith('video') || file.name.match(/\.(mp4|webm|mov|avi|mkv|flv|wmv|3gp|m3u8|ts|m4v|mts|m2ts|mxf|ogv|ogg|f4v)$/i);
+             const isImage = file.type.startsWith('image') || file.name.match(/\.(jpg|jpeg|png|gif|bmp|webp|svg|tiff|heic)$/i);
+
+             if (!isVideo && !isImage) {
+                 alert('❌ Invalid file type. Please select a video or image file.');
+                 return;
+             }
+
+             currentPostData.file = file;
+             currentPostData.fileName = file.name;
+             currentPostData.fileType = isVideo ? 'video' : 'image';
 
             // Show preview
             const postPreview = document.getElementById('postPreview');
