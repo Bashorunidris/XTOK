@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XTOK Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>▶️</text></svg>">
+    <link rel="manifest" href="data:application/manifest+json,{}">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -2533,7 +2535,7 @@
 
         /* Wallet Modal */
         .wallet-modal {
-            display: none;
+            display: flex;
             position: fixed;
             top: 0;
             left: 0;
@@ -2545,10 +2547,13 @@
             justify-content: center;
             overflow-y: auto;
             padding: 2rem 0;
+            visibility: hidden;
+            opacity: 0;
         }
 
         .wallet-modal.active {
-            display: flex;
+            visibility: visible;
+            opacity: 1;
         }
 
         .wallet-content {
@@ -4436,7 +4441,7 @@
                 <button class="tab active" onclick="switchTab('forYou', this)">For You</button>
                 <button class="tab" onclick="switchTab('free', this)">Free</button>
                 <button class="tab" onclick="switchTab('exclusive', this)">Exclusive</button>
-                <button class="tab" onclick="switchTab('loaded', this)">📥 Loaded</button>
+                <button class="tab" onclick="switchTab('loaded', this)">💳 Your Videos</button>
                 <button class="tab" onclick="initializeFeeds()"
                     style="margin-left: auto; color: #999; border: none; background: transparent; cursor: pointer; font-size: 1.5rem; padding: 1rem;">🔄</button>
             </div>
@@ -4470,7 +4475,7 @@
         <div id="loaded" class="tab-content">
             <div class="loading-container">
                 <div class="loading-spinner"></div>
-                <div class="loading-text">LOADING SAVED VIDEOS</div>
+                <div class="loading-text">LOADING YOUR PAID VIDEOS</div>
             </div>
             <div class="video-feed" id="loadedFeed"></div>
         </div>
@@ -5603,7 +5608,7 @@
             }
         }
 
-        // Initialize Wallet with Signup Bonus
+        // Initialize Wallet with Signup Bonus - 500 XTC coins gift
         async function initializeWalletForNewUser() {
             try {
                 if (!currentUser) return false;
@@ -5612,15 +5617,15 @@
                 const walletDoc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
 
                 if (!walletDoc.exists) {
-                    // New user - create wallet with 500 naira bonus
+                    // New user - create wallet with 500 XTC coins bonus (gift, non-withdrawable)
                     await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').set({
-                        totalBalance: 500,
-                        withdrawableBalance: 0,
-                        freeBonus: 500,
+                        balance: 0,
+                        xtcoinBalance: 500,  // 500 XTC coin gift
+                        giftCoins: 500,      // Track as gift (not from earnings)
                         createdAt: new Date().toISOString(),
                         lastUpdated: new Date().toISOString()
                     });
-                    console.log('✅ 500 Naira signup bonus added!');
+                    console.log('✅ 500 XTC coins signup bonus added as a gift!');
                     return true;
                 }
                 return false;
@@ -5642,9 +5647,9 @@
                     // Initialize if doesn't exist
                     await initializeWalletForNewUser();
                     return {
-                        totalBalance: 500,
-                        withdrawableBalance: 0,
-                        freeBonus: 500,
+                        balance: 0,
+                        xtcoinBalance: 500,  // 500 XTC coin gift
+                        giftCoins: 500,      // Track as gift
                         createdAt: new Date().toISOString()
                     };
                 }
@@ -5677,6 +5682,51 @@
             }
         }
 
+        // Grant 500 XTC coins to existing users (one-time gift)
+        async function grantWelcomeGiftToUser() {
+            try {
+                if (!currentUser) {
+                    console.log('⚠️ No current user, skipping gift grant');
+                    return false;
+                }
+
+                console.log('🎁 Attempting to grant welcome gift to user:', currentUser.uid);
+                const walletDoc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                
+                if (!walletDoc.exists) {
+                    console.log('📝 Wallet does not exist, initializing with gift...');
+                    await initializeWalletForNewUser();
+                    return true;
+                }
+
+                const wallet = walletDoc.data();
+                console.log('💰 Current wallet:', wallet);
+
+                // Check if user already received the gift
+                if (wallet.giftCoins && wallet.giftCoins >= 500) {
+                    console.log('✅ User already received the 500 XTC coin gift');
+                    return false;
+                }
+
+                // Grant 500 XTC coins if they don't have them
+                const newXTCBalance = (wallet.xtcoinBalance || 0) + 500;
+                console.log('🎁 Granting 500 XTC coins. New balance:', newXTCBalance);
+                
+                await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').update({
+                    xtcoinBalance: newXTCBalance,
+                    giftCoins: 500,
+                    lastGiftDate: new Date().toISOString(),
+                    lastUpdated: new Date().toISOString()
+                });
+
+                console.log('✅ 500 XTC coin welcome gift granted to user!');
+                return true;
+            } catch (error) {
+                console.error('❌ Error granting welcome gift:', error);
+                return false;
+            }
+        }
+
         // Check if amount can be withdrawn (only withdrawable balance can be withdrawn, not free bonus)
         async function canWithdraw(amount) {
             try {
@@ -5694,25 +5744,35 @@
         // Display Wallet Info (with free bonus indicator)
         async function displayWalletInfo() {
             try {
+                console.log('📊 Loading wallet info...');
                 const wallet = await loadWalletFromFirebase();
-                if (!wallet) return;
+                if (!wallet) {
+                    console.warn('⚠️ Wallet is null or undefined');
+                    return;
+                }
 
-                // Update wallet display in UI
+                console.log('💰 Wallet data:', wallet);
+
+                // Update wallet display in UI - using new structure
                 const walletBalanceEl = document.querySelector('.wallet-balance-amount');
                 const walletSubEl = document.querySelector('.wallet-balance-sub');
 
                 if (walletBalanceEl) {
-                    walletBalanceEl.textContent = `₦${wallet.totalBalance.toLocaleString()}`;
+                    const balance = wallet.balance || 0;
+                    walletBalanceEl.textContent = `₦${balance.toLocaleString()}`;
+                    console.log('✅ Updated balance display:', balance);
                 }
 
                 if (walletSubEl) {
+                    const balance = wallet.balance || 0;
+                    const xtc = wallet.xtcoinBalance || 0;
                     walletSubEl.innerHTML = `
-                         <div>Withdrawable: ₦${wallet.withdrawableBalance.toLocaleString()}</div>
-                         <div style="color: #FFA500; font-weight: 700;">Free Bonus: ₦${wallet.freeBonus.toLocaleString()} (Use Only)</div>
+                         <div>Naira Balance: ₦${balance.toLocaleString()}</div>
+                         <div style="color: #FFD700; font-weight: 700;">XTC Coins: ${xtc} XTC</div>
                      `;
                 }
             } catch (error) {
-                console.error('Error displaying wallet:', error);
+                console.error('❌ Error displaying wallet:', error);
             }
         }
 
@@ -5857,8 +5917,11 @@
                     currentUser = user;
                     console.log('User authenticated:', user.uid);
                     try {
-                        // Initialize wallet for new users (adds 500 naira bonus)
+                        // Initialize wallet for new users (adds 500 XTC coins as gift)
                         await initializeWalletForNewUser();
+                        
+                        // Grant welcome gift to existing users (one-time)
+                        await grantWelcomeGiftToUser();
 
                         await displayUserInfo(user);
                         // Initialize feeds after user is authenticated
@@ -5980,6 +6043,13 @@
         function closeUserProfile() {
             document.getElementById('profileModal').classList.remove('active');
         }
+
+        // Suppress 404 errors for missing favicon/manifest
+        window.addEventListener('error', (event) => {
+            if (event.filename && (event.filename.includes('favicon') || event.filename.includes('manifest'))) {
+                event.preventDefault();
+            }
+        }, true);
 
         // Close modal when clicking outside
         document.addEventListener('DOMContentLoaded', function () {
@@ -6307,24 +6377,54 @@
             accountID: null
         };
 
-        // Load wallet from Firebase
+        // Load wallet from Firebase (from 'balance' document)
         async function loadWalletFromFirebase() {
             try {
-                if (!currentUser) return;
-                const doc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('data').get();
+                if (!currentUser) {
+                    console.warn('⚠️ No current user');
+                    return null;
+                }
+                
+                // Try to load from 'balance' document first (new structure)
+                let doc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                
                 if (doc.exists) {
                     walletData = doc.data();
+                    console.log('✅ Wallet loaded from balance doc:', walletData);
+                    return walletData;
+                } else {
+                    // Fallback to 'data' document for backward compatibility
+                    doc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('data').get();
+                    if (doc.exists) {
+                        walletData = doc.data();
+                        console.log('✅ Wallet loaded from data doc (legacy):', walletData);
+                        return walletData;
+                    } else {
+                        // Initialize new wallet if neither exists
+                        console.log('📝 No wallet found, initializing...');
+                        await grantWelcomeGiftToUser();
+                        // Reload after initialization
+                        doc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                        if (doc.exists) {
+                            walletData = doc.data();
+                            console.log('✅ Wallet initialized and loaded:', walletData);
+                            return walletData;
+                        }
+                    }
                 }
+                return null;
             } catch (error) {
-                console.error('Error loading wallet:', error);
+                console.error('❌ Error loading wallet:', error);
+                return null;
             }
         }
 
-        // Save wallet to Firebase
+        // Save wallet to Firebase (to 'balance' document)
         async function saveWalletToFirebase() {
             try {
                 if (!currentUser) return;
-                await db.collection('users').doc(currentUser.uid).collection('wallet').doc('data').set(walletData);
+                await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').set(walletData);
+                console.log('✅ Wallet saved:', walletData);
             } catch (error) {
                 console.error('Error saving wallet:', error);
                 alert('Error saving wallet: ' + error.message);
@@ -6405,17 +6505,19 @@
                 if (kesDisplay) kesDisplay.textContent = `KES${getKesExchangeRate()}`;
                 if (ugxDisplay) ugxDisplay.textContent = `UGX${getUgxExchangeRate()}`;
 
-                // Update balance display
+                // Update balance display - with safety checks
+                const balance = walletData.balance || 0;
                 const balanceEl = document.getElementById('walletBalance');
                 if (balanceEl) {
-                    balanceEl.textContent = `₦${walletData.balance.toLocaleString()}`;
+                    balanceEl.textContent = `₦${balance.toLocaleString()}`;
+                    console.log('✅ Balance display updated:', balance);
                 }
 
                 // Update all currency conversions
-                const usdAmount = nairaToUSD(walletData.balance);
-                const ghsAmount = nairaToGhs(walletData.balance);
-                const kesAmount = nairaToKes(walletData.balance);
-                const ugxAmount = nairaToUgx(walletData.balance);
+                const usdAmount = nairaToUSD(balance);
+                const ghsAmount = nairaToGhs(balance);
+                const kesAmount = nairaToKes(balance);
+                const ugxAmount = nairaToUgx(balance);
 
                 const usdEl = document.getElementById('walletBalanceUSDAmount');
                 const ghsEl = document.getElementById('walletBalanceGHSAmount');
@@ -6426,12 +6528,26 @@
                 if (ghsEl) ghsEl.textContent = ghsAmount;
                 if (kesEl) kesEl.textContent = kesAmount;
                 if (ugxEl) ugxEl.textContent = ugxAmount;
+                console.log('✅ Currency conversions updated');
 
-                // Display XTCoin balance
+                // Display XTCoin balance with gift indicator
                 const xtcoinBalanceEl = document.getElementById('walletXTCoinBalance');
                 if (xtcoinBalanceEl) {
                     const xtcoinBalance = walletData.xtcoinBalance || 0;
-                    xtcoinBalanceEl.textContent = `${xtcoinBalance} XTC`;
+                    const giftCoins = walletData.giftCoins || 0;
+                    console.log('📊 XTC Balance Display:', { xtcoinBalance, giftCoins, walletData });
+                    
+                    let xtcDisplay = `${xtcoinBalance} XTC`;
+                    
+                    // Add gift icon if user has gift coins
+                    if (giftCoins > 0) {
+                        xtcDisplay += ` <span style="cursor: pointer; margin-left: 0.5rem; display: inline-block;" title="Click for more info" onclick="showGiftPopup('${giftCoins}')">🎁</span>`;
+                    }
+                    
+                    xtcoinBalanceEl.innerHTML = xtcDisplay;
+                    console.log('✅ XTC Display Updated:', xtcDisplay);
+                } else {
+                    console.warn('⚠️ walletXTCoinBalance element not found');
                 }
 
                 // Load bank details if exists
@@ -6491,6 +6607,70 @@
         // Close Wallet
         function closeWallet() {
             document.getElementById('walletModal').classList.remove('active');
+        }
+
+        // Show Gift Coins Popup
+        function showGiftPopup(giftAmount) {
+            // Remove existing popup if any
+            const existing = document.getElementById('giftPopupOverlay');
+            if (existing) existing.remove();
+
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'giftPopupOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.3s ease-in;
+            `;
+
+            // Create popup
+            const popup = document.createElement('div');
+            popup.id = 'giftPopup';
+            popup.style.cssText = `
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+                border: 3px solid #FFFFFF;
+                border-radius: 20px;
+                padding: 2.5rem;
+                max-width: 450px;
+                width: 90%;
+                box-shadow: 0 15px 50px rgba(255, 215, 0, 0.4);
+                text-align: center;
+                color: #000;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                animation: bounceIn 0.5s ease-out;
+            `;
+
+            popup.innerHTML = `
+                <div style="font-size: 4rem; margin-bottom: 1rem; animation: pulse 0.6s ease-in-out;">🎁</div>
+                <div style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; color: #C41E00;">WELCOME GIFT!</div>
+                <div style="font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.8; font-weight: 600;">
+                    You received <span style="color: #C41E00;">${giftAmount} XTC Coins</span> from XTOK!
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.4); padding: 1.2rem; border-radius: 12px; margin-bottom: 1.8rem; font-size: 0.95rem; font-weight: 500;">
+                    💡 Use these coins to watch exclusive premium content and enjoy unlimited entertainment!
+                </div>
+                <button onclick="document.getElementById('giftPopupOverlay').remove()" style="padding: 0.9rem 2.5rem; background: #C41E00; color: #FFD700; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(196, 30, 0, 0.3);">
+                    ✓ Thanks!
+                </button>
+            `;
+
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+
+            // Auto-close after 10 seconds
+            setTimeout(() => {
+                const elem = document.getElementById('giftPopupOverlay');
+                if (elem) elem.remove();
+            }, 10000);
         }
 
         // Open Buy XTCoin Modal
@@ -7884,6 +8064,12 @@
                 return;
             }
 
+            // Validate paid post has price selected
+            if (currentPostData.type === 'paid' && currentPostData.price === 0) {
+                alert('Please select a price for this paid post');
+                return;
+            }
+
             // Get current values
             currentPostData.title = document.getElementById('postTitle').value.trim();
             currentPostData.hashtags = document.getElementById('postHashtags').value
@@ -7963,6 +8149,9 @@
                     comments: 0,
                     shares: 0
                 };
+
+                console.log('📤 Saving post:', post);
+                console.log('💰 Post type:', post.postType, '| Price:', post.price);
 
                 // Save post to Firebase
                 const saved = await savePostToFirebase(post);
@@ -8170,9 +8359,24 @@
 
         // Display video feed with TikTok-style cards
         // Initialize paid video 5-second timers
-        function initializePaidVideoTimers() {
+        async function initializePaidVideoTimers() {
             const videoCards = document.querySelectorAll('.tiktok-video-card');
 
+            // Get current user's purchased posts
+            let purchasedPostIds = [];
+            if (currentUser) {
+                try {
+                    const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                    const userData = userDoc.data() || {};
+                    purchasedPostIds = userData.purchasedPosts || [];
+                    console.log('✅ Purchased posts loaded:', purchasedPostIds);
+                } catch (error) {
+                    console.error('Error loading purchased posts:', error);
+                }
+            }
+
+            console.log(`🎬 Initializing ${videoCards.length} video cards`);
+            
             videoCards.forEach(card => {
                 const video = card.querySelector('video');
                 if (!video) return;
@@ -8180,6 +8384,18 @@
                 // Find the paid overlay in this card
                 const paidOverlay = card.querySelector('[id^="paid-overlay-"]');
                 if (!paidOverlay) return; // Not a paid video
+
+                // Extract postId from overlay id (format: paid-overlay-{postId})
+                const overlayId = paidOverlay.id;
+                const postId = overlayId.replace('paid-overlay-', '');
+                console.log('🎬 Checking Video ID:', postId, 'Purchased:', purchasedPostIds.includes(postId));
+
+                // If user already purchased, hide the overlay permanently
+                if (purchasedPostIds.includes(postId)) {
+                    paidOverlay.style.display = 'none';
+                    console.log(`✅ Video ${postId} already purchased - overlay hidden`);
+                    return;
+                }
 
                 let timerStarted = false;
                 let paymentShown = false;
@@ -8196,7 +8412,7 @@
                         paymentShown = true;
                         video.pause();
                         paidOverlay.style.display = 'flex';
-                        console.log(`💰 Payment prompt shown after 5 seconds`);
+                        console.log(`💰 Payment prompt shown after 5 seconds for video ${postId}`);
                     }
 
                     // If video is playing and timer hasn't fired yet, keep checking
@@ -8573,13 +8789,13 @@
             console.log(`💳 Opening purchase modal for post ${postId} (${price} XTC)`);
 
             try {
-                console.log('📖 Getting user document...');
-                // Get user's wallet balance and post title
-                const userDoc = await db.collection('users').doc(currentUser.uid).get();
-                console.log('✅ User doc retrieved:', userDoc.data());
-                const userData = userDoc.data() || {};
-                const userBalance = userData.walletBalance || 0;
-                console.log('💰 User balance:', userBalance);
+                console.log('📖 Getting user wallet...');
+                // Get user's XTC balance from wallet subcollection
+                const walletDoc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                console.log('✅ Wallet doc retrieved:', walletDoc.data());
+                const walletData = walletDoc.data() || {};
+                const userBalance = walletData.xtcoinBalance || 0;
+                console.log('💰 User XTC balance:', userBalance);
 
                 console.log('📖 Getting post document from xtokpost...');
                 // Get post title from xtokpost collection
@@ -8661,10 +8877,10 @@
             console.log(`✅ Processing purchase: ${postId} for ${price} XTC`);
 
             try {
-                // Double-check balance
-                const userDoc = await db.collection('users').doc(currentUser.uid).get();
-                const userData = userDoc.data() || {};
-                const currentBalance = userData.walletBalance || 0;
+                // Double-check balance from wallet
+                const walletDoc = await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').get();
+                const walletData = walletDoc.data() || {};
+                const currentBalance = walletData.xtcoinBalance || 0;
 
                 if (currentBalance < price) {
                     alert(`❌ Insufficient Balance!\n\nYour Balance: ${currentBalance} XTC\nPost Price: ${price} XTC`);
@@ -8672,10 +8888,11 @@
                     return;
                 }
 
-                // Deduct from user's balance
+                // Deduct from user's XTC balance
                 const newBalance = currentBalance - price;
-                await db.collection('users').doc(currentUser.uid).update({
-                    walletBalance: newBalance
+                await db.collection('users').doc(currentUser.uid).collection('wallet').doc('balance').update({
+                    xtcoinBalance: newBalance,
+                    lastUpdated: new Date().toISOString()
                 });
 
                 // Add to creator's earnings
@@ -8687,6 +8904,8 @@
                 });
 
                 // Add to user's purchased posts list
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const userData = userDoc.data() || {};
                 let purchasedPosts = userData.purchasedPosts || [];
                 if (!purchasedPosts.includes(postId)) {
                     purchasedPosts.push(postId);
@@ -8696,10 +8915,41 @@
                 }
 
                 closePurchaseModal();
+                
+                // IMMEDIATELY hide the overlay on the current page
+                const paidOverlay = document.getElementById(`paid-overlay-${postId}`);
+                if (paidOverlay) {
+                    paidOverlay.style.display = 'none';
+                    console.log(`✅ Paid overlay hidden immediately for post ${postId}`);
+                }
+                
+                // Also unpause the video so user can continue watching
+                const videoCard = document.querySelector(`[id*="${postId}"]`)?.closest('.tiktok-video-card');
+                if (videoCard) {
+                    const video = videoCard.querySelector('video');
+                    if (video) {
+                        video.play();
+                        console.log(`▶️ Video resumed for post ${postId}`);
+                    }
+                }
+                
+                // Update wallet balance in UI if visible
+                const walletBalanceElement = document.getElementById('walletBalance');
+                if (walletBalanceElement) {
+                    walletBalanceElement.textContent = `₦${newBalance.toLocaleString()}`;
+                    console.log(`💰 Wallet balance updated in UI: ₦${newBalance.toLocaleString()}`);
+                }
+                
+                // Update XTC balance display if visible (creator dashboard)
+                const xtcBalanceElement = document.getElementById('xtcBalance');
+                if (xtcBalanceElement) {
+                    xtcBalanceElement.textContent = `${newBalance} XTC`;
+                }
+                
                 alert(`✅ Purchase Successful!\n\n🎉 Enjoy the premium content!\n\nNew Balance: ${newBalance} XTC`);
 
-                // Reload page to show unblurred content
-                location.reload();
+                // NO PAGE RELOAD - user stays on the same video to continue watching
+                console.log(`✅ Purchase complete. User can continue watching without interruption.`);
             } catch (error) {
                 console.error('❌ Purchase error:', error);
                 alert('❌ Purchase failed. Please try again.');
@@ -8880,9 +9130,8 @@
                              </div>
                          </div>
                      `;
-                    document.getElementById('freeFeed').innerHTML = warningHTML + '<div id="freeVideosContainer"></div>';
-                    const container = document.getElementById('freeVideosContainer');
-                    container.innerHTML = sortedPosts.map((post, index) => displayVideoCard(post, index)).join('');
+                    document.getElementById('freeFeed').innerHTML = warningHTML;
+                    displayVideoFeed(sortedPosts, 'freeFeed');
                 } else {
                     console.log('Free posts:', sortedPosts.length);
                     displayVideoFeed(sortedPosts, 'freeFeed');
@@ -8896,38 +9145,77 @@
         // EXCLUSIVE: Only paid posts (3 and 4 XTCoins) (including current user's)
         async function loadExclusiveFeed() {
             try {
-                console.log('Loading Exclusive feed...');
-                // Hide loading spinner
-                const loadingContainer = document.querySelector('#exclusive .loading-container');
-                if (loadingContainer) {
-                    loadingContainer.classList.add('hidden');
+                console.log('🎬 Loading Exclusive feed...');
+                const feedContainer = document.getElementById('exclusiveFeed');
+                
+                if (!feedContainer) {
+                    console.error('❌ Exclusive feed container not found');
+                    return;
                 }
-                const allPosts = await getCachedPosts();
-                const userPosts = await getCurrentUserPosts();
-                const mergedPosts = mergePosts(allPosts, userPosts);
 
-                // Filter only paid posts with price 3 or 4 XTCoins
-                const exclusivePosts = mergedPosts.filter(post => {
-                    if (post.postType !== 'paid') return false;
-                    const price = post.price || 0;
-                    if (![3, 4].includes(price)) return false;  // Only 3 and 4
-                    if (post.scheduled) {
-                        const scheduleDateTime = new Date(`${post.scheduleDate}T${post.scheduleTime}`);
-                        if (scheduleDateTime > new Date()) return false;
-                    }
-                    return true;
-                });
+                // Show loading state
+                feedContainer.innerHTML = '<div class="loading-indicator">Loading exclusive content...</div>';
+
+                // Load exclusive posts
+                let exclusivePosts = await loadExclusivePostsOptimized();
+                
+                if (!exclusivePosts || exclusivePosts.length === 0) {
+                    console.warn('⚠️ No exclusive posts found');
+                    feedContainer.innerHTML = '<div class="no-posts">📭 No exclusive content available</div>';
+                    return;
+                }
 
                 // Sort by most recent first
                 const sortedPosts = exclusivePosts.sort((a, b) => {
                     return new Date(b.createdAt) - new Date(a.createdAt);
                 });
 
-                console.log('Exclusive posts:', sortedPosts.length);
+                console.log('✅ Displaying exclusive posts:', sortedPosts.length);
                 displayVideoFeed(sortedPosts, 'exclusiveFeed');
+                
             } catch (error) {
-                console.error('Error loading Exclusive feed:', error);
-                document.getElementById('exclusiveFeed').innerHTML = '<div class="no-posts">Error loading posts</div>';
+                console.error('❌ Error loading Exclusive feed:', error);
+                const feedContainer = document.getElementById('exclusiveFeed');
+                if (feedContainer) {
+                    feedContainer.innerHTML = '<div class="no-posts">❌ Error loading exclusive posts. Please try again later.</div>';
+                }
+            }
+        }
+
+        // Optimized query for exclusive posts - fetch all paid videos
+        async function loadExclusivePostsOptimized() {
+            try {
+                if (!db) return [];
+
+                console.log('🔍 Loading exclusive posts from cache...');
+                const allPosts = await getCachedPosts();
+                console.log('📊 Cached posts available:', allPosts.length);
+                
+                // Debug: log all post types
+                const postTypes = {};
+                allPosts.forEach(post => {
+                    postTypes[post.postType] = (postTypes[post.postType] || 0) + 1;
+                });
+                console.log('📋 Post types distribution:', postTypes);
+
+                // Filter only paid posts (any price)
+                const exclusivePosts = allPosts.filter(post => {
+                    if (post.postType !== 'paid') return false;
+                    if (post.scheduled) {
+                        const scheduleDateTime = new Date(`${post.scheduleDate}T${post.scheduleTime}`);
+                        if (scheduleDateTime > new Date()) return false;  // Skip if not yet scheduled
+                    }
+                    return true;
+                });
+
+                console.log('✅ Exclusive posts filtered:', exclusivePosts.length);
+                if (exclusivePosts.length > 0) {
+                    console.log('💰 Sample prices:', exclusivePosts.slice(0, 3).map(p => p.price));
+                }
+                return exclusivePosts;
+            } catch (error) {
+                console.error('❌ Error loading exclusive posts:', error);
+                return [];
             }
         }
 
@@ -9106,76 +9394,79 @@
             return videos.sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, limit);
         }
 
-        // Smart algorithm: Load and display loaded feed
+        // YOUR VIDEOS: Load videos that user has purchased
         async function loadLoadedFeed() {
             try {
-                console.log('📥 Loading Loaded/Cached videos...');
-
-                // Hide loading spinner
+                console.log('💳 Loading Your Paid Videos...');
+                
+                // Show loading spinner
                 const loadingContainer = document.querySelector('#loaded .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.remove('hidden');
+                }
+
+                if (!currentUser) {
+                    document.getElementById('loadedFeed').innerHTML = '<div class="no-posts">🔐 Please sign in first</div>';
+                    if (loadingContainer) {
+                        loadingContainer.classList.add('hidden');
+                    }
+                    return;
+                }
+
+                // Get user's purchased posts from Firebase
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                const userData = userDoc.data() || {};
+                const purchasedPostIds = userData.purchasedPosts || [];
+
+                console.log('💳 User purchased posts:', purchasedPostIds);
+
+                if (purchasedPostIds.length === 0) {
+                    document.getElementById('loadedFeed').innerHTML = '<div class="no-posts">🎬 No videos purchased yet</div>';
+                    if (loadingContainer) {
+                        loadingContainer.classList.add('hidden');
+                    }
+                    return;
+                }
+
+                // Fetch all purchased videos from xtokpost collection
+                const purchasedVideos = [];
+                for (const postId of purchasedPostIds) {
+                    try {
+                        const postDoc = await db.collection('xtokpost').doc(postId).get();
+                        if (postDoc.exists) {
+                            const postData = postDoc.data();
+                            purchasedVideos.push({
+                                id: postId,
+                                ...postData
+                            });
+                        }
+                    } catch (error) {
+                        console.warn(`Could not fetch post ${postId}:`, error);
+                    }
+                }
+
+                // Sort by most recent first
+                const sortedVideos = purchasedVideos.sort((a, b) => {
+                    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+                });
+
+                console.log(`✅ Displaying ${sortedVideos.length} purchased videos`);
+
+                // Use the same displayVideoFeed function as other tabs for consistent UI and features
+                displayVideoFeed(sortedVideos, 'loadedFeed');
+                
+                // Hide loading spinner
                 if (loadingContainer) {
                     loadingContainer.classList.add('hidden');
                 }
 
-                // Clean expired videos first
-                cleanExpiredLoadedVideos();
-
-                // Get loaded videos
-                const loadedVideos = getLoadedVideos();
-
-                if (loadedVideos.length === 0) {
-                    document.getElementById('loadedFeed').innerHTML = `
-                         <div class="no-posts" style="text-align: center; padding: 3rem;">
-                             <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
-                             <div style="color: #999; font-size: 1.1rem;">No videos loaded yet</div>
-                             <div style="color: #666; font-size: 0.9rem; margin-top: 1rem;">Videos you watch will appear here</div>
-                         </div>
-                     `;
-                    return;
-                }
-
-                // Sort by most recent first (but keep metadata)
-                const sortedVideos = loadedVideos.sort((a, b) => {
-                    return new Date(b.loadedAt) - new Date(a.loadedAt);
-                });
-
-                console.log(`📥 Displaying ${sortedVideos.length} loaded videos`);
-
-                // Create custom video cards with metadata
-                const videosHTML = sortedVideos.map(video => {
-                    const daysAgo = Math.floor((new Date() - new Date(video.loadedAt)) / (1000 * 60 * 60 * 24));
-                    const daysText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo}d ago`;
-
-                    return `
-                         <div class="tiktok-video-card" onclick="openVideoViewer('${video.id}', '${video.creatorId}')">
-                             <div class="tiktok-video-container" style="position: relative; background: #0a0a0a;">
-                                 ${video.type === 'video'
-                            ? `<video style="width: 100%; height: 100%; object-fit: cover;">
-                                         <source src="${video.url}" type="video/mp4">
-                                        </video>`
-                            : `<img src="${video.url}" style="width: 100%; height: 100%; object-fit: cover;" alt="${video.title}">`
-                        }
-                             </div>
-                             <div class="tiktok-video-info">
-                                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                                     <div class="tiktok-video-title" title="${video.title}">${video.title || 'Untitled'}</div>
-                                     <div style="color: #666; font-size: 0.75rem; white-space: nowrap;">${daysText}</div>
-                                 </div>
-                                 <div style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">👤 ${video.creatorName || 'Creator'}</div>
-                                 <div style="display: flex; gap: 1rem; color: #666; font-size: 0.8rem;">
-                                     <span>👁️ ${video.views || 0}</span>
-                                     <span>❤️ ${video.likes || 0}</span>
-                                     <span>🔄 ${video.viewCount || 1}x viewed</span>
-                                 </div>
-                             </div>
-                         </div>
-                     `;
-                }).join('');
-
-                document.getElementById('loadedFeed').innerHTML = videosHTML;
             } catch (error) {
-                console.error('Error loading Loaded feed:', error);
-                document.getElementById('loadedFeed').innerHTML = '<div class="no-posts">Error loading saved videos</div>';
+                console.error('Error loading paid videos:', error);
+                document.getElementById('loadedFeed').innerHTML = '<div class="no-posts">Error loading paid videos</div>';
+                const loadingContainer = document.querySelector('#loaded .loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
             }
         }
 
